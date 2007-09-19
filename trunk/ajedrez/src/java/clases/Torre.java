@@ -1,5 +1,5 @@
 /*
- * Torrre.java
+ * Torre.java
  *
  * Created on 19 de septiembre de 2007, 13:05
  *
@@ -13,10 +13,12 @@ package clases;
  *
  * @author Pablo
  */
-public class Torrre extends Ficha{
+public class Torre extends Ficha{
     
-    /** Creates a new instance of Torrre */
-    public Torrre() {
+    /**
+     * Creates a new instance of Torre
+     */
+    public Torre() {
     }
     
     public void mover(){

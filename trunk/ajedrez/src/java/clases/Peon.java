@@ -20,7 +20,9 @@ public class Peon extends Ficha{
     public Peon() {
     }
     
-    public void mover(){
+   public boolean movimiento_dentro_tablero(){
+    //abstract porque depende del tipo de ficha
+    return(true);
     }
     
         

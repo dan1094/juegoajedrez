@@ -16,19 +16,63 @@ package clases;
 
 public class Casilla {
    
-    protected Long id_casilla; 
-    protected Long id_ficha;
-    protected Long fila;
-    protected String columna;
-    protected boolean ocupada;
+    private Long id_casilla; 
+    private Long id_ficha;
+    private Long fila;
+    private String columna;
+    private boolean ocupada;
     
     
     
     /** Creates a new instance of Casilla */
     public Casilla() {
     }
-    public boolean ocupada(Long fil, String col){
-        return(this.ocupada);
+
+    public Long getId_casilla() {
+        return id_casilla;
     }
+
+    public void setId_casilla(Long id_casilla) {
+        this.id_casilla = id_casilla;
+    }
+
+    public Long getId_ficha() {
+        return id_ficha;
+    }
+
+    public void setId_ficha(Long id_ficha) {
+        this.id_ficha = id_ficha;
+    }
+
+    public Long getFila() {
+        return fila;
+    }
+
+    public void setFila(Long fila) {
+        this.fila = fila;
+    }
+
+    public String getColumna() {
+        return columna;
+    }
+
+    public void setColumna(String columna) {
+        this.columna = columna;
+    }
+
+    public boolean getOcupada() {
+        return ocupada;
+    }
+
+    public void setOcupada(boolean ocupada) {
+        this.ocupada = ocupada;
+    }
+    
+    
+    
+    
+    
+    
+              
     
 }

@@ -18,7 +18,11 @@ public class Alfil extends Ficha{
     /** Creates a new instance of Alfil */
     public Alfil() {
     }
-
-    public void mover(){
+    
+    public boolean movimiento_dentro_tablero(){
+    //abstract porque depende del tipo de ficha
+    return(true);
     }
+            
+    
 }

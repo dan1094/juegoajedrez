@@ -19,7 +19,8 @@ public class Caballo extends Ficha{
     public Caballo() {
     }
     
-    public void mover(){
+    public boolean movimiento_dentro_tablero(){
+    //abstract porque depende del tipo de ficha
+    return(true);
     }
-    
 }

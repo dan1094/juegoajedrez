@@ -18,7 +18,10 @@ public class Rey extends Ficha{
     /** Creates a new instance of Rey */
     public Rey() {
     }
-    
+  
+    public boolean movimiento_permitido(String a, String b, String c, String d){
+        
+    }
     public void mover(){
     }
     

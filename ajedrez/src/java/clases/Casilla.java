@@ -13,12 +13,22 @@ package clases;
  *
  * @author Pablo
  */
+
 public class Casilla {
+   
+    protected Long id_casilla; 
+    protected Long id_ficha;
+    protected Long fila;
+    protected String columna;
+    protected boolean ocupada;
     
     
     
     /** Creates a new instance of Casilla */
     public Casilla() {
+    }
+    public boolean ocupada(Long fil, String col){
+        return(this.ocupada);
     }
     
 }

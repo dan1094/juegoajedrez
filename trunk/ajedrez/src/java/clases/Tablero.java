@@ -30,44 +30,75 @@ public class Tablero {
         this.tablero=tablero;
     }
     
-    /**Cambia el turno de la partida.*/
+    /**Cambia el turno de la partida.False(0)-> Turno de Blancas
+     True(1)-> Turno de Negras*/
     public void setTurno(boolean turno){
         this.turno=turno;
     }
     
-    /**Obtiene el turno de la partida, a quien le toca mover*/
+    /**Obtiene el turno de la partida, a quien le toca mover. False(0)-> Turno de Blancas
+     True(1)-> Turno de Negras*/
     public boolean getTurno(){
         return(this.turno);
     }
     
-    /**Coloca las fichas en su posicion inicial*/
+    /**Coloca las fichas en su posicion inicial, al comienzo de la partida*/
     public Tablero colocar_fichas(Tablero tablero){
-        
         //Colocar cada ficha en su sitio del tablero
         return tablero;
     }
+   
     
-    /**Elimina el tablero, eliminando la partida*/
-    public void eliminar_tablero(){} //¿Hara falta eliminar tablero?
-    
-    /*Asocia las letras del tablero con las coordenadas, aunque +1, igual que la fila
-     *return 0 es error*/
-    public int asociar_columnas(String letra){
-            if(letra.equalsIgnoreCase("A")) return(1);
-            else if(letra.equalsIgnoreCase("B")) return(2);
-            else if (letra.equalsIgnoreCase("C")) return(3);
-            else if (letra.equalsIgnoreCase("D")) return(4);
-            else if (letra.equalsIgnoreCase("E")) return(5);
-            else if (letra.equalsIgnoreCase("F")) return(6);
-            else if (letra.equalsIgnoreCase("G")) return(7);
-            else if (letra.equalsIgnoreCase("H")) return(8);
-            else return(0);
-     
+    /**Busca la casilla solicitada en el tablero, si no la encuentra devuelve null*/
+    public Casilla getCasilla(int fila, int columna){
+   
+        return(tablero[fila-1][columna-1]);
     }
-    /**Mueve la ficha de la casilla inicial (ci,fi) a la casilla final (cf,ff)*/
-    public void mover_ficha(String ci, Long fi, String cf, Long ff){
+    public void mover(Casilla origen, Casilla destino){
+        destino.setFicha(origen.getFicha());
+        origen.setFicha(null);
+        origen.ocupada=false;
+    }
+    
+    public void comprobar_movimiento(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+        boolean origen_invalido=false; //La casilla origen no es del turno
+        boolean destino_invalido=false; //La casilla destino no esta vacia o tiene una ficha del color
+                                        //del turno.
         
-       
+        
+        do{
+            
+        //comprobar_coordenadas(filaorigen,columnaorigen);
+        //comprobar_coordenadas(filadestino,columnadestino);
+        
+        Casilla casillaorigen=getCasilla(filaorigen,columnaorigen);
+        Casilla casilladestino=getCasilla(filadestino,columnadestino);
+        
+        Ficha fichaorigen=casillaorigen.getFicha();
+        Ficha fichadestino=casilladestino.getFicha();
+        
+        //color=true=blancas
+        //color=false=negras
+        if(fichaorigen.getColor()!=turno) { origen_invalido=true;
+        }
+        else if(!casilladestino.getOcupada()) 
+                            {/*AQUI MOVEMOS*/
+                            mover(casillaorigen,casilladestino);
+                            }
+             else if(casilladestino.getFicha().getColor()!=turno) 
+                            {/*AQUI MOVEMOS*/
+                            mover(casillaorigen,casilladestino);
+                            }
+                else destino_invalido=true;
+        }while(!origen_invalido||!destino_invalido);
+        
+        
+        
     }
+    
+    
+    
+    
+   
     
 }

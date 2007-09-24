@@ -16,12 +16,12 @@ package clases;
 
 public class Casilla {
    
-    private Long id_casilla; 
-    private Long id_ficha;
-    private Long fila;
-    private String columna;
-    private boolean ocupada;
-    
+    protected Long id_casilla; 
+    protected Ficha ficha;
+    protected Long fila;
+    protected String columna;
+    protected boolean ocupada; //0-> vacia, 1->ocupada
+       
     
     
     /** Creates a new instance of Casilla */
@@ -36,12 +36,12 @@ public class Casilla {
         this.id_casilla = id_casilla;
     }
 
-    public Long getId_ficha() {
-        return id_ficha;
+    public Ficha getFicha() {
+        return this.ficha;
     }
 
-    public void setId_ficha(Long id_ficha) {
-        this.id_ficha = id_ficha;
+    public void setFicha(Ficha ficha) {
+        this.ficha=ficha;
     }
 
     public Long getFila() {
@@ -67,6 +67,10 @@ public class Casilla {
     public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
     }
+    
+       
+   
+    
     
     
     

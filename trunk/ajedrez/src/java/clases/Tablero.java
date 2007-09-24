@@ -54,46 +54,60 @@ public class Tablero {
    
         return(tablero[fila-1][columna-1]);
     }
-    public void mover(Casilla origen, Casilla destino){
-        destino.setFicha(origen.getFicha());
-        origen.setFicha(null);
-        origen.ocupada=false;
+    public void mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+        
+        boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino);
+        if(mov_per){
+                Casilla origen=getCasilla(filaorigen,columnaorigen);
+                Casilla destino=getCasilla(filadestino,columnadestino);
+                destino.setFicha(origen.getFicha());
+                origen.setFicha(null);
+                origen.ocupada=false;
+        }
     }
     
-    public void comprobar_movimiento(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
-        boolean origen_invalido=false; //La casilla origen no es del turno
-        boolean destino_invalido=false; //La casilla destino no esta vacia o tiene una ficha del color
-                                        //del turno.
+    public boolean dentro_tablero(int fila, int columna){
+        if(fila>=1&&fila<=8&&columna<=8&&columna>=1) return(true);
+        else return(false);
+    }
+    
+    public boolean comprobar_movimiento(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
         
+        boolean origen_valido=true;
+        boolean destino_valido=true;
         
-        do{
-            
-        //comprobar_coordenadas(filaorigen,columnaorigen);
-        //comprobar_coordenadas(filadestino,columnadestino);
+        origen_valido=dentro_tablero(filaorigen,columnaorigen); //esta dentro
+        destino_valido=dentro_tablero(filadestino,columnadestino); //esta dentro
+        while(origen_valido&&destino_valido)
+        {
+            Casilla casillaorigen=getCasilla(filaorigen,columnaorigen);
+            Casilla casilladestino=getCasilla(filadestino,columnadestino);
         
-        Casilla casillaorigen=getCasilla(filaorigen,columnaorigen);
-        Casilla casilladestino=getCasilla(filadestino,columnadestino);
-        
-        Ficha fichaorigen=casillaorigen.getFicha();
-        Ficha fichadestino=casilladestino.getFicha();
+            Ficha fichaorigen=casillaorigen.getFicha();
+            Ficha fichadestino=casilladestino.getFicha();
         
         //color=true=blancas
         //color=false=negras
-        if(fichaorigen.getColor()!=turno) { origen_invalido=true;
+        if(fichaorigen.getColor()!=turno) 
+        { 
+                //Origen de distinto color que el turno
+                return(false);
         }
         else if(!casilladestino.getOcupada()) 
-                            {/*AQUI MOVEMOS*/
-                            mover(casillaorigen,casilladestino);
+                            {
+                            //origen del mismo color que el turno y casilla destino vacia
+                            return(true);
                             }
              else if(casilladestino.getFicha().getColor()!=turno) 
-                            {/*AQUI MOVEMOS*/
-                            mover(casillaorigen,casilladestino);
+                            {
+                            //origen=turno, y destino del color diferente. Se puede comer la
+                            //ficha del destino
+                            return(true);
                             }
-                else destino_invalido=true;
-        }while(!origen_invalido||!destino_invalido);
+                else return(false);
+        }
         
-        
-        
+        return(false);
     }
     
     

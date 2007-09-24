@@ -16,7 +16,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <head>
        
         <title>Juego de Ajedrez</title>
-        <link href="web/WEB-INF/estilos/estilo.css" rel="stylesheet" type="text/css">
+        <link href="./estilos/estilo.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
     </head>

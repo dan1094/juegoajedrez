@@ -19,9 +19,27 @@ public class Alfil extends Ficha{
     public Alfil() {
     }
     
-    public boolean movimiento_dentro_tablero(){
-    //abstract porque depende del tipo de ficha
-    return(true);
+    public boolean diagonal(int fo, int co, int fd, int cd){
+        //Para comprobar que es diagonal, debemos sumar a la fila y a la columna
+        //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
+        //Restar y sumar el mismo numero.
+        Casilla casilla;
+        
+        return(true);
+    }
+    
+    public boolean camino_libre(int fo, int co, int fd, int cd){
+        //Para cada sitio de la diagonal, debemos comprobar que esta libre
+        return(true);
+    }
+    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+        //Se debe comprobar que el el movimiento es diagonal.
+        boolean diagonal=diagonal(filaorigen,columnaorigen,filadestino,columnadestino);
+        
+        //Se debe comprobar que no hay fichas por el camino.
+        boolean camino_libre=camino_libre(filaorigen,columnaorigen,filadestino,columnadestino);
+        
+        return(diagonal&&camino_libre);
     }
             
     

@@ -18,6 +18,7 @@ public abstract class Ficha {
     
     protected boolean color;
     protected Long id_ficha;
+    protected String tipo_ficha;
  
     
     public boolean getColor(){
@@ -38,5 +39,14 @@ public abstract class Ficha {
         this.id_ficha=id_ficha;
     }
     
+    public String getTipo_ficha(){
+        return(this.tipo_ficha);
+    }
+    
+    public void setTipo_ficha(String tipo_ficha){
+        this.tipo_ficha=tipo_ficha;
+    }
+    
+    public abstract boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino);
     
 }

@@ -56,6 +56,7 @@ public class Tablero {
     }
     public void mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
         
+        //Comprueba que el movimiento
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino);
         if(mov_per){
                 Casilla origen=getCasilla(filaorigen,columnaorigen);
@@ -76,9 +77,15 @@ public class Tablero {
         boolean origen_valido=true;
         boolean destino_valido=true;
         
-        origen_valido=dentro_tablero(filaorigen,columnaorigen); //esta dentro
-        destino_valido=dentro_tablero(filadestino,columnadestino); //esta dentro
-        while(origen_valido&&destino_valido)
+        //comprueba que el origen y el destino estan dentro del tablero
+        origen_valido=dentro_tablero(filaorigen,columnaorigen); 
+        destino_valido=dentro_tablero(filadestino,columnadestino);
+        
+        //Ahora habria que comprobar que el movimiento se corresponde con el de la ficha
+        //que se esta moviendo.
+        
+        //mientras ambos son validos
+        if(origen_valido&&destino_valido)
         {
             Casilla casillaorigen=getCasilla(filaorigen,columnaorigen);
             Casilla casilladestino=getCasilla(filadestino,columnadestino);
@@ -86,33 +93,28 @@ public class Tablero {
             Ficha fichaorigen=casillaorigen.getFicha();
             Ficha fichadestino=casilladestino.getFicha();
         
-        //color=true=blancas
-        //color=false=negras
-        if(fichaorigen.getColor()!=turno) 
-        { 
-                //Origen de distinto color que el turno
+            if(fichaorigen.getColor()!=turno) 
+            { 
+                //La ficha que se quiere mover no es del color del turno de la partida.
                 return(false);
-        }
-        else if(!casilladestino.getOcupada()) 
+            }
+            else if(!casilladestino.getOcupada()) 
                             {
                             //origen del mismo color que el turno y casilla destino vacia
                             return(true);
                             }
-             else if(casilladestino.getFicha().getColor()!=turno) 
+                    else if(casilladestino.getFicha().getColor()!=turno) 
                             {
                             //origen=turno, y destino del color diferente. Se puede comer la
-                            //ficha del destino
+                            //ficha del destino.
+                
                             return(true);
                             }
-                else return(false);
+                            else return(false);
         }
-        
-        return(false);
+        else return(false);//No se da la condicion del if. No estan dentro del tablero
     }
     
-    
-    
-    
-   
+  
     
 }

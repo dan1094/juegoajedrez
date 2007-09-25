@@ -21,33 +21,26 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
     </head>
     <body>
-
-   <center>
+		<center>
         <div id="contenedor" >
                 <div id="cabecera"> 
-                        <p>Juego de Ajedrez</p> 
+                        <p>Juego de Ajedrez</p>
                 </div>
                 <div id="menu">
-                        <a href="index.html"> Inicio</a> | 
-                        <a href="index.html"> Jugar</a> | 
-                        <a href="index.html"> Instrucciones</a> | 
-                        <a href="index.html"> Historia</a> |   
-                        <a href="index.html"> Acerca de</a> 
+                        <a href="construccion.html"> Inicio</a> | 
+                        <a href="construccion.html"> Jugar</a> | 
+                        <a href="construccion.html"> Instrucciones</a> | 
+                        <a href="construccion.html"> Historia</a> |   
+                        <a href="construccion.html"> Acerca de</a> 
                 </div>
                 <div id="cuerpo">
-                <p>El ajedrez es un juego de mesa que consiste en dos reinos antagónicos sobre un tablero cuadriculado; el objetivo es capturar al rey contrario. El ajedrez es uno de los juegos más populares del mundo. Se considera no sólo un juego, sino un arte, una ciencia y un deporte mental. Esto último es muy apropiado, dado que se juega a menudo de forma competitiva. La enseñanza del ajedrez puede ser útil como forma de desarrollar la mente. El ajedrez es jugado tanto recreativa como competitivamente en clubes, torneos, en Internet, e incluso por correo (ajedrez por correspondencia).
+                <p>El ajedrez es un juego de mesa que consiste en dos reinos antag&oacute;nicos sobre un tablero cuadriculado; el objetivo es capturar al rey contrario. El ajedrez es uno de los juegos m&aacute;s populares del mundo. Se considera no s&oacute;lo un juego, sino un arte, una ciencia y un deporte mental. Esto &uacute;ltimo es muy apropiado, dado que se juega a menudo de forma competitiva. La ense&ntilde;anza del ajedrez puede ser &uacute;til como forma de desarrollar la mente. El ajedrez es jugado tanto recreativa como competitivamente en clubes, torneos, en Internet, e incluso por correo (ajedrez por correspondencia). </p>
+                <p>El ajedrez es un juego de guerra, perteneciente a la misma familia que el xi&agrave;ngq&iacute; (ajedrez chino) y el shogi (ajedrez japon&eacute;s). Se cree que todos ellos provienen del juego llamado chaturanga, que se practicaba en la India en el siglo VI. </p>
+                <p>Por ajedrez se conoce tambi&eacute;n al conjunto de piezas de este juego, con o sin el tablero. <br>
                 </p>
-                <p>El ajedrez es un juego de guerra, perteneciente a la misma familia que el xiàngqí (ajedrez chino) y el shogi (ajedrez japonés). Se cree que todos ellos provienen del juego llamado chaturanga, que se practicaba en la India en el siglo VI.
-                </p>
-                <p>Por ajedrez se conoce también al conjunto de piezas de este juego, con o sin el tablero.
-                </p>
-
-                </div>
-                <div id="pie">
-                         <p>Todos los derechos reservados</p>
-                </div>
+          </div>
+                <div id="pie">Escuela Polit&eacute;cnica Superior - Universidad San Pablo CEU </div>
         </div>
-        </center>
-    
+		</center>
     </body>
 </html>

@@ -19,9 +19,11 @@ public class Reina extends Ficha{
     public Reina() {
     }
     
-    public boolean movimiento_dentro_tablero(){
-    //abstract porque depende del tipo de ficha
-    return(true);
+    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+       //La reina es una mezcla entre el alfil y la torre.
+       
+       return(true);
+        
     }
     
 }

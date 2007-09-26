@@ -20,9 +20,12 @@ public class Peon extends Ficha{
     public Peon() {
     }
     
-   public boolean movimiento_dentro_tablero(){
-    //abstract porque depende del tipo de ficha
-    return(true);
+   public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+       //Se debe comprobar que el movimiento es hacia delante. Puede ser sencillo, o doble,
+       //si se trata del primer movimiento.
+       
+       return(true);
+        
     }
     
         

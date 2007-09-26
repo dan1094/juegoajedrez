@@ -49,4 +49,6 @@ public abstract class Ficha {
     
     public abstract boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino);
     
+    
+        
 }

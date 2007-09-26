@@ -19,8 +19,11 @@ public class Caballo extends Ficha{
     public Caballo() {
     }
     
-    public boolean movimiento_dentro_tablero(){
-    //abstract porque depende del tipo de ficha
-    return(true);
+    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+       //Se debe comprobar que el movimiento es en L. Dos hacia delante y una al lado o viceversa.
+       //No importa si hay fichas por el camino, ya que puede saltar.
+       
+       return(true);
+        
     }
 }

@@ -19,9 +19,11 @@ public class Rey extends Ficha{
     public Rey() {
     }
   
-    public boolean movimiento_dentro_tablero(){
-    //abstract porque depende del tipo de ficha
-    return(true);
+    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+       //Hay que comprobar que mueve solo de uno en uno y que la posición no esta amenazada.
+       
+       return(true);
+        
     }
     
 }

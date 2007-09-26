@@ -23,7 +23,15 @@ public class Peon extends Ficha{
    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
        //Se debe comprobar que el movimiento es hacia delante. Puede ser sencillo, o doble,
        //si se trata del primer movimiento.
-       
+       boolean color=super.getColor();
+       //color=false=BLANCAS
+       //color=true=NEGRAS
+       if(color){
+           
+       }else
+       {
+           
+       }
        return(true);
         
     }

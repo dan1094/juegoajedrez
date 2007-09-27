@@ -15,13 +15,25 @@ package clases;
  */
 public class Rey extends Ficha{
     
+    protected boolean esta_en_jaque;
+    
     /** Creates a new instance of Rey */
     public Rey() {
     }
   
+    /**Funcion que comprueba que el rey puede mover a la casilla destino. ESto se 
+     *debe a que puede estar amenazada por una ficha del oponente*/
+    public boolean esta_amenazada(Casilla casilla){
+        
+    return(false);
+    }
+    
+    
+    
     public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
        //Hay que comprobar que mueve solo de uno en uno y que la posición no esta amenazada.
        
+        
        return(true);
         
     }

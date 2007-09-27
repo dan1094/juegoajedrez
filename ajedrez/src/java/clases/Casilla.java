@@ -21,6 +21,7 @@ public class Casilla {
     protected Long fila;
     protected String columna;
     protected boolean ocupada; //0-> vacia, 1->ocupada
+    
        
     
     
@@ -67,14 +68,6 @@ public class Casilla {
     public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
     }
-    
-       
-   
-    
-    
-    
-    
-    
     
     
               

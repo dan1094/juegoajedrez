@@ -16,10 +16,12 @@ package clases;
  */
 public abstract class Ficha {
     
-    protected boolean color;
     protected Long id_ficha;
+    protected boolean color;
     protected String tipo_ficha;
- 
+    
+    
+    
     
     public boolean getColor(){
         return(this.color);
@@ -49,6 +51,10 @@ public abstract class Ficha {
     
     public abstract boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino);
     
+    public boolean dentro(int fil, int col){
+        if(fil>=1&&fil<=8&&col<=8&&col>=1) return(true);
+        else return(false);
+    }
     
         
 }

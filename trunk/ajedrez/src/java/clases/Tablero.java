@@ -30,10 +30,22 @@ public class Tablero {
         this.tablero=tablero;
     }
     
-    /**Cambia el turno de la partida.False(0)-> Turno de Blancas
-     True(1)-> Turno de Negras*/
+    /**Coloca las fichas en sus posiciones iniciales*/
+    public Tablero inicializar_tablero(Tablero tablero){
+        //Aqui habria que modificar el tablero, colocando las fichas.
+      return(tablero);  
+    }
+    
+    /**Modificael turno*/
     public void setTurno(boolean turno){
         this.turno=turno;
+    }
+    /**Metodo que cambia el turno*/
+    public void cambio_turno(){
+        //Si el turno es False(BLANCAS) pasa a true(NEGRAS) y viceversa
+        if(this.getTurno()) 
+            this.setTurno(false);
+        else this.setTurno(true);
     }
     
     /**Obtiene el turno de la partida, a quien le toca mover. False(0)-> Turno de Blancas
@@ -85,6 +97,7 @@ public class Tablero {
         boolean destino_valido=true;
         
         //comprueba que el origen y el destino estan dentro del tablero
+        
         origen_valido=dentro_tablero(filaorigen,columnaorigen); 
         destino_valido=dentro_tablero(filadestino,columnadestino);
         

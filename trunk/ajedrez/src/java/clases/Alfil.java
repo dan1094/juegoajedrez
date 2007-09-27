@@ -16,14 +16,22 @@ package clases;
 public class Alfil extends Ficha{
     
     /** Creates a new instance of Alfil */
-    public Alfil() {
+    public Alfil(Long id_ficha, boolean color) {
     }
     
     public boolean diagonal(int fo, int co, int fd, int cd){
         //Para comprobar que es diagonal, debemos sumar a la fila y a la columna
         //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
         //Restar y sumar el mismo numero.
-              
+        int i=fo;
+        int j=co;
+        for(i=fo,j=co;super.dentro(i,j);i++,j++){
+            //Mientras la casilla en la que estamos, este dentro del tablero,
+            //miramos si esta ocupada.
+            //NO PUEDO ACCEDER AL METODO "getOcupada" porque pertenece al tablero. Y
+            //en esta clase no tengo ningun tablero
+            
+        }
         return(true);
     }
     
@@ -44,6 +52,8 @@ public class Alfil extends Ficha{
         
         return(diagonal&&camino_libre);
     }
+    
+    
             
     
 }

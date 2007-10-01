@@ -30,7 +30,7 @@ public class Rey extends Ficha{
     
     
     
-    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+    public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, int columnaorigen, int filadestino, int columnadestino){
        //Hay que comprobar que mueve solo de uno en uno y que la posición no esta amenazada.
        
         

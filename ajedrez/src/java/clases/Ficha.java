@@ -17,6 +17,9 @@ package clases;
 public abstract class Ficha {
     
     protected Long id_ficha;
+        //Añado un id_casilla donde se deberá introducir el id de la casilla en la
+        //que esta situada la ficha.
+    protected Long id_casilla;
     protected boolean color;
     protected String tipo_ficha;
     
@@ -49,8 +52,18 @@ public abstract class Ficha {
         this.tipo_ficha=tipo_ficha;
     }
     
-    public abstract boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino);
+    public Long getId_casilla(){
+        return(this.id_casilla);
+    }
     
+    public void setId_casilla(Long id_casilla){
+        this.id_casilla=id_casilla;
+    }
+    
+    public abstract boolean movimiento_correspondiente_ficha(Tablero tablero, int filaorigen, int columnaorigen, int filadestino, int columnadestino);
+    
+    
+    /**Comprueba si la casilla seleccionada esta dentro*/
     public boolean dentro(int fil, int col){
         if(fil>=1&&fil<=8&&col<=8&&col>=1) return(true);
         else return(false);

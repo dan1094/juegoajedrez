@@ -20,7 +20,7 @@ public class Peon extends Ficha{
     public Peon() {
     }
     
-   public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+   public boolean movimiento_correspondiente_ficha(Tablero tablero, int filaorigen, int columnaorigen, int filadestino, int columnadestino){
        //Se debe comprobar que el movimiento es hacia delante. Puede ser sencillo, o doble,
        //si se trata del primer movimiento.
        boolean color=super.getColor();

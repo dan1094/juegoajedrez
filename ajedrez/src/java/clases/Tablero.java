@@ -111,7 +111,7 @@ public class Tablero {
         Ficha fichaorigen=casillaorigen.getFicha();
         
         //Llamamos al metodo abstracto MOVIMIENTO_CORRESPONDIENTE_FICHA
-        boolean mcf=fichaorigen.movimiento_correspondiente_ficha(filaorigen,columnaorigen,filadestino,columnadestino);
+        boolean mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
          if(mcf){
         //Se obtienen la casilla y la ficha del destino
         Casilla casilladestino=getCasilla(filadestino,columnadestino);

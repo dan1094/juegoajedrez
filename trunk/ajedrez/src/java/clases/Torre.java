@@ -21,7 +21,7 @@ public class Torre extends Ficha{
     public Torre() {
     }
     
-    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+    public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, int columnaorigen, int filadestino, int columnadestino){
        //Se debe comprobar que mueve recto y que no hay fichas por el camino.
        
        return(true);

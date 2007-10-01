@@ -9,6 +9,7 @@
 
 package clases;
 
+
 /**
  *
  * @author Pablo
@@ -19,38 +20,65 @@ public class Alfil extends Ficha{
     public Alfil(Long id_ficha, boolean color) {
     }
     
-    public boolean diagonal(int fo, int co, int fd, int cd){
+    public boolean diagonal_libre(Tablero tablero, int fo, int co, int fd, int cd){
         //Para comprobar que es diagonal, debemos sumar a la fila y a la columna
         //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
         //Restar y sumar el mismo numero.
         int i=fo;
         int j=co;
-        for(i=fo,j=co;super.dentro(i,j);i++,j++){
-            //Mientras la casilla en la que estamos, este dentro del tablero,
-            //miramos si esta ocupada.
-            //NO PUEDO ACCEDER AL METODO "getOcupada" porque pertenece al tablero. Y
-            //en esta clase no tengo ningun tablero
-            
+        boolean libre=true;
+        
+        //Hay 4 posibles movimientos diagonales
+        //Movimiento hacia abajo y a la derecha.  
+        if((fd>fo)&&(cd>co)){
+          
+                for(i=fo,j=co;(i<fd)&&(i<cd)&&super.dentro(i,j)&&libre;i++,j++){
+                //Mientras la casilla consultada este dentro del tablero, mientras
+                //sea menor que el destino y mientras este vacia
+                Casilla cas=tablero.getCasilla(i,j);
+                libre=!cas.getOcupada();
+                 }  return(libre);
         }
-        return(true);
+        
+        //Movimiento hacia abajo y a la izda. 
+        else if((fd>fo)&&(cd<co)){
+                for(i=fo,j=co;(i<fd)&&(i>cd)&&super.dentro(i,j)&&libre;i++,j--){
+                //Mientras la casilla consultada este dentro del tablero, mientras
+                //sea menor que el destino y mientras este vacia
+                Casilla cas=tablero.getCasilla(i,j);
+                libre=!cas.getOcupada();
+                 }  return(libre);
+        }
+        //Movimiento hacia arriba y a la derecha
+        else if((fd<fo)&&(cd>co)){
+            for(i=fo,j=co;(i>fd)&&(i<cd)&&super.dentro(i,j)&&libre;i--,j++){
+                //Mientras la casilla consultada este dentro del tablero, mientras
+                //sea menor que el destino y mientras este vacia
+                Casilla cas=tablero.getCasilla(i,j);
+                libre=!cas.getOcupada();
+                 }  return(libre);
+        }
+         //Movimiento hacia arriba y a la izquierda
+        else if((fd<fo)&&(cd<co)){
+            for(i=fo,j=co;(i>fd)&&(i>cd)&&super.dentro(i,j)&&libre;i--,j--){
+                //Mientras la casilla consultada este dentro del tablero, mientras
+                //sea menor que el destino y mientras este vacia
+                Casilla cas=tablero.getCasilla(i,j);
+                libre=!cas.getOcupada();
+                 }  return(libre);
+        }   
+            
+        return(false);
     }
+       
+   
     
-    /**Metodo que recorre las posibilidades de movimiento, comprobando que las casillas
-     *intermedias (no la de destino) estan libres. Este metodo no es necesario para el
-     *caballo, ya que este puede saltar fichas)*/
-    public boolean camino_libre(int fo, int co, int fd, int cd){
-        //Para cada sitio de la diagonal, debemos comprobar que esta libre
-        return(true);
-    }
     
-    public boolean movimiento_correspondiente_ficha(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+    public boolean movimiento_correspondiente_ficha(Tablero tablero, int filaorigen, int columnaorigen, int filadestino, int columnadestino){
         //Se debe comprobar que el el movimiento es diagonal.
-        boolean diagonal=diagonal(filaorigen,columnaorigen,filadestino,columnadestino);
+        boolean diagonal_libre=diagonal_libre(tablero, filaorigen,columnaorigen,filadestino,columnadestino);
         
-        //Se debe comprobar que no hay fichas por el camino.
-        boolean camino_libre=camino_libre(filaorigen,columnaorigen,filadestino,columnadestino);
-        
-        return(diagonal&&camino_libre);
+        return(diagonal_libre);
     }
     
     

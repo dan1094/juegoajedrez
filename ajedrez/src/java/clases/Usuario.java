@@ -9,11 +9,7 @@
 
 package clases;
 
-import objects.*;
-import persistencia.PersistFactoryAjedrez;
-/**
-/**
- *
+ /*
  * @author Miguel1
  */
 public class Usuario {

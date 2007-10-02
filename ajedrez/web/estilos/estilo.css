@@ -63,6 +63,11 @@ BODY {
 	padding: 5px;
 	FONT: 10pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
 }
+#cuerpo h1{
+	text-align:left;
+	font:18pt Verdana, Arial, Helvetica, sans-serif;
+	margin: 4px;
+}
 
 
 #pie {
@@ -78,15 +83,25 @@ BODY {
 	border-top-color: #0066CC;
 }
 A:active {
-	COLOR: #000000;
+	COLOR: #FF0000;
 }
 
 A:link {
 	COLOR: #0099FF;	
 }
+
 A:visited {
 	COLOR: #0033FF;
 }
+#login {
+	background-color: #000000;
+	text-align: center;
+	margin-top: 0px;
+	padding-bottom: 2px;
+	color: #FFCC00;
+	font-size: 12px;
+}
+
 A:hover {
-	COLOR: white;
+	COLOR: #000099;
 }

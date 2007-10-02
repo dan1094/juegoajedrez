@@ -9,29 +9,33 @@
 
 package clases;
 
+import objects.*;
+import persistencia.PersistFactoryAjedrez;
+/**
 /**
  *
  * @author Miguel1
  */
 public class Usuario {
     
-    private String id_usuario;
-    private String nombre;
-    private String email;
-    private String pass;
-    private String fecha_registro;
-    private String nick;
+    private int id_usuario=-1;
+    private String nombre=null;
+    private String email=null;
+    private String pass=null;
+    //private String fecha_registro=null;
+    private String nick=null;
+    private boolean valid = false;
     
     
     /** Creates a new instance of Usuario */
     public Usuario() {
     }
 
-    public String getId_usuario() {
+    public int getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(String id_usuario) {
+    public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
 
@@ -59,13 +63,13 @@ public class Usuario {
         this.pass = pass;
     }
 
-    public String getFecha_registro() {
+  /*  public String getFecha_registro() {
         return fecha_registro;
     }
 
     public void setFecha_registro(String fecha_registro) {
         this.fecha_registro = fecha_registro;
-    }
+    }*/
 
     public String getNick() {
         return nick;
@@ -73,6 +77,14 @@ public class Usuario {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
     
 }

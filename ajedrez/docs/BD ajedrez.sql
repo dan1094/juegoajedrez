@@ -3,7 +3,7 @@ CREATE TABLE `usuario` (
   `nombre` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `pass` blob NOT NULL,
-  `fecha_registro` date NOT NULL,
+  /*`fecha_registro` date NULL,*/
   `nick` varchar(10) NOT NULL,
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

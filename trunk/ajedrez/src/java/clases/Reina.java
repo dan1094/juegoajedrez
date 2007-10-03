@@ -22,7 +22,9 @@ public class Reina extends Ficha{
     
     
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, int columnaorigen, int filadestino, int columnadestino){
-       //La reina es una mezcla entre el alfil y la torre.
+        //La reina es una mezcla entre el alfil y la torre.
+        
+        boolean dl= diagonal_libre(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
         
         
        

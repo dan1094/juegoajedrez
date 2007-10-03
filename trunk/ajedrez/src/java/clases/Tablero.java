@@ -32,8 +32,15 @@ public class Tablero {
     
     /**Coloca las fichas en sus posiciones iniciales*/
     public Tablero inicializar_tablero(Tablero tablero){
-        //Aqui habria que modificar el tablero, colocando las fichas.
-      return(tablero);  
+        
+        //Se crea una casilla
+        Casilla cas00 = new Casilla();
+        //Se crea un alfil blanco
+        Ficha alfil_blanco =new Alfil(new Long(1),false);
+        //Se coloca el alfil blanco en la casilla00
+        cas00.setFicha(alfil_blanco);
+               
+        return(tablero);  
     }
     
     /**Modificael turno*/
@@ -53,13 +60,6 @@ public class Tablero {
     public boolean getTurno(){
         return(this.turno);
     }
-    
-    /**Coloca las fichas en su posicion inicial, al comienzo de la partida*/
-    public Tablero colocar_fichas(Tablero tablero){
-        //Colocar cada ficha en su sitio del tablero
-        return tablero;
-    }
-   
     
     /**Busca la casilla solicitada en el tablero, si no la encuentra devuelve null*/
     public Casilla getCasilla(int fila, int columna){

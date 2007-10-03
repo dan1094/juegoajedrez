@@ -34,11 +34,11 @@ public class Tablero {
     public Tablero inicializar_tablero(Tablero tablero){
         
         //Se crea una casilla
-        Casilla cas00 = new Casilla();
+        Casilla cas02 = new Casilla();
         //Se crea un alfil blanco
         Ficha alfil_blanco =new Alfil(new Long(1),false);
         //Se coloca el alfil blanco en la casilla00
-        cas00.setFicha(alfil_blanco);
+        cas02.setFicha(alfil_blanco);
                
         return(tablero);  
     }
@@ -66,7 +66,7 @@ public class Tablero {
    
         return(tablero[fila-1][columna-1]);
     }
-    public void mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino){
+    public void mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino, Tablero tablero){
         
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino);
         if(mov_per){
@@ -81,6 +81,9 @@ public class Tablero {
                 origen.ocupada=false;
                 //Ponemos ocupada a true en el destino
                 destino.ocupada=true;
+                tablero.cambio_turno();
+                
+                
         }
         //Habria que poner aqui un else con un mensaje de error, indicando que
         //el movimiento no esta permitido.

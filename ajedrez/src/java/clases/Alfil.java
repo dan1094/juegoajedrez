@@ -26,7 +26,7 @@ public class Alfil extends Ficha{
         //Para comprobar que es diagonal, debemos sumar a la fila y a la columna
         //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
         //Restar y sumar el mismo numero.
-       
+       System.out.println("Mueve un alfil.");
         int i=fo;
         int j=co;
         boolean libre=true;
@@ -35,24 +35,27 @@ public class Alfil extends Ficha{
          
         if((fd>fo)&&(cd>co)){
             //Movimiento hacia abajo y a la derecha. 
+            System.out.println("Mueve diagonal abajo-derecha");
             for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++){
                     libre=!tablero.tablero[i][j].getOcupada();
                         
                 }return(libre);
         } else if((fd>fo)&&(cd<co)){
             //Movimiento hacia abajo y a la izda.
+            System.out.println("Mueve diagonal abajo-izquierda");
             for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--){
                     libre=!tablero.tablero[i][j].getOcupada();
                         
                 }return(libre);
         }else if((fd<fo)&&(cd>co)){
             //Movimiento hacia arriba y a la derecha
+            System.out.println("Mueve diagonal arriba-derecha");
             for(i=fo-1,j=co+1;(i>fd)&&(i<cd)&&libre;i--,j++){
                 libre=!tablero.tablero[i][j].getOcupada();
                  }  return(libre);
-        }
-         //Movimiento hacia arriba y a la izquierda
-        else if((fd<fo)&&(cd<co)){
+        }else if((fd<fo)&&(cd<co)){
+            //Movimiento hacia arriba y a la izquierda
+            System.out.println("Mueve diagonal arriba-izquierda");
             for(i=fo-1,j=co-1;(i>fd)&&(i>cd)&&libre;i--,j--){
                 libre=!tablero.tablero[i][j].getOcupada();
             }  return(libre);

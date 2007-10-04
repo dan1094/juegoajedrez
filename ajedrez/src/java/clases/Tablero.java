@@ -51,9 +51,9 @@ public class Tablero {
         
         //Creamos las FICHAS de tipo TORRE
         //blancas
-        Ficha tor_b_1 = new Alfil(id_ficha,false);
+        Ficha tor_b_1 = new Torre(id_ficha,false);
         id_ficha++;
-        Ficha tor_b_2 = new Alfil(id_ficha,false);
+        Ficha tor_b_2 = new Torre(id_ficha,false);
         id_ficha++;
         //negras
         Ficha tor_n_1 = new Torre(id_ficha,true);
@@ -118,6 +118,7 @@ public class Tablero {
     }
     public boolean mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino, Tablero tablero){
         
+        System.out.println("Entra en la funcion MOVER");
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
         if(mov_per){
                 //Obtenemos las casillas
@@ -132,6 +133,7 @@ public class Tablero {
                 //Ponemos ocupada a true en el destino
                 destino.ocupada=true;
                 tablero.cambio_turno();
+                System.out.println("Ficha movida.");
                 
                 return(true);
                 
@@ -154,6 +156,8 @@ public class Tablero {
     public boolean comprobar_movimiento(int filaorigen, int columnaorigen, 
         int filadestino, int columnadestino, Tablero tablero){
         
+        System.out.println("Entra en comprobar movimiento.");
+        
         boolean origen_valido=true;
         boolean destino_valido=true;
         
@@ -161,19 +165,21 @@ public class Tablero {
         origen_valido=dentro_tablero(filaorigen,columnaorigen); 
         destino_valido=dentro_tablero(filadestino,columnadestino);
         
-      
         //Si el origen y el destino son validos seguimos
         if(origen_valido&&destino_valido)
         {
-        //Ahora habria que comprobar que el movimiento se corresponde con el de la ficha
-        //que se esta moviendo. Obtenemos la casilla, y luego la ficha.
+               System.out.println("Origen y Destino Validos");
+        //Para comprobar el movimiento necesitamos saber la ficha que se mueve
         Ficha fichaorigen=tablero.tablero[filaorigen][columnaorigen].getFicha();
+        
         
         //Llamamos al metodo abstracto MOVIMIENTO_CORRESPONDIENTE_FICHA
         //Deberia llamar al metodo de la ficha correspondiente
         boolean mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
+      
         if(mcf){
         //Se obtienen la casilla y la ficha del destino
+        System.out.println("El movimiento esta permitido.");
         Casilla casilladestino=getCasilla(filadestino,columnadestino);
         
         Ficha fichadestino=casilladestino.getFicha();
@@ -186,22 +192,23 @@ public class Tablero {
             else if(!casilladestino.getOcupada()) 
                             {
                             //origen del mismo color que el turno y casilla destino vacia
+                             System.out.println("Origen=turno y casilla destino vacia");
                             return(true);
                             }
                     else if(casilladestino.getFicha().getColor()!=turno) 
                             {
                             //origen=turno, y destino del color diferente. Se puede comer la
                             //ficha del destino.
-                
+                             System.out.println("Origen=turno y casilla destino del color" +
+                                     "contrario.");
                             return(true);
                             }
                             else return(false);
         
-        }{
-            System.out.println("Ese movimiento no se corresponde con esa ficha.");
-            return(false); //La condicion de que el movimiento es el correspondiente es falsa.
         }
         
+        return(false); //La condicion de que el movimiento es el correspondiente es falsa.
+              
         }
         else {
             if(origen_valido){

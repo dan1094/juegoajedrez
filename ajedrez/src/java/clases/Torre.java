@@ -25,10 +25,10 @@ public class Torre extends Ficha{
     
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int fo,int co,int fd,int cd){
        //Se debe comprobar que mueve recto y que no hay fichas por el camino.
-       int i=fo;
-       int j=co;
+       int i=0;
+       int j=0;
        boolean libre=true;
-       
+       System.out.println("Se mueve una torre.");
        
        //Hay 4 posibles movimientos. Derecha, Izquierda, Arriba y Abajo
        if((co==cd)&&(fo==fd)) {
@@ -40,29 +40,35 @@ public class Torre extends Ficha{
            return(false);
        }else if(fo==fd){
            //Quiere decir que se mueve en la misma fila (HORIZONTALMENTE)
+           System.out.println("Mueve horizontalmente.");
            if(cd>co){
                //Mueve hacia la derecha
-               for(i=co+1;(i<cd)&&libre;i++) {
+               System.out.println("Mueve a la derecha.");
+               for(i=co+1;((i<cd)&&(libre));i++) {
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[fo][i].getOcupada();
                }
                //Devolvemos libre, porque puede haber dos posibilidades:
                //(1) que salga del for por llegar al final-> libre=true
                //(2) que salga del for porque encontro ficha -> libre=false
-               return(libre);
+               
+            //   return(libre);
            }else if(cd<co){
                //Mueve hacia la izquierda
-               for(i=co-1;(i>cd)&&libre;i++) {
+               System.out.println("Mueve a la izquierda.");
+               for(i=co-1;(i>cd)&&libre;i--) {
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[fo][i].getOcupada();
                }
                //Igual que el caso anterior
-               return(libre);
+              // return(libre);
            }
        }else if(co==cd){
            //Quiere decir que se mueve en la misma columna (VERTICALMENTE)
+            System.out.println("Mueve verticalmente.");
            if(fd>fo){
                //Mueve hacia abajo
+               System.out.println("Mueve hacia abajo.");
                for(i=fo+1;(i<fd)&&libre;i++) {
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[i][co].getOcupada();
@@ -70,18 +76,25 @@ public class Torre extends Ficha{
                //Devolvemos libre, porque puede haber dos posibilidades:
                //(1) que salga del for por llegar al final-> libre=true
                //(2) que salga del for porque encontro ficha -> libre=false
-               return(libre);
+              // return(libre);
            }else if(fd<fo){
                //Mueve hacia arriba
-               for(i=fo-1;(i>fd)&&libre;i++) {
+               System.out.println("Mueve hacia arriba.");
+               for(i=fo-1;(i>fd)&&libre;i--) {
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[i][co].getOcupada();
                }
                //Igual que el caso anterior
-               return(libre);
+              // return(libre);
            }
        }
-        return(false);
+       if(libre) return(libre);
+       else{
+            System.out.println("Hay fichas impidiendo el paso");
+            return(false);
+       }
+       
+       
     }
     
 }

@@ -17,7 +17,8 @@ package clases;
 public class Alfil extends Ficha{
     
     /** Creates a new instance of Alfil */
-    public Alfil(Long id_ficha, boolean color) {
+    public Alfil(int id_ficha, boolean color) {
+        this.setTipo_ficha("alfil");
     }
     
     public boolean diagonal_libre(Tablero tablero, int fo, int co, int fd, int cd){
@@ -31,7 +32,8 @@ public class Alfil extends Ficha{
         //Hay 4 posibles movimientos diagonales
         //Movimiento hacia abajo y a la derecha.  
         if((fd>fo)&&(cd>co)){
-          
+                //AQUI SE COMPRUEBA SI EL CAMINO ESTA LIBRE, NO SI EL DESTINO ESTA
+                //OCUPADO O NO.
                 for(i=fo,j=co;(i<fd)&&(i<cd)&&super.dentro(i,j)&&libre;i++,j++){
                 //Mientras la casilla consultada este dentro del tablero, mientras
                 //sea menor que el destino y mientras este vacia

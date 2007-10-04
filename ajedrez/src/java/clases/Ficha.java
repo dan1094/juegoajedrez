@@ -16,7 +16,7 @@ package clases;
  */
 public abstract class Ficha {
     
-    protected Long id_ficha;
+    protected int id_ficha;
         //Añado un id_casilla donde se deberá introducir el id de la casilla en la
         //que esta situada la ficha.
     protected Long id_casilla;
@@ -36,11 +36,11 @@ public abstract class Ficha {
         this.color=color;
     }
     
-    public Long getId_ficha(){
+    public int getId_ficha(){
         return(this.id_ficha);
     }
     
-    public void setId_ficha(Long id_ficha){
+    public void setId_ficha(int id_ficha){
         this.id_ficha=id_ficha;
     }
     

@@ -61,6 +61,10 @@ public class Tablero {
         Ficha tor_n_2 = new Torre(id_ficha,true);
         id_ficha++;
         
+        //Creamos REINAS
+        Ficha reina_b = new Reina(id_ficha,false);
+        Ficha reina_n = new Reina(id_ficha,true);
+        
         
 
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
@@ -75,7 +79,7 @@ public class Tablero {
             }
         
         
-        //Asociamos las fichas a sus posiciones en el tablero.(ALFILES Y TORRES)
+        //Asociamos las fichas a sus posiciones en el tablero.(ALFILES, TORRES Y REINAS)
         tablero.tablero[0][2].setFicha(alf_n_1);
         tablero.tablero[0][5].setFicha(alf_n_2);
         tablero.tablero[7][2].setFicha(alf_b_1);
@@ -84,6 +88,8 @@ public class Tablero {
         tablero.tablero[0][7].setFicha(tor_n_2);
         tablero.tablero[7][0].setFicha(tor_b_1);
         tablero.tablero[7][7].setFicha(tor_b_2);
+        tablero.tablero[0][3].setFicha(reina_n);
+        tablero.tablero[7][3].setFicha(reina_b);
         
        
         return(tablero);  

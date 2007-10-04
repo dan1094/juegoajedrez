@@ -33,13 +33,29 @@ public class Main {
         
         //Flujo para leer datos
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        
-        System.out.println("Solo puede mover el alfil blanco.");
-        int fila=0, columna=0;
+        //LEEMOS LA CASILLA ORIGEN
+        int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         try {
-            System.out.println("Indique la fila a la que desea mover.");
+            System.out.println("Indique la fila que desea mover");
             //Leemos la fila destino
-            fila = Integer.parseInt(in.readLine())-1;
+            filaorigen = Integer.parseInt(in.readLine())-1;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("Entrada incorrecta de la fila.");
+        } 
+        
+        try {
+            System.out.println("Indique la columna a la que desea mover.");
+            //Leemos la columna origen
+            columnaorigen = Integer.parseInt(in.readLine())-1;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("Entrada incorrecta de la columna.");
+        }
+        try {
+            System.out.println("Indique la fila a la que desea mover");
+            //Leemos la fila destino
+            filadestino = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Entrada incorrecta de la fila.");
@@ -48,7 +64,7 @@ public class Main {
         try {
             System.out.println("Indique la columna a la que desea mover.");
             //Leemos la columna destino
-            columna = Integer.parseInt(in.readLine())-1;
+            columnadestino = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Entrada incorrecta de la columna.");
@@ -58,13 +74,13 @@ public class Main {
         //ESTA FIJADO A MOVER EL ALFIL BLANCO DE LA IZQUIERDA.
         //Debemos cambiarlo y pedirle al usuario que ficha quiere mover y modificarlo
         //en la llamada a mover-----
-      boolean movida=tablero.mover(7,2,fila,columna,tablero);
+      boolean movida=tablero.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
       if(movida)
         { 
-          System.out.println("FICHA DESTINO: "+tablero.getCasilla(fila,columna).getFicha().getTipo_ficha());
-          System.out.println("COLOR FICHA: "+tablero.getCasilla(fila,columna).getFicha().getColor());
-          
-      }
+          Ficha fichaorigen=tablero.getCasilla(filaorigen,columnaorigen).getFicha();
+          System.out.println("Ha movido el/la: "+fichaorigen.getTipo_ficha()+", de color " +
+                  fichaorigen.getColor());
+                }
       else
           System.out.println("La ficha no pudo ser movida.");
         

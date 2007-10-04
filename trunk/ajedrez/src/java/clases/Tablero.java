@@ -37,6 +37,7 @@ public class Tablero {
         int i=0,j=0;
         int id_ficha = 0;
         
+        
         //Creamos FICHAS de tipo ALFIL blancos
         Ficha alf_b_1 = new Alfil(id_ficha,false);
         id_ficha++;
@@ -48,6 +49,20 @@ public class Tablero {
         Ficha alf_n_2 = new Alfil(id_ficha,true);
         id_ficha++;
         
+        //Creamos las FICHAS de tipo TORRE
+        //blancas
+        Ficha tor_b_1 = new Alfil(id_ficha,false);
+        id_ficha++;
+        Ficha tor_b_2 = new Alfil(id_ficha,false);
+        id_ficha++;
+        //negras
+        Ficha tor_n_1 = new Torre(id_ficha,true);
+        id_ficha++;
+        Ficha tor_n_2 = new Torre(id_ficha,true);
+        id_ficha++;
+        
+        
+
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
         Casilla cas;
         int m=0,n=0,id=0;
@@ -60,11 +75,15 @@ public class Tablero {
             }
         
         
-        //Asociamos las fichas(alfiles) a sus posiciones en el tablero.
+        //Asociamos las fichas a sus posiciones en el tablero.(ALFILES Y TORRES)
         tablero.tablero[0][2].setFicha(alf_n_1);
         tablero.tablero[0][5].setFicha(alf_n_2);
         tablero.tablero[7][2].setFicha(alf_b_1);
         tablero.tablero[7][5].setFicha(alf_b_2);
+        tablero.tablero[0][0].setFicha(tor_n_1);
+        tablero.tablero[0][7].setFicha(tor_n_2);
+        tablero.tablero[7][0].setFicha(tor_b_1);
+        tablero.tablero[7][7].setFicha(tor_b_2);
         
        
         return(tablero);  
@@ -139,7 +158,6 @@ public class Tablero {
         boolean destino_valido=true;
         
         //comprueba que el origen y el destino estan dentro del tablero
-        
         origen_valido=dentro_tablero(filaorigen,columnaorigen); 
         destino_valido=dentro_tablero(filadestino,columnadestino);
         
@@ -149,10 +167,10 @@ public class Tablero {
         {
         //Ahora habria que comprobar que el movimiento se corresponde con el de la ficha
         //que se esta moviendo. Obtenemos la casilla, y luego la ficha.
-        Casilla casillaorigen=tablero.getCasilla(filaorigen,columnaorigen);
-        Ficha fichaorigen=casillaorigen.getFicha();
+        Ficha fichaorigen=tablero.tablero[filaorigen][columnaorigen].getFicha();
         
         //Llamamos al metodo abstracto MOVIMIENTO_CORRESPONDIENTE_FICHA
+        //Deberia llamar al metodo de la ficha correspondiente
         boolean mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
         if(mcf){
         //Se obtienen la casilla y la ficha del destino

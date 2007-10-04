@@ -17,7 +17,9 @@ public class Peon extends Ficha{
     
     
     /** Creates a new instance of Peon */
-    public Peon() {
+    public Peon(int id_ficha, boolean color){
+        super(id_ficha,color);
+        this.setTipo_ficha("peon");
     }
     
    public boolean movimiento_correspondiente_ficha(Tablero tablero, int filaorigen, int columnaorigen, int filadestino, int columnadestino){

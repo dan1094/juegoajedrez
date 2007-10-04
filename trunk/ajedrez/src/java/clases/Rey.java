@@ -18,7 +18,9 @@ public class Rey extends Ficha{
     protected boolean esta_en_jaque;
     
     /** Creates a new instance of Rey */
-    public Rey() {
+    public Rey(int id_ficha, boolean color){
+        super(id_ficha,color);
+        this.setTipo_ficha("rey");
     }
   
     /**Funcion que comprueba que el rey puede mover a la casilla destino. ESto se 

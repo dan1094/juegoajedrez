@@ -18,7 +18,9 @@ public class Torre extends Ficha{
     /**
      * Creates a new instance of Torre
      */
-    public Torre() {
+    public Torre(int id_ficha, boolean color){
+        super(id_ficha,color);
+        this.setTipo_ficha("torre");
     }
     
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, int columnaorigen, int filadestino, int columnadestino){

@@ -16,7 +16,9 @@ package clases;
 public class Reina extends Ficha{
     
     /** Creates a new instance of Reina */
-    public Reina() {
+    public Reina(int id_ficha, boolean color){
+        super(id_ficha,color);
+        this.setTipo_ficha("reina");
     }
     
     

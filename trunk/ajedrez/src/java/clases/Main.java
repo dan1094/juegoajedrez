@@ -27,12 +27,8 @@ public class Main {
     public static void main(String[] args){ 
         
         System.out.println("Bienvenido al Ajedrez");
-        //Se define el array que pertenecera al Tablero
-        Casilla tab[][];
-        tab = new Casilla[8][8];
-        //Creo una instancia de la clase tablero con turno para BLANCAS(false)
-        Tablero tablero = new Tablero(new Long(1), false, tab);
-        //Se colocan las fichas (por ahora solo alfil) en sus posiciones iniciales
+        Tablero tablero = new Tablero(1, false);
+        //Se colocan las fichas en sus posiciones iniciales
         tablero.inicializar_tablero(tablero);
         
         //Flujo para leer datos
@@ -46,7 +42,7 @@ public class Main {
             fila = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta.");
+            System.out.println("Entrada incorrecta de la fila.");
         } 
         
         try {
@@ -55,14 +51,19 @@ public class Main {
             columna = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta.");
+            System.out.println("Entrada incorrecta de la columna.");
         }
         
         //Movemos la ficha, del origen (obligatorio) al destino dado por el usuario
-      boolean movida=tablero.mover(0,2,fila,columna,tablero);
+        //ESTA FIJADO A MOVER EL ALFIL BLANCO DE LA IZQUIERDA.
+        //Debemos cambiarlo y pedirle al usuario que ficha quiere mover y modificarlo
+        //en la llamada a mover-----
+      boolean movida=tablero.mover(7,2,fila,columna,tablero);
       if(movida)
         { 
           System.out.println("FICHA DESTINO: "+tablero.getCasilla(fila,columna).getFicha().getTipo_ficha());
+          System.out.println("COLOR FICHA: "+tablero.getCasilla(fila,columna).getFicha().getColor());
+          
       }
       else
           System.out.println("La ficha no pudo ser movida.");

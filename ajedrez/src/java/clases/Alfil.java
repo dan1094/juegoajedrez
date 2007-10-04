@@ -22,67 +22,45 @@ public class Alfil extends Ficha{
         this.setTipo_ficha("alfil");
     }
     
-    public boolean diagonal_libre(Tablero tablero, int fo, int co, int fd, int cd){
+    public boolean movimiento_correspondiente_ficha(Tablero tablero, int fo, int co, int fd, int cd){
         //Para comprobar que es diagonal, debemos sumar a la fila y a la columna
         //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
         //Restar y sumar el mismo numero.
+       
         int i=fo;
         int j=co;
         boolean libre=true;
         
         //Hay 4 posibles movimientos diagonales
-        //Movimiento hacia abajo y a la derecha.  
+         
         if((fd>fo)&&(cd>co)){
-                //AQUI SE COMPRUEBA SI EL CAMINO ESTA LIBRE, NO SI EL DESTINO ESTA
-                //OCUPADO O NO.
-                for(i=fo,j=co;(i<fd)&&(i<cd)&&super.dentro(i,j)&&libre;i++,j++){
-                //Mientras la casilla consultada este dentro del tablero, mientras
-                //sea menor que el destino y mientras este vacia
-                Casilla cas=tablero.getCasilla(i,j);
-                libre=!cas.getOcupada();
-                 }  return(libre);
-        }
-        
-        //Movimiento hacia abajo y a la izda. 
-        else if((fd>fo)&&(cd<co)){
-                for(i=fo,j=co;(i<fd)&&(i>cd)&&super.dentro(i,j)&&libre;i++,j--){
-                //Mientras la casilla consultada este dentro del tablero, mientras
-                //sea menor que el destino y mientras este vacia
-                Casilla cas=tablero.getCasilla(i,j);
-                libre=!cas.getOcupada();
-                 }  return(libre);
-        }
-        //Movimiento hacia arriba y a la derecha
-        else if((fd<fo)&&(cd>co)){
-            for(i=fo,j=co;(i>fd)&&(i<cd)&&super.dentro(i,j)&&libre;i--,j++){
-                //Mientras la casilla consultada este dentro del tablero, mientras
-                //sea menor que el destino y mientras este vacia
-                Casilla cas=tablero.getCasilla(i,j);
-                libre=!cas.getOcupada();
+            //Movimiento hacia abajo y a la derecha. 
+            for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++){
+                    libre=!tablero.tablero[i][j].getOcupada();
+                        
+                }return(libre);
+        } else if((fd>fo)&&(cd<co)){
+            //Movimiento hacia abajo y a la izda.
+            for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--){
+                    libre=!tablero.tablero[i][j].getOcupada();
+                        
+                }return(libre);
+        }else if((fd<fo)&&(cd>co)){
+            //Movimiento hacia arriba y a la derecha
+            for(i=fo-1,j=co+1;(i>fd)&&(i<cd)&&libre;i--,j++){
+                libre=!tablero.tablero[i][j].getOcupada();
                  }  return(libre);
         }
          //Movimiento hacia arriba y a la izquierda
         else if((fd<fo)&&(cd<co)){
-            for(i=fo,j=co;(i>fd)&&(i>cd)&&super.dentro(i,j)&&libre;i--,j--){
-                //Mientras la casilla consultada este dentro del tablero, mientras
-                //sea menor que el destino y mientras este vacia
-                Casilla cas=tablero.getCasilla(i,j);
-                libre=!cas.getOcupada();
-                 }  return(libre);
+            for(i=fo-1,j=co-1;(i>fd)&&(i>cd)&&libre;i--,j--){
+                libre=!tablero.tablero[i][j].getOcupada();
+            }  return(libre);
         }   
-            
+        System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
+                "el paso.");
         return(false);
-    }
-       
-   
-    
-    
-    public boolean movimiento_correspondiente_ficha(Tablero tablero, int filaorigen, int columnaorigen, int filadestino, int columnadestino){
-        //Se debe comprobar que el el movimiento es diagonal.
-        boolean diagonal_libre=diagonal_libre(tablero, filaorigen,columnaorigen,filadestino,columnadestino);
-        
-        return(diagonal_libre);
-    }
+        }
     
     
             

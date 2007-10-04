@@ -36,36 +36,36 @@ public class Main {
         tablero.inicializar_tablero(tablero);
         
         //Flujo para leer datos
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br= new BufferedReader(isr);
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
-        System.out.println("Solo puede mover el alfil blanco. Indique la fila.");
-        String fila="", columna="";
+        System.out.println("Solo puede mover el alfil blanco.");
+        int fila=0, columna=0;
         try {
-            
+            System.out.println("Indique la fila a la que desea mover.");
             //Leemos la fila destino
-            fila = br.readLine();
+            fila = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+            System.out.println("Entrada incorrecta.");
+        } 
         
         try {
+            System.out.println("Indique la columna a la que desea mover.");
             //Leemos la columna destino
-            columna = br.readLine();
+            columna = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
+            System.out.println("Entrada incorrecta.");
         }
-        //Pasamos a enteros y restamos 1 para que corresponda con los indices
-        int fil = Integer.parseInt(fila);
-        int col = Integer.parseInt(columna);
-        fil--;
-        col--;
+        
         //Movemos la ficha, del origen (obligatorio) al destino dado por el usuario
-        tablero.mover(0,2,fil,col,tablero);
-        
-        
-        
-        
+      boolean movida=tablero.mover(0,2,fila,columna,tablero);
+      if(movida)
+        { 
+          System.out.println("FICHA DESTINO: "+tablero.getCasilla(fila,columna).getFicha().getTipo_ficha());
+      }
+      else
+          System.out.println("La ficha no pudo ser movida.");
         
 	    }
     

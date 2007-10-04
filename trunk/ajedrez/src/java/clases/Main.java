@@ -29,6 +29,7 @@ public class Main {
         System.out.println("Bienvenido al Ajedrez");
         Tablero tablero = new Tablero(1, false);
         //Se colocan las fichas en sus posiciones iniciales
+        System.out.println("Creando tablero e inicializandolo...");
         tablero.inicializar_tablero(tablero);
         
         //Flujo para leer datos
@@ -41,16 +42,16 @@ public class Main {
             filaorigen = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la fila.");
+            System.out.println("Entrada incorrecta de la fila origen.");
         } 
         
         try {
-            System.out.println("Indique la columna a la que desea mover.");
+            System.out.println("Indique la columna que desea mover.");
             //Leemos la columna origen
             columnaorigen = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la columna.");
+            System.out.println("Entrada incorrecta de la columna origen.");
         }
         try {
             System.out.println("Indique la fila a la que desea mover");
@@ -58,7 +59,7 @@ public class Main {
             filadestino = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la fila.");
+            System.out.println("Entrada incorrecta de la fila destino.");
         } 
         
         try {
@@ -67,7 +68,7 @@ public class Main {
             columnadestino = Integer.parseInt(in.readLine())-1;
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la columna.");
+            System.out.println("Entrada incorrecta de la columna destino.");
         }
         
         //Movemos la ficha, del origen (obligatorio) al destino dado por el usuario
@@ -77,9 +78,10 @@ public class Main {
       boolean movida=tablero.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
       if(movida)
         { 
-          Ficha fichaorigen=tablero.getCasilla(filaorigen,columnaorigen).getFicha();
-          System.out.println("Ha movido el/la: "+fichaorigen.getTipo_ficha()+", de color " +
-                  fichaorigen.getColor());
+          //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
+          Ficha ficha=tablero.getCasilla(filadestino,columnadestino).getFicha();
+          System.out.println("Ha movido el/la: "+ficha.getTipo_ficha()+", de color " +
+                  ficha.getColor());
                 }
       else
           System.out.println("La ficha no pudo ser movida.");

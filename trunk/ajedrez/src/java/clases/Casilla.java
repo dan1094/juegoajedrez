@@ -70,7 +70,8 @@ public class Casilla {
     }
 
     public boolean getOcupada() {
-        return this.ocupada;
+        if(this.getFicha()==null) return(false);
+        else return(true);
     }
 
     public void setOcupada(boolean ocupada) {

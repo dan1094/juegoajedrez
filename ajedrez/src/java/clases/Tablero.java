@@ -15,7 +15,7 @@ package clases;
  */
 public class Tablero {
     
-    protected Long id_tablero; //numero de tablero
+    protected int id_tablero; //numero de tablero
     protected boolean turno;    //turno del jugador (BLANCAS=0, NEGRAS=1)
     protected Casilla tablero[][];
         
@@ -24,49 +24,49 @@ public class Tablero {
     }
     
     /**Crea una tablero con los atributos especificados*/
-    public Tablero(Long id, boolean tur, Casilla tablero[][]){
+    public Tablero(int id, boolean tur){
         this.id_tablero=id;
         this.turno=tur;
-        this.tablero=tablero;
-    }
+        tablero = new Casilla[8][8];
+        }
     
     /**Coloca las fichas en sus posiciones iniciales*/
     public Tablero inicializar_tablero(Tablero tablero){
         
-        //Se crea una casilla y todas las posibles a las que pueda mover el alfil, 
-        //por ahora, en su movimiento inicial.
-        Casilla cas02 = new Casilla();
-        tablero.setCasilla(cas02,0,2);
+        //CREA LAS INSTANCIAS DE LAS FICHAS (por ahora, alfiles)
+        int i=0,j=0;
+        int id_ficha = 0;
         
-        Casilla cas11 = new Casilla();
-        tablero.setCasilla(cas11,1,1);
+        //Creamos FICHAS de tipo ALFIL blancos
+        Ficha alf_b_1 = new Alfil(id_ficha,false);
+        id_ficha++;
+        Ficha alf_b_2 = new Alfil(id_ficha,false);
+        id_ficha++;
+        //Creamos alfiles negros
+        Ficha alf_n_1 = new Alfil(id_ficha,true);
+        id_ficha++;
+        Ficha alf_n_2 = new Alfil(id_ficha,true);
+        id_ficha++;
         
-        Casilla cas20 = new Casilla();
-        tablero.setCasilla(cas20,2,0);
-        
-        Casilla cas13 = new Casilla();
-        tablero.setCasilla(cas13,1,3);
-        
-        Casilla cas24 = new Casilla();
-        tablero.setCasilla(cas24,2,4);
-        
-        Casilla cas35 = new Casilla();
-        tablero.setCasilla(cas35,3,5);
-        
-        Casilla cas46 = new Casilla();
-        tablero.setCasilla(cas46,4,6);
-        
-        Casilla cas57 = new Casilla();
-        tablero.setCasilla(cas57,5,7);
-                
-        //Se crea un alfil blanco
-        Ficha alfil_blanco =new Alfil(1,false);
-        
-        //Se coloca el alfil blanco en la casilla02
-        cas02.setFicha(alfil_blanco);
+        //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
+        Casilla cas;
+        int m=0,n=0,id=0;
+        int id_casilla= 0;
+        for(m=0;m<8;m++)
+            for(n=0;n<8;n++)
+            {
+                tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false);
+                id_casilla++;
+            }
         
         
-               
+        //Asociamos las fichas(alfiles) a sus posiciones en el tablero.
+        tablero.tablero[0][2].setFicha(alf_n_1);
+        tablero.tablero[0][5].setFicha(alf_n_2);
+        tablero.tablero[7][2].setFicha(alf_b_1);
+        tablero.tablero[7][5].setFicha(alf_b_2);
+        
+       
         return(tablero);  
     }
     
@@ -113,9 +113,7 @@ public class Tablero {
                 //Ponemos ocupada a true en el destino
                 destino.ocupada=true;
                 tablero.cambio_turno();
-                System.out.println("Moviendo "+origen.getFicha().getTipo_ficha()+
-                        " de ("+(filaorigen+1)+","+(columnaorigen+1)+") a ("+
-                        (filadestino+1)+","+(columnadestino+1)+").");
+                
                 return(true);
                 
         }
@@ -145,6 +143,7 @@ public class Tablero {
         origen_valido=dentro_tablero(filaorigen,columnaorigen); 
         destino_valido=dentro_tablero(filadestino,columnadestino);
         
+      
         //Si el origen y el destino son validos seguimos
         if(origen_valido&&destino_valido)
         {
@@ -163,7 +162,7 @@ public class Tablero {
         
             if(fichaorigen.getColor()!=turno) 
             { 
-                //La ficha que se quiere mover no es del color del turno de la partida.
+                System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
                 return(false);
             }
             else if(!casilladestino.getOcupada()) 
@@ -180,11 +179,18 @@ public class Tablero {
                             }
                             else return(false);
         
-        }return(false); //La condicion de que el movimiento es el correspondiente es falsa.
+        }{
+            System.out.println("Ese movimiento no se corresponde con esa ficha.");
+            return(false); //La condicion de que el movimiento es el correspondiente es falsa.
+        }
         
         }
         else {
-            System.out.println("El origen o el destino no son validos.");
+            if(origen_valido){
+                 System.out.println("El destino no es valido.");
+            }else {
+                System.out.println("El origen no es valido.");
+            }
             return(false);//No se da la condicion del if. No estan dentro del tablero
         }
         

@@ -17,7 +17,8 @@ package clases;
 public class Alfil extends Ficha{
     
     /** Creates a new instance of Alfil */
-    public Alfil(int id_ficha, boolean color) {
+    public Alfil(int id_ficha, boolean color){
+        super(id_ficha,color);
         this.setTipo_ficha("alfil");
     }
     

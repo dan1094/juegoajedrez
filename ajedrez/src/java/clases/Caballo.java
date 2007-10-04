@@ -16,7 +16,9 @@ package clases;
 public class Caballo extends Ficha{
     
     /** Creates a new instance of Caballo */
-    public Caballo() {
+    public Caballo(int id_ficha, boolean color){
+        super(id_ficha,color);
+        this.setTipo_ficha("caballo");
     }
     
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, int columnaorigen, int filadestino, int columnadestino){

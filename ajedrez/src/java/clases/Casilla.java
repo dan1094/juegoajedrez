@@ -16,10 +16,10 @@ package clases;
 
 public class Casilla {
    
-    protected Long id_casilla; 
+    protected int id_casilla; 
     protected Ficha ficha;
-    protected Long fila;
-    protected String columna;
+    protected int fila;
+    protected int columna;
     protected boolean ocupada; //0-> vacia, 1->ocupada
     
        
@@ -28,12 +28,20 @@ public class Casilla {
     /** Creates a new instance of Casilla */
     public Casilla() {
     }
-
-    public Long getId_casilla() {
-        return id_casilla;
+    
+    public Casilla(int id_casilla, Ficha ficha, int fila, int columna, boolean ocupada){
+        this.id_casilla=id_casilla;
+        this.columna=columna;
+        this.fila=fila;
+        this.ficha=ficha;
+        this.ocupada=ocupada;
     }
 
-    public void setId_casilla(Long id_casilla) {
+    public int getId_casilla() {
+        return this.id_casilla;
+    }
+
+    public void setId_casilla(int id_casilla) {
         this.id_casilla = id_casilla;
     }
 
@@ -45,24 +53,24 @@ public class Casilla {
         this.ficha=ficha;
     }
 
-    public Long getFila() {
-        return fila;
+    public int getFila() {
+        return this.fila;
     }
 
-    public void setFila(Long fila) {
+    public void setFila(int fila) {
         this.fila = fila;
     }
 
-    public String getColumna() {
-        return columna;
+    public int getColumna() {
+        return this.columna;
     }
 
-    public void setColumna(String columna) {
+    public void setColumna(int columna) {
         this.columna = columna;
     }
 
     public boolean getOcupada() {
-        return ocupada;
+        return this.ocupada;
     }
 
     public void setOcupada(boolean ocupada) {

@@ -21,8 +21,6 @@ public class Reina extends Ficha{
         this.setTipo_ficha("reina");
     }
     
-    
-    
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, 
         int columnaorigen, int filadestino, int columnadestino){
         //La reina es una mezcla entre el alfil y la torre.

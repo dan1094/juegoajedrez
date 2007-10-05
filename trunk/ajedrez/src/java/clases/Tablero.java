@@ -65,6 +65,18 @@ public class Tablero {
         Ficha reina_b = new Reina(id_ficha,false);
         Ficha reina_n = new Reina(id_ficha,true);
         
+        //Creamos los caballos
+        //blancos
+        Ficha cab_b_1 = new Caballo(id_ficha,false);
+        id_ficha++;
+        Ficha cab_b_2 = new Caballo(id_ficha,false);
+        id_ficha++;
+        //negros
+        Ficha cab_n_1 = new Caballo(id_ficha,true);
+        id_ficha++;
+        Ficha cab_n_2 = new Caballo(id_ficha,true);
+        id_ficha++;
+        
         
 
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
@@ -90,6 +102,10 @@ public class Tablero {
         tablero.tablero[7][7].setFicha(tor_b_2);
         tablero.tablero[0][3].setFicha(reina_n);
         tablero.tablero[7][3].setFicha(reina_b);
+        tablero.tablero[0][1].setFicha(cab_n_1);
+        tablero.tablero[0][6].setFicha(cab_n_2);
+        tablero.tablero[7][1].setFicha(cab_b_1);
+        tablero.tablero[7][6].setFicha(cab_b_1);
         
        
         return(tablero);  
@@ -174,13 +190,13 @@ public class Tablero {
         //Si el origen y el destino son validos seguimos
         if(origen_valido&&destino_valido)
         {
-               System.out.println("Origen y Destino Validos");
+        System.out.println("Origen y Destino Validos");
         //Para comprobar el movimiento necesitamos saber la ficha que se mueve
         Ficha fichaorigen=tablero.tablero[filaorigen][columnaorigen].getFicha();
-        
+        System.out.println("Despues de coger la ficha.");
         
         //Llamamos al metodo abstracto MOVIMIENTO_CORRESPONDIENTE_FICHA
-        //Deberia llamar al metodo de la ficha correspondiente
+        //Deberia llamar al metodo de la ficha correspondient
         boolean mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
       
         if(mcf){

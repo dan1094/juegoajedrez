@@ -25,6 +25,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args){ 
+        boolean mate=false;
         
         System.out.println("Bienvenido al Ajedrez");
         Tablero tablero = new Tablero(1, false);
@@ -36,7 +37,9 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         //LEEMOS LA CASILLA ORIGEN
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
-        try {
+        System.out.println("Comienza la partida. Mueven las BLANCAS");
+       do{ 
+            try {
             System.out.println("Indique la fila que desea mover");
             //Leemos la fila destino
             filaorigen = Integer.parseInt(in.readLine())-1;
@@ -71,21 +74,20 @@ public class Main {
             System.out.println("Entrada incorrecta de la columna destino.");
         }
         
-        //Movemos la ficha, del origen (obligatorio) al destino dado por el usuario
-        //ESTA FIJADO A MOVER EL ALFIL BLANCO DE LA IZQUIERDA.
-        //Debemos cambiarlo y pedirle al usuario que ficha quiere mover y modificarlo
-        //en la llamada a mover-----
+        //Movemos la ficha, del origen al destino dado por el usuario
+        
       boolean movida=tablero.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
       if(movida)
         { 
           //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
           Ficha ficha=tablero.getCasilla(filadestino,columnadestino).getFicha();
-          System.out.println("Ha movido el/la: "+ficha.getTipo_ficha()+", de color " +
-                  ficha.getColor());
-                }
-      else
-          System.out.println("La ficha no pudo ser movida.");
+          System.out.println("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+          if(ficha.getColor()) System.out.println("negro.");
+          else System.out.println("blanco.");
+          
+         }else
+            System.out.println("La ficha no pudo ser movida.");
         
-	    }
-    
+    }while(!mate);
+ }
 }

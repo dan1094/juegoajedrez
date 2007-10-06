@@ -20,21 +20,17 @@ public class Casilla {
     protected Ficha ficha;
     protected int fila;
     protected int columna;
-    protected boolean ocupada; //0-> vacia, 1->ocupada
-    
-       
-    
+  
     
     /** Creates a new instance of Casilla */
     public Casilla() {
     }
     
-    public Casilla(int id_casilla, Ficha ficha, int fila, int columna, boolean ocupada){
+    public Casilla(int id_casilla, Ficha ficha, int fila, int columna){
         this.id_casilla=id_casilla;
         this.columna=columna;
         this.fila=fila;
         this.ficha=ficha;
-        this.ocupada=ocupada;
     }
 
     public int getId_casilla() {
@@ -73,10 +69,12 @@ public class Casilla {
         if(this.getFicha()==null) return(false);
         else return(true);
     }
-
-    public void setOcupada(boolean ocupada) {
+    
+    //Esta funcion ya no hace falta, porque ya no hay una variable que indique
+    //si esta ocupada, sino que mira si hay ficha asignada directamente.
+   /* public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
-    }
+    }*/
     
     
     

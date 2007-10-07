@@ -83,9 +83,15 @@ public class Main {
           System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
           if(ficha.getColor()) System.out.println("negro.");
           else System.out.println("blanco.");
-          
-         }/*else
-            System.out.println("La ficha no pudo ser movida.");*/
+          if(tablero.tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
+          {
+              //Si lo movido es un rey, ya no puede enrocar.
+              //de que color es?
+              if(ficha.getColor()==false) tablero.setEnroqueblanco(false);
+              else tablero.setEnroquenegro(false);
+              
+          }
+         }
         
     }while(!mate);
  }

@@ -24,32 +24,39 @@ public class Reina extends Ficha{
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, 
         int columnaorigen, int filadestino, int columnadestino){
         //La reina es una mezcla entre el alfil y la torre.
+        System.out.println("Entra en la reina.");
         int f=0, c=0;
         boolean libre=true;
         boolean recto = es_recto(filaorigen, columnaorigen, filadestino, columnadestino);
         if(recto){
             if(filadestino==filaorigen){
                 //HORIZONTAL
+                System.out.println("Movimiento reina horizontal");
                 if(columnadestino>columnaorigen){
                     for(c=columnaorigen+1;((c<columnadestino)&&(libre));c++){
                         //HORIZONTAL DERECHA
+                        System.out.println("Movimiento derecha");
                         libre=!tablero.tablero[c][filadestino].getOcupada();
                     }return(libre);
                 }else if(columnadestino<columnaorigen){
                         for(c=columnaorigen-1;((c>columnadestino)&&(libre));c--){
                             //HORIZONTAL IZQUIERDA
+                            System.out.println("Movimiento izquierda.");
                             libre=!tablero.tablero[c][filadestino].getOcupada();
                         }return(libre);
                 }else return(false);
             }else if(columnaorigen==columnadestino){
                 //VERTICAL
+                System.out.println("Movimiento reina vertical");
                 if(filaorigen>filadestino){
                     //VERTICAL ARRIBA
+                    System.out.println("Movimiento arriba");
                     for(f=filaorigen-1;((f>filadestino)&&(libre));f--){
                         libre=!tablero.tablero[f][columnadestino].getOcupada();
                     }return(libre);
                 }else if(filaorigen<filadestino){
                     //VERTICAL ABAJO
+                    System.out.println("Movimiento abajo");
                     for(f=filaorigen+1;((f<filadestino)&&(libre));f++){
                         libre=!tablero.tablero[f][columnadestino].getOcupada();
                     }return(libre);
@@ -57,6 +64,7 @@ public class Reina extends Ficha{
                 
             }else return(false);
         }else{
+            System.out.println("Movimiento reina diagonal");
          //movimiento diagonal. no recto
          //Hay 4 posibles movimientos diagonales
          int i=0, j=0;

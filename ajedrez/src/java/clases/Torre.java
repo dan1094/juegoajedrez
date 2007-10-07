@@ -48,11 +48,7 @@ public class Torre extends Ficha{
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[fo][i].getOcupada();
                }
-               //Devolvemos libre, porque puede haber dos posibilidades:
-               //(1) que salga del for por llegar al final-> libre=true
-               //(2) que salga del for porque encontro ficha -> libre=false
                
-            //   return(libre);
            }else if(cd<co){
                //Mueve hacia la izquierda
                System.out.println("Mueve a la izquierda.");
@@ -60,8 +56,7 @@ public class Torre extends Ficha{
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[fo][i].getOcupada();
                }
-               //Igual que el caso anterior
-              // return(libre);
+            
            }
        }else if(co==cd){
            //Quiere decir que se mueve en la misma columna (VERTICALMENTE)
@@ -73,10 +68,7 @@ public class Torre extends Ficha{
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[i][co].getOcupada();
                }
-               //Devolvemos libre, porque puede haber dos posibilidades:
-               //(1) que salga del for por llegar al final-> libre=true
-               //(2) que salga del for porque encontro ficha -> libre=false
-              // return(libre);
+               
            }else if(fd<fo){
                //Mueve hacia arriba
                System.out.println("Mueve hacia arriba.");
@@ -84,14 +76,12 @@ public class Torre extends Ficha{
                   //Miro si esa casilla esta ocupada
                   libre=!tablero.tablero[i][co].getOcupada();
                }
-               //Igual que el caso anterior
-              // return(libre);
            }
        }
        if(libre) return(libre);
        else{
             System.out.println("Hay fichas impidiendo el paso");
-            return(false);
+            return(libre);
        }
        
        

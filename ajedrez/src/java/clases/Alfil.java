@@ -32,40 +32,31 @@ public class Alfil extends Ficha{
         boolean libre=true;
         
         //Hay 4 posibles movimientos diagonales
-         
         if((fd>fo)&&(cd>co)){
             //Movimiento hacia abajo y a la derecha. 
             System.out.println("Mueve diagonal abajo-derecha");
-            for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++){
-                    libre=!tablero.tablero[i][j].getOcupada();
-                        
-                }return(libre);
+            for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++) libre=!tablero.tablero[i][j].getOcupada();
         } else if((fd>fo)&&(cd<co)){
-            //Movimiento hacia abajo y a la izda.
-            System.out.println("Mueve diagonal abajo-izquierda");
-            for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--){
-                    libre=!tablero.tablero[i][j].getOcupada();
-                }return(libre);
-        }else if((fd<fo)&&(cd>co)){
-            //Movimiento hacia arriba y a la derecha
-            System.out.println("Mueve diagonal arriba-derecha");
-            for(i=fo-1,j=co+1;(i>fd)&&(j<cd)&&libre;i--,j++){
-            libre=!tablero.tablero[i][j].getOcupada();
-                 } System.out.println(libre);
-                   return(libre);
-        }else if((fd<fo)&&(cd<co)){
-            //Movimiento hacia arriba y a la izquierda
-            System.out.println("Mueve diagonal arriba-izquierda");
-            for(i=fo-1,j=co-1;(i>fd)&&(i>cd)&&libre;i--,j--){
-                libre=!tablero.tablero[i][j].getOcupada();
-            }  return(libre);
-        }   
-        System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
+                   //Movimiento hacia abajo y a la izda.
+                    System.out.println("Mueve diagonal abajo-izquierda");
+                    for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--)  libre=!tablero.tablero[i][j].getOcupada();
+                }else if((fd<fo)&&(cd>co)){
+                         //Movimiento hacia arriba y a la derecha
+                          System.out.println("Mueve diagonal arriba-derecha");
+                          for(i=fo-1,j=co+1;(i>fd)&&(j<cd)&&libre;i--,j++) libre=!tablero.tablero[i][j].getOcupada();                  
+                      }else if((fd<fo)&&(cd<co)){
+                                //Movimiento hacia arriba y a la izquierda
+                                System.out.println("Mueve diagonal arriba-izquierda");
+                                for(i=fo-1,j=co-1;(i>fd)&&(i>cd)&&libre;i--,j--)  libre=!tablero.tablero[i][j].getOcupada();
+                            }else return(false);
+        if(libre) return(libre);
+        else {
+             System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
                 "el paso.");
-        return(false);
+             return(false);
         }
     
     
-            
+    }    
     
 }

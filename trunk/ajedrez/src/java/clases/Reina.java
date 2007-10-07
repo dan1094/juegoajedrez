@@ -24,15 +24,73 @@ public class Reina extends Ficha{
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, 
         int columnaorigen, int filadestino, int columnadestino){
         //La reina es una mezcla entre el alfil y la torre.
-        boolean horizontal = es_recto(filaorigen, columnaorigen, filadestino, columnadestino);
-        if(horizontal)
-        {
-            
+        int f=0, c=0;
+        boolean libre=true;
+        boolean recto = es_recto(filaorigen, columnaorigen, filadestino, columnadestino);
+        if(recto){
+            if(filadestino==filaorigen){
+                //HORIZONTAL
+                if(columnadestino>columnaorigen){
+                    for(c=columnaorigen+1;((c<columnadestino)&&(libre));c++){
+                        //HORIZONTAL DERECHA
+                        libre=!tablero.tablero[c][filadestino].getOcupada();
+                    }return(libre);
+                }else if(columnadestino<columnaorigen){
+                        for(c=columnaorigen-1;((c>columnadestino)&&(libre));c--){
+                            //HORIZONTAL IZQUIERDA
+                            libre=!tablero.tablero[c][filadestino].getOcupada();
+                        }return(libre);
+                }else return(false);
+            }else if(columnaorigen==columnadestino){
+                //VERTICAL
+                if(filaorigen>filadestino){
+                    //VERTICAL ARRIBA
+                    for(f=filaorigen-1;((f>filadestino)&&(libre));f--){
+                        libre=!tablero.tablero[f][columnadestino].getOcupada();
+                    }return(libre);
+                }else if(filaorigen<filadestino){
+                    //VERTICAL ABAJO
+                    for(f=filaorigen+1;((f<filadestino)&&(libre));f++){
+                        libre=!tablero.tablero[f][columnadestino].getOcupada();
+                    }return(libre);
+                }else return(false);
+                
+            }else return(false);
         }else{
-            
+         //movimiento diagonal. no recto
+         //Hay 4 posibles movimientos diagonales
+         int i=0, j=0;
+            if((filadestino>filaorigen)&&(columnadestino>columnaorigen)){
+                //Movimiento hacia abajo y a la derecha. 
+                System.out.println("Mueve diagonal abajo-derecha");
+                for(i=filaorigen+1,j=columnaorigen+1;(i<filadestino)&&(j<columnadestino)&&libre;i++,j++){
+                        libre=!tablero.tablero[i][j].getOcupada();
+                        
+                }return(libre);
+        } else if((filadestino>filaorigen)&&(columnadestino<columnaorigen)){
+            //Movimiento hacia abajo y a la izda.
+            System.out.println("Mueve diagonal abajo-izquierda");
+            for(i=filaorigen+1,j=columnaorigen-1;(i<filadestino)&&(j>columnadestino)&&libre;i++,j--){
+                    libre=!tablero.tablero[i][j].getOcupada();
+                        
+                }return(libre);
+        }else if((filadestino<filaorigen)&&(columnadestino>columnaorigen)){
+            //Movimiento hacia arriba y a la derecha
+            System.out.println("Mueve diagonal arriba-derecha");
+            for(i=filaorigen-1,j=columnaorigen+1;(i>filadestino)&&(i<columnadestino)&&libre;i--,j++){
+                libre=!tablero.tablero[i][j].getOcupada();
+                 }  return(libre);
+        }else if((filadestino<filaorigen)&&(columnadestino<columnaorigen)){
+            //Movimiento hacia arriba y a la izquierda
+            System.out.println("Mueve diagonal arriba-izquierda");
+            for(i=filaorigen-1,j=columnaorigen-1;(i>filadestino)&&(i>columnadestino)&&libre;i--,j--){
+                libre=!tablero.tablero[i][j].getOcupada();
+            }  return(libre);
+        }   
+        System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
+                "el paso.");
+        return(false);
         }
-        
-       return(true);
         
     }
     

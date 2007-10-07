@@ -45,14 +45,14 @@ public class Alfil extends Ficha{
             System.out.println("Mueve diagonal abajo-izquierda");
             for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--){
                     libre=!tablero.tablero[i][j].getOcupada();
-                        
                 }return(libre);
         }else if((fd<fo)&&(cd>co)){
             //Movimiento hacia arriba y a la derecha
             System.out.println("Mueve diagonal arriba-derecha");
-            for(i=fo-1,j=co+1;(i>fd)&&(i<cd)&&libre;i--,j++){
-                libre=!tablero.tablero[i][j].getOcupada();
-                 }  return(libre);
+            for(i=fo-1,j=co+1;(i>fd)&&(j<cd)&&libre;i--,j++){
+            libre=!tablero.tablero[i][j].getOcupada();
+                 } System.out.println(libre);
+                   return(libre);
         }else if((fd<fo)&&(cd<co)){
             //Movimiento hacia arriba y a la izquierda
             System.out.println("Mueve diagonal arriba-izquierda");

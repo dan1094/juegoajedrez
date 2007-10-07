@@ -22,6 +22,7 @@ public class Tablero {
     protected int id_tablero; //numero de tablero
     protected boolean turno;    //turno del jugador (BLANCAS=0, NEGRAS=1)
     protected Casilla tablero[][];
+    protected boolean blanco_puede_enrocar, negro_puede_enrocar;
         
     /** Creates a new instance of Tablero */
     public Tablero() {        
@@ -33,6 +34,21 @@ public class Tablero {
         this.turno=tur;
         tablero = new Casilla[8][8];
         }
+    
+    /**Controla la posibilidad de enroque de ambos colores*/
+    public void setEnroquenegro(boolean enroque_negro){
+        this.negro_puede_enrocar=enroque_negro;
+    }
+    public boolean getEnroquenegro(){
+        return(this.negro_puede_enrocar);
+    }
+    public void setEnroqueblanco(boolean enroque_blanco){
+        this.blanco_puede_enrocar=enroque_blanco;
+    }
+    public boolean getEnroqueblanco(){
+        return(this.negro_puede_enrocar);
+    }
+    
     
     /**Coloca las fichas en sus posiciones iniciales*/
     public Tablero inicializar_tablero(Tablero tablero){
@@ -123,6 +139,7 @@ public class Tablero {
         tablero.tablero[1][5].setFicha(peon_n_1);
         tablero.tablero[1][6].setFicha(peon_n_1);
         tablero.tablero[1][7].setFicha(peon_n_1);
+        
         tablero.tablero[0][4].setFicha(rey_n);
         tablero.tablero[7][4].setFicha(rey_b);
        
@@ -221,7 +238,7 @@ public class Tablero {
                                  System.out.println("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
                                          " destino esta vacia.");
                                  mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
-                                 if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf)) 
+                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf)) 
                                      ofrecer_cambio(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                  return(mcf);
                       }else if(casilladestino.getFicha().getColor()!=tablero.getTurno()){
@@ -230,13 +247,11 @@ public class Tablero {
                                 mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
                                 System.out.println("El/La "+fichaorigen.tipo_ficha+" a mover es de su color. Y la casilla" +
                                         " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
-                                System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
+                                if(mcf) System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
                                return(mcf);
                             }else if(casilladestino.getFicha().getColor()==tablero.getTurno()){
-                                       System.out.println("El destino esta ocupado por una ficha de su propio color.");  
+                                        System.out.println("El destino esta ocupado por una ficha de su propio color.");  
                                   }else return(false);
-        
-            
         
         }else {
                //Origen no valido o destino no valido o origen vacio
@@ -302,7 +317,8 @@ public class Tablero {
   public Tablero cambio_ficha(Tablero tablero, int eleccion, int fd, int cd){
      //Esta funcion dependiendo de la ficha que el jugador haya escogido
       //crea la ficha y la mete en su sitio.
-     
+     System.out.println("Cambio de ficha. ("+fd+","+cd+").");
+     System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
       switch(eleccion){
           case 1: tablero.tablero[fd][cd].setFicha(new Reina(33,tablero.getTurno()));
                     return(tablero);

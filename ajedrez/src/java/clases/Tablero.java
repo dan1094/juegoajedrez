@@ -118,7 +118,9 @@ public class Tablero {
         tablero.tablero[1][4].setFicha(peon_n_1);
         tablero.tablero[1][5].setFicha(peon_n_1);
         tablero.tablero[1][6].setFicha(peon_n_1);
-        tablero.tablero[1][7].setFicha(peon_n_1);        
+        tablero.tablero[1][7].setFicha(peon_n_1);
+        tablero.tablero[0][4].setFicha(rey_n);
+        tablero.tablero[7][4].setFicha(rey_b);
        
         return(tablero);  
     }
@@ -165,13 +167,13 @@ public class Tablero {
                 origen.setFicha(null);
                 tablero.cambio_turno();
                 System.out.println("Ficha movida.");
+                
                 if(turno)  System.out.println("ES EL TURNO DE LAS NEGRAS");
                 else System.out.println("ES EL TURNO DE LAS BLANCAS");
                 
                 return(true);
                 
-        }
-        else{
+        }else{
             System.out.println("No puede realizarse el movimiento solicitado.");
             return(false);
         }
@@ -190,69 +192,65 @@ public class Tablero {
         
         System.out.println("Comprobando el movimiento.");
         
-        boolean origen_valido=true;
-        boolean destino_valido=true;
-        
         //comprueba que el origen y el destino estan dentro del tablero
-        origen_valido=dentro_tablero(filaorigen,columnaorigen); 
-        destino_valido=dentro_tablero(filadestino,columnadestino);
+        boolean origen_dentro=dentro_tablero(filaorigen,columnaorigen); 
+        boolean destino_dentro=dentro_tablero(filadestino,columnadestino);
+        boolean origen_turno=ocupada_color(tablero,filaorigen,columnaorigen);
         
-        //Si el origen y el destino son validos seguimos
-        if(origen_valido&&destino_valido)
-        {
-        System.out.println("Origen y Destino Validos");
+        //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
+        if(origen_dentro&&destino_dentro&&origen_turno){
+        
+        System.out.println("Origen y Destino dentro del tablero.");
+        System.out.println("La ficha de la casilla ORIGEN es de su color.");
+        
         //Para comprobar el movimiento necesitamos saber la ficha que se mueve
         Ficha fichaorigen=tablero.tablero[filaorigen][columnaorigen].getFicha();
-                
-        //Llamamos al metodo abstracto MOVIMIENTO_CORRESPONDIENTE_FICHA
-        //Deberia llamar al metodo de la ficha correspondient
-        boolean mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
-      
-        if(mcf){
-        //Se obtienen la casilla y la ficha del destino
-        System.out.println("El movimiento esta permitido.");
+        Ficha fichadestino;
+        boolean mcf;
+        
         Casilla casilladestino = tablero.tablero[filadestino][columnadestino];
         
-        Ficha fichadestino=casilladestino.getFicha();
+                if(fichaorigen.getColor()!=turno){ 
+                    System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
+                    return(false);
+                }else if(!casilladestino.getOcupada()){
+                                //origen del mismo color que el turno y casilla destino vacia
+                                 System.out.println("La ficha a mover, es de su color. Y la casilla" +
+                                         " destino esta vacia.");
+                                 mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                 return(mcf);
+                      }else if(casilladestino.getFicha().getColor()!=tablero.getTurno()){
+                                //origen=turno, y destino del color diferente. Se puede comer la ficha del destino.
+                                fichadestino=casilladestino.getFicha();
+                                mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                System.out.println("La ficha a mover es de su color. Y la casilla" +
+                                        " destino esta ocupada por un ficha del contrario.");
+                                System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
+                               return(mcf);
+                            }else if(casilladestino.getFicha().getColor()==tablero.getTurno()){
+                                       System.out.println("El destino esta ocupado por una ficha de su propio color.");  
+                                  }else return(false);
         
-            if(fichaorigen.getColor()!=turno) 
-            { 
-                System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
-                return(false);
-            }
-            else if(!casilladestino.getOcupada()) 
-                            {
-                            //origen del mismo color que el turno y casilla destino vacia
-                             System.out.println("Origen=turno y casilla destino vacia");
-                            return(true);
-                            }
-                    else if(casilladestino.getFicha().getColor()!=turno) 
-                            {
-                            //origen=turno, y destino del color diferente. Se puede comer la
-                            //ficha del destino.
-                             System.out.println("Origen=turno y casilla destino del color " +
-                                     "contrario. Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
-                            return(true);
-                            }
-                            else return(false);
+            
         
+        }else {
+               //Origen no valido o destino no valido o origen vacio
+                if(!origen_dentro) System.out.println("El origen no es valido. No pertenece al tablero.");
+                if(!destino_dentro)  System.out.println("El destino no es valido. No pertenece al tablero.");
+                if(!origen_turno) System.out.println("La ficha de la casilla DESTINO es de su color.");
+                return(false);//No se da la condicion del if. No estan dentro del tablero
         }
         
-        return(false); //La condicion de que el movimiento es el correspondiente es falsa.
-              
-        }
-        else {
-            if(origen_valido){
-                 System.out.println("El destino no es valido.");
-            }else {
-                System.out.println("El origen no es valido.");
-            }
-            return(false);//No se da la condicion del if. No estan dentro del tablero
-        }
-        
-    
+    return(false);
     }
     
-  
+  public boolean ocupada_color(Tablero tablero, int fo, int co){
+      Ficha ficha;
+      if(tablero.tablero[fo][co].getOcupada()) ficha=tablero.tablero[fo][co].getFicha();
+      else return(false);
+      if(ficha.color==tablero.turno) return(true);
+      else return(false);
+      
+  }
     
 }

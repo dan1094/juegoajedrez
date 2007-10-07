@@ -15,12 +15,22 @@ package clases;
  */
 public class Rey extends Ficha{
     
-    protected boolean esta_en_jaque;
+    protected boolean puede_enrocar;
     
     /** Creates a new instance of Rey */
     public Rey(int id_ficha, boolean color){
         super(id_ficha,color);
         this.setTipo_ficha("rey");
+        this.puede_enrocar=true;
+  
+        
+    }
+    
+    public boolean getPuede_enrocar(){
+        return(this.puede_enrocar);
+    }
+    public void setPuede_enrocar(boolean enrocar){
+        this.puede_enrocar=enrocar;
     }
   
     /**Funcion que comprueba que el rey puede mover a la casilla destino. ESto se 
@@ -39,5 +49,7 @@ public class Rey extends Ficha{
        return(true);
         
     }
+    
+    
     
 }

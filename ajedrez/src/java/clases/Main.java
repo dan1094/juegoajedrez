@@ -35,7 +35,6 @@ public class Main {
         
         //Flujo para leer datos
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        //LEEMOS LA CASILLA ORIGEN
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         System.out.println("Comienza la partida. Mueven las BLANCAS");
        do{ 
@@ -81,12 +80,12 @@ public class Main {
         { 
           //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
           Ficha ficha=tablero.getCasilla(filadestino,columnadestino).getFicha();
-          System.out.println("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+          System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
           if(ficha.getColor()) System.out.println("negro.");
           else System.out.println("blanco.");
           
-         }else
-            System.out.println("La ficha no pudo ser movida.");
+         }/*else
+            System.out.println("La ficha no pudo ser movida.");*/
         
     }while(!mate);
  }

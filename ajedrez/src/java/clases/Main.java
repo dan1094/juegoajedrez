@@ -26,12 +26,15 @@ public class Main {
      */
     public static void main(String[] args){ 
         boolean mate=false;
+        int i=1;
         
         System.out.println("Bienvenido al Ajedrez");
-        Tablero tablero = new Tablero(1, false);
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,false,tablero,true,true);
+       
         //Se colocan las fichas en sus posiciones iniciales
         System.out.println("Creando tablero e inicializandolo...");
-        tablero.inicializar_tablero(tablero);
+        tablero.inicializar_tablero_estandar(tablero);
         
         //Flujo para leer datos
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -75,7 +78,7 @@ public class Main {
         
         //Movemos la ficha, del origen al destino dado por el usuario
         
-      boolean movida=tablero.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
+      boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
       if(movida)
         { 
           //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
@@ -87,8 +90,9 @@ public class Main {
           {
               //Si lo movido es un rey, ya no puede enrocar.
               //de que color es?
-              if(ficha.getColor()==false) tablero.setEnroqueblanco(false);
-              else tablero.setEnroquenegro(false);
+              if(ficha.getColor()==false) 
+                  partida.setBlanco_puede_enrocar(false);
+              else partida.setNegro_puede_enrocar(false);
               
           }
          }

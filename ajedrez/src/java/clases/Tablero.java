@@ -9,6 +9,7 @@
 
 package clases;
 
+import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,38 +21,21 @@ import java.io.InputStreamReader;
 public class Tablero {
     
     protected int id_tablero; //numero de tablero
-    protected boolean turno;    //turno del jugador (BLANCAS=0, NEGRAS=1)
     protected Casilla tablero[][];
-    protected boolean blanco_puede_enrocar, negro_puede_enrocar;
+ 
         
     /** Creates a new instance of Tablero */
     public Tablero() {        
     }
     
     /**Crea una tablero con los atributos especificados*/
-    public Tablero(int id, boolean tur){
+    public Tablero(int id){
         this.id_tablero=id;
-        this.turno=tur;
         tablero = new Casilla[8][8];
         }
     
-    /**Controla la posibilidad de enroque de ambos colores*/
-    public void setEnroquenegro(boolean enroque_negro){
-        this.negro_puede_enrocar=enroque_negro;
-    }
-    public boolean getEnroquenegro(){
-        return(this.negro_puede_enrocar);
-    }
-    public void setEnroqueblanco(boolean enroque_blanco){
-        this.blanco_puede_enrocar=enroque_blanco;
-    }
-    public boolean getEnroqueblanco(){
-        return(this.negro_puede_enrocar);
-    }
-    
-    
     /**Coloca las fichas en sus posiciones iniciales*/
-    public Tablero inicializar_tablero(Tablero tablero){
+    public Tablero inicializar_tablero_estandar(Tablero tablero){
         
         int i=0,j=0;
         int id_ficha = 0;
@@ -91,7 +75,8 @@ public class Tablero {
         Ficha alf_n_2 = new Alfil(id_ficha,true);       id_ficha++;
         Ficha reina_n = new Reina(id_ficha,true);       id_ficha++;
         Ficha rey_n = new Rey(id_ficha,true);
-                
+          
+        
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
         Casilla cas;
         int m=0,n=0,id=0;
@@ -145,24 +130,28 @@ public class Tablero {
        
         return(tablero);  
     }
+    /**Crea un tablero como indique el usuario*/
+    public Tablero inicializar_tablero_personalizado(Tablero tablero){
+        
+        int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
+        int opcion_ficha=0, fila=0, columna=0, id=0;
+        boolean cumple_reglas=false, color=false;
+               
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("PERSONALIZACION DEL TABLERO");
+        do{
+            opcion_ficha=this.ofrecer_ficha();
+            color=this.pedir_color();
+            fila=this.ofrecer_fila();
+            columna=this.ofrecer_columna();
+            Ficha ficha = crear_ficha(opcion_ficha,color,id);
+            tablero.tablero[fila][columna].setFicha(ficha);
+        }while((opcion_ficha!=0)&&(!cumple_reglas));
+        
+        return(tablero);
+    }
     
-    /**Modificael turno*/
-    public void setTurno(boolean turno){
-        this.turno=turno;
-    }
-    /**Metodo que cambia el turno*/
-    public void cambio_turno(){
-        //Si el turno es False(BLANCAS) pasa a true(NEGRAS) y viceversa
-        if(this.getTurno()) 
-            this.setTurno(false);
-        else this.setTurno(true);
-    }
-    
-    /**Obtiene el turno de la partida, a quien le toca mover. False(0)-> Turno de Blancas
-     True(1)-> Turno de Negras*/
-    public boolean getTurno(){
-        return(this.turno);
-    }
     
     /**Busca la casilla solicitada en el tablero, si no la encuentra devuelve null*/
     public Casilla getCasilla(int fila, int columna){
@@ -173,33 +162,7 @@ public class Tablero {
     public void setCasilla(Casilla casilla, int fila, int columna){
         tablero[fila][columna]=casilla;
     }
-    public boolean mover(int filaorigen, int columnaorigen, int filadestino, int columnadestino, Tablero tablero){
-        
-        boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
-        if(mov_per){
-                //Obtenemos las casillas
-                Casilla origen=getCasilla(filaorigen,columnaorigen);
-                Casilla destino=getCasilla(filadestino,columnadestino);
-                //Ponemos en el destino la ficha del origen
-                destino.setFicha(origen.getFicha());
-                //Vaciamos la casilla origen y directamente, al colocar la ficha
-                //en el destino, se pone ocupada a TRUE el destino.
-                origen.setFicha(null);
-                tablero.cambio_turno();
-                System.out.println("Ficha movida.");
-                
-                if(turno)  System.out.println("ES EL TURNO DE LAS NEGRAS");
-                else System.out.println("ES EL TURNO DE LAS BLANCAS");
-                
-                return(true);
-                
-        }else{
-            System.out.println("No puede realizarse el movimiento solicitado.");
-            return(false);
-        }
-        
-        
-    }
+    
     
     public boolean dentro_tablero(int fila, int columna){
         if((fila>=0)&&(fila<=7)&&(columna<=7)&&(columna>=0)) 
@@ -207,128 +170,103 @@ public class Tablero {
         else return(false);
     }
     
-    public boolean comprobar_movimiento(int filaorigen, int columnaorigen, 
-        int filadestino, int columnadestino, Tablero tablero){
+    //A PARTIR DE AQUI DEBERIA IR EN CONTROLLER, NO?
+    
+    
+    public int ofrecer_ficha(){
         
-        System.out.println("Comprobando el movimiento.");
+        int opcion=0;
+        System.out.println("¿Que ficha desea introducir? (0 para ninguna mas)");
+        try {
         
-        //comprueba que el origen y el destino estan dentro del tablero
-        boolean origen_dentro=dentro_tablero(filaorigen,columnaorigen); 
-        boolean destino_dentro=dentro_tablero(filadestino,columnadestino);
-        boolean origen_turno=ocupada_color(tablero,filaorigen,columnaorigen);
-        
-        //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
-        if(origen_dentro&&destino_dentro&&origen_turno){
-        
-        System.out.println("Origen y Destino dentro del tablero.");
-        System.out.println("La ficha de la casilla ORIGEN es de su color.");
-        
-        //Para comprobar el movimiento necesitamos saber la ficha que se mueve
-        Ficha fichaorigen=tablero.tablero[filaorigen][columnaorigen].getFicha();
-        Ficha fichadestino;
-        boolean mcf;
-        
-        Casilla casilladestino = tablero.tablero[filadestino][columnadestino];
-        
-                if(fichaorigen.getColor()!=turno){ 
-                    System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
-                    return(false);
-                }else if(!casilladestino.getOcupada()){
-                                //origen del mismo color que el turno y casilla destino vacia
-                                 System.out.println("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
-                                         " destino esta vacia.");
-                                 mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
-                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf)) 
-                                     ofrecer_cambio(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
-                                 return(mcf);
-                      }else if(casilladestino.getFicha().getColor()!=tablero.getTurno()){
-                                //origen=turno, y destino del color diferente. Se puede comer la ficha del destino.
-                                fichadestino=casilladestino.getFicha();
-                                mcf=fichaorigen.movimiento_correspondiente_ficha(this,filaorigen,columnaorigen,filadestino,columnadestino);
-                                System.out.println("El/La "+fichaorigen.tipo_ficha+" a mover es de su color. Y la casilla" +
-                                        " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
-                                if(mcf) System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
-                               return(mcf);
-                            }else if(casilladestino.getFicha().getColor()==tablero.getTurno()){
-                                        System.out.println("El destino esta ocupado por una ficha de su propio color.");  
-                                  }else return(false);
-        
-        }else {
-               //Origen no valido o destino no valido o origen vacio
-                if(!origen_dentro) System.out.println("El origen no es valido. No pertenece al tablero.");
-                if(!destino_dentro)  System.out.println("El destino no es valido. No pertenece al tablero.");
-                if(!origen_turno) System.out.println("La ficha de la casilla DESTINO es de su color.");
-                return(false);//No se da la condicion del if. No estan dentro del tablero
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("1.- REY");
+            System.out.println("2.- REINA");
+            System.out.println("3.- TORRE");
+            System.out.println("4.- CABALLO");
+            System.out.println("5.- ALFIL");
+            System.out.println("6.- PEON");
+            opcion = Integer.parseInt(in.readLine());
+            
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        
-    return(false);
+        return(opcion);
     }
     
-  public boolean ocupada_color(Tablero tablero, int fo, int co){
-      Ficha ficha;
-      if(tablero.tablero[fo][co].getOcupada()) ficha=tablero.tablero[fo][co].getFicha();
-      else return(false);
-      if(ficha.color==tablero.turno) return(true);
-      else return(false);
-   }
-  
-  public void ofrecer_cambio(Tablero tablero, int fo, int co, int fd, int cd){
-      if((fd==0)&&(fo==1)&&(tablero.getTurno()==tablero.tablero[fo][co].getFicha().color)){
-          //FD=ultima fila. FO=penultima. turno=color ficha a mover
-          //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
-          // ofrece el cambio y llama a cambio_ficha.
-          BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-          try {
-            System.out.println("Ha coronado un peon. ¿Que ficha desea obtener?(ej. 1)");
-            System.out.println("1.- Reina");
-            System.out.println("2.- Torre");
-            System.out.println("3.- Alfil");
-            System.out.println("4.- Caballo");
-            //Leemos el numero
-            int eleccion = Integer.parseInt(in.readLine());
-            cambio_ficha(tablero,eleccion,fd,cd);
+    /**Funcion para pedir al usuario la fila de la ficha solicitada*/
+    public int ofrecer_fila(){
+        
+        int fila=0;
+       
+        try {
+        
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("FILA");
+            fila = Integer.parseInt(in.readLine())-1;
+            
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la ficha.");
-        } 
-          
-      }else if((fd==7)&&(fo==6)&&(tablero.getTurno()==tablero.tablero[fo][co].getFicha().color)){
-          //FD=ultima fila. FO=penultima. turno=color ficha a mover
-          //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
-          // ofrece el cambio y llama a cambio_ficha.
-          BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-          try {
-            System.out.println("Ha coronado un peon. ¿Que ficha desea obtener?(ej. 1)");
-            System.out.println("1.- Reina");
-            System.out.println("2.- Torre");
-            System.out.println("3.- Alfil");
-            System.out.println("4.- Caballo");
-            //Leemos el numero
-            int eleccion = Integer.parseInt(in.readLine());
-            cambio_ficha(tablero,eleccion,fd,cd);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Entrada incorrecta de la ficha.");
-        } 
-          
-      }
-  }
+        }
+        return(fila);
+    }
     
-  public Tablero cambio_ficha(Tablero tablero, int eleccion, int fd, int cd){
-     //Esta funcion dependiendo de la ficha que el jugador haya escogido
-      //crea la ficha y la mete en su sitio.
-     System.out.println("Cambio de ficha. ("+fd+","+cd+").");
-     System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
-      switch(eleccion){
-          case 1: tablero.tablero[fd][cd].setFicha(new Reina(33,tablero.getTurno()));
-                    return(tablero);
-          case 2: tablero.tablero[fd][cd].setFicha(new Torre(33,tablero.getTurno()));
-                    return(tablero);
-          case 3: tablero.tablero[fd][cd].setFicha(new Alfil(33,tablero.getTurno()));
-                    return(tablero);
-          case 4: tablero.tablero[fd][cd].setFicha(new Caballo(33,tablero.getTurno()));
-                    return(tablero);
-          default: return(tablero);
-      }
-  }
+    /**Funcion para pedir al usuario la fila de la ficha solicitada*/
+    public int ofrecer_columna(){
+        
+        int columna=0;
+        
+        try {
+        
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("COLUMNA");
+            columna = Integer.parseInt(in.readLine())-1;
+            
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return(columna);
+    }
+    
+     public boolean pedir_color(){
+        
+        int columna=0, color=0;
+        
+        System.out.println("¿Que color?");
+        try {
+        
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("(0-Blanco, 1-Negro)");
+            color = Integer.parseInt(in.readLine());
+            
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        if(color==0) return(false);
+        else return(true);
+    }
+    
+    public Ficha crear_ficha(int opcion, boolean color, int id){
+        Ficha ficha;
+        switch(opcion){
+            case 1:return(ficha = new Rey(id,color));
+            case 2:return(ficha = new Reina(id,color));
+            case 3:return(ficha = new Torre(id,color));
+            case 4:return(ficha = new Caballo(id,color));
+            case 5:return(ficha = new Alfil(id,color));
+            case 6:return(ficha = new Peon(id,color));
+            default: return(null);
+        }
+        
+        
+    }
+  
 }

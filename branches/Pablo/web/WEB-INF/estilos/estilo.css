@@ -1,0 +1,81 @@
+BODY {
+	width: 640px;
+	BACKGROUND: #B0CBF7;
+        FONT: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+        COLOR: #000000; 
+	TEXT-ALIGN: left;
+}
+#contenedor {
+	AILIGN: center;
+	BACKGROUND: #FFFFFF;
+	WIDTH: 640px;
+	TEXT-ALIGN: left;
+	BORDER-STYLE: double;
+	BORDER-COLOR:#003366;
+}
+#cabecera {
+	BACKGROUND: url(web/WEB-INF/imagenes/banerChess.jpg) #FFFFFF;
+	PADDING-TOP: 140px;
+	PADDING-RIGHT: 30px;
+	FONT: 16pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+	FONT-weight: bold;
+	COLOR: #003366;
+	TEXT-ALIGN: right;
+	WIDTH: 640px; 
+	HEIGHT: 188px;
+}
+#menu {
+	width: 640px;
+	HEIGHT: 30px;
+	BACKGROUND: #000000;
+	PADDING-TOP: 3px;
+	BORDER-COLOR:#003366;
+	BORDER-WIDTH: 2px;
+	BORDER-TOP-STYLE: solid;
+	BORDER-BOTTOM-STYLE: solid;
+	color: #FFFFFF;
+	TEXT-ALIGN: center;
+	FONT: 10pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+	FONT-weight: bold;
+	
+	
+}
+#cuerpo {
+	PADDING: 4px;
+	width: 640px;
+	TEXT-ALIGN: justify;
+}
+#cuerpo p{
+	FONT: 10pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+}
+
+
+#pie {
+	width: 640px;
+	BACKGROUND-COLOR: #ffffff;
+	TEXT-ALIGN: center;
+	BORDER-TOP-STYLE: solid;
+	BORDER-WIDTH: 2px;
+	BORDER-COLOR:#003366;
+}
+
+A {
+	TEXT-DECORATION: none;
+	COLOR: #000000;
+}
+A:active {
+	COLOR: #000000;
+}
+A:unknown {
+	COLOR: #3f7de3;
+}
+A:link {
+	COLOR: #000000;
+	
+}
+A:visited {
+	COLOR: #3f7de3;
+}
+A:hover {
+	COLOR: white;
+}

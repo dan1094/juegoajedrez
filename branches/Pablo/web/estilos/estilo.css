@@ -1,0 +1,107 @@
+BODY {
+	BACKGROUND: #B0CBF7;
+    COLOR: #000000;
+}
+#contenedor {
+	BACKGROUND: #FFFFFF;
+	WIDTH: 640px;
+	TEXT-ALIGN: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	border: thin solid #000000;
+}
+#cabecera {
+	FONT-weight: bold;
+	COLOR: #0066CC;
+	TEXT-ALIGN: right;
+	WIDTH: 640px;
+	HEIGHT: 188px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	font-style: oblique;
+	background-color: #FFFFFF;
+	background-image: url(../imagenes/banerChess.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+	margin: 0px;
+}
+
+#cabecera p{
+	padding-right: 10px;
+	margin: 0px;
+}
+#menu {
+	width: 640px;
+	HEIGHT: 20px;
+	BACKGROUND: #000000;
+	color: #FFFFFF;
+	TEXT-ALIGN: center;
+	FONT-weight: bold;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	padding-top: 7px;
+	border-top-width: medium;
+	border-bottom-width: medium;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-color: #0066CC;
+}
+
+#menu A:link {
+	COLOR: #FFCC00;	
+}
+#menu A:visited {
+	COLOR: #FFCC33;
+}
+
+#cuerpo {
+	width: 640px;
+	TEXT-ALIGN: justify;
+	background-image: url(../imagenes/logoCeu.jpg);
+}
+#cuerpo p{
+	padding: 5px;
+	FONT: 10pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+}
+#cuerpo h1{
+	text-align:left;
+	font:18pt Verdana, Arial, Helvetica, sans-serif;
+	margin: 4px;
+}
+
+
+#pie {
+	width: 640px;
+	BACKGROUND-COLOR: #ffffff;
+	TEXT-ALIGN: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-style: oblique;
+	height: 20px;
+	border-top-width: medium;
+	border-top-style: solid;
+	border-top-color: #0066CC;
+}
+A:active {
+	COLOR: #FF0000;
+}
+
+A:link {
+	COLOR: #0099FF;	
+}
+
+A:visited {
+	COLOR: #0033FF;
+}
+#login {
+	background-color: #000000;
+	text-align: center;
+	margin-top: 0px;
+	padding-bottom: 2px;
+	color: #FFCC00;
+	font-size: 12px;
+}
+
+A:hover {
+	COLOR: #000099;
+}

@@ -5,12 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>ajedrez</name>
             <minimum-ant-version>1.6</minimum-ant-version>
-            <web-module-libraries>
-                <library files="3">
-                    <file>${libs.JAVADB_DRIVER_LABEL.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-            </web-module-libraries>
+            <web-module-libraries/>
             <web-module-additional-libraries/>
             <source-roots>
                 <root id="src.dir"/>

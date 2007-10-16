@@ -21,10 +21,15 @@ public class Main {
     public Main() {
     }
     
+    
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args){ 
+        
+       
+        
         boolean mate=false;
         int i=1, filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

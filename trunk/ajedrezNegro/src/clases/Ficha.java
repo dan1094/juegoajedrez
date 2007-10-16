@@ -26,6 +26,7 @@ public abstract class Ficha {
     public Ficha(int id_ficha, boolean color){
         this.id_ficha=id_ficha;
         this.color=color;
+      
         
     }
     

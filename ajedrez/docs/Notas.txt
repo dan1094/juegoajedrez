@@ -1,0 +1,2 @@
+1.- Comer al paso del peon.
+2.- Cumple_reglas (creacion personalizada del tablero).

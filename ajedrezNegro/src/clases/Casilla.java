@@ -70,15 +70,4 @@ public class Casilla {
         else return(true);
     }
     
-    //Esta funcion ya no hace falta, porque ya no hay una variable que indique
-    //si esta ocupada, sino que mira si hay ficha asignada directamente.
-   /* public void setOcupada(boolean ocupada) {
-        this.ocupada = ocupada;
-    }*/
-    
-    
-    
-    
-              
-    
 }

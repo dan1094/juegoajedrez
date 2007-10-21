@@ -44,7 +44,7 @@ public class PeonTest extends TestCase {
         int fd = 4;
         int cd = 2;
         
-        Peon instance = new Peon(0,true);
+        Peon instance = new Peon(0,false);
         
         boolean expResult = true;
         boolean resultadoObtenido = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);

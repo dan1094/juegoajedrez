@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+	<!ENTITY CommonProperties SYSTEM "CommonProperties.xml">
+	<!ENTITY CommonPathReferences SYSTEM "CommonPathReferences.xml">
+]>
+
+<!-- ======================================================================= -->
+<!--                         "ajedrez" build file                           -->
+<!-- ======================================================================= -->
+
+<project name="Ajedrez" default="compile" basedir=".">
+
+<!-- ============================  Properties ============================== -->
+
+	<property name="ajedrez.home" value="${basedir}/.."/>       
+        &CommonProperties;
+        &CommonPathReferences;
+        
+	<property name="ajedrez.projectname" value="ajedrez"/>
+	<property name="ajedrez.sources" value="${ajedrez.home}/src"/>
+        <property name="ajedrez.scripts" value="${ajedrez.home}/scripts"/>
+	<property name="ajedrez.build" value="${ajedrez.home}/build"/>
+	<property name="ajedrez.classes" value="${ajedrez.build}/classes"/>
+	<property name="ajedrez.jars" value="${ajedrez.build}/jars"/>
+	<property name="ajedrez.javadoc" value="${ajedrez.build}/javadoc"/>
+        <property name="propertiesconfiguration.home"
+		  value="${ajedrez.home}/PropertiesConfiguration"/> 
+
+<!-- ============================ "init" target ============================ -->
+	
+	<target name="init">		
+		<echo>
+--------------------------------------------------------------------------------
+Running build file for subsystem ${ajedrez.projectname} ...
+--------------------------------------------------------------------------------
+		</echo>
+	</target>
+
+
+<!-- ========================== "compile" target =========================== -->
+	 
+	<target name="compile" depends="init">
+		<mkdir dir="${ajedrez.classes}"/>
+		<javac srcdir="${ajedrez.sources}" 
+			   destdir="${ajedrez.classes}"
+			   classpathref="ajedrez.classpath"
+			   debug="${javac.debug}" 
+			   optimize="${javac.optimize}" 
+			   deprecation="${javac.deprecation}"/>
+	</target>
+
+<!-- ========================= "cleanclasses" target ======================= -->
+
+	<target	name="cleanclasses" depends="init">
+		<delete dir="${ajedrez.classes}"/>
+	</target>
+
+<!-- ========================== "rebuild" target =========================== -->
+
+	<target name="rebuild" depends="cleanclasses, compile"/>
+	
+<!-- ============================ "jars" target ============================ -->
+
+	<target name="jars" depends=""/>
+
+<!-- ========================= "javadoc" target ============================ -->
+
+	<target name="javadoc" depends="compile">
+		<delete dir="${ajedrez.javadoc}"/>
+		<mkdir dir="${ajedrez.javadoc}"/>
+		<javadoc packagenames="es.*"
+				 sourcepath="${ajedrez.sources}"
+				 classpathref="ajedrez.classpath"
+				 destdir="${ajedrez.javadoc}"
+				 private="yes"
+             	 windowtitle="ajedrez"
+             	 doctitle="ajedrez"
+				 header="ajedrez"
+			   bottom="${ajedrez.name} v${ajedrez.version} - ${ajedrez.author}">
+			<link href="${j2se.javadocurl}"/>
+			<link href="${util.javadocurl}"/>
+		</javadoc>
+  </target>
+
+<!-- ========================= "TestPortal" target =============-=========== -->
+
+	<target name="TestPortal">
+		<java fork="yes" classpathref="ajedrez.classpath"
+                classname="model.facade.PortalFacadeDelegateFactory"/>
+	</target>
+<!-- ========================= "LoginEnNegro" target =============-=========== -->
+
+	<target name="LoginEnNegro">
+		<java fork="yes" classpathref="ajedrez.classpath"
+                classname="view.LoginEnNegro"/>
+	</target>
+<!-- ========================= "JugarEnNegro" target =============-=========== -->
+
+	<target name="JugarEnNegro">
+		<java fork="yes" classpathref="ajedrez.classpath"
+                classname="clases.Main"/>
+	</target>
+        
+<!-- ====================== "TestNewsService" target ======================= 
+
+	<target name="TestNewsService">
+		<java fork="yes" classpathref="ajedrez.classpath"
+classname="es.udc.fi.is.jss.ajedrez.model.newsservice.newsservicefacade.delegate.NewsServiceFacadeDelegateFactory"/>
+	</target>
+-->
+
+ <!-- =========================== "clean" target =========================== -->
+
+	<target name="clean" depends="init">
+		<delete dir="${ajedrez.build}"/>
+	</target>
+
+<!-- ============================ "initdb" target ========================== -->
+
+    <!-- IMPORTANT: 
+    
+         - All "java" tasks set "fork" to "true". Otherwise, problems occur 
+           in the creation of the SAX parser. Furthermore, it is required if
+           the "dir" attribute is used.
+           
+         - All "sql" tasks specify onerror="continue" since SQL scripts
+           try to drop tables before creating them (which causes errors if
+           such tables do not exist yet).
+           
+         - All "sql" tasks specify autocommit="true" since some drivers (e.g 
+           the PostgreSQL JDBC 2 driver) do not commit changes if some error 
+           ocurrs.
+           
+    -->
+
+    <target name="initdb" depends="init">
+            
+        <sql driver="${jdbcdriver.className}" 
+            url="${jdbcdriver.url}" userid="${jdbcdriver.user}"        
+            password="${jdbcdriver.password}" 
+            classpathref="ajedrez.classpath"
+            onerror="continue" autocommit="true">
+            <fileset dir="${ajedrez.home}" 
+                includes="**/${jdbcdriver.databaseName}CreateTables.sql"/>
+            <fileset dir="${ajedrez.home}" 
+                includes="**/${jdbcdriver.databaseName}BasicInserts.sql"/>
+        </sql>
+            
+    </target>
+        
+</project>

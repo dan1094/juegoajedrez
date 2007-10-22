@@ -1,0 +1,64 @@
+<!-- ======================================================================= -->
+<!--                              Common properties                          -->
+<!-- ======================================================================= -->
+
+<!--
+The following properties must be defined before referencing this file in
+a build.xml file:
+
+- ajedrez.home
+-->
+
+<!-- ====================== Development environment ======================== -->
+
+<!--
+The following properties must be adapted to your environment:
+
+- jdbcdriver.home
+- jdbcdriver.jars
+- jdbcdriver.className
+- jdbcdriver.url
+- jdbcdriver.databaseName
+- jdbcdriver.user
+- jdbcdriver.password
+- j2se.javadocurl
+-->
+
+<!-- JDBC driver -->
+<!-- MySQL  -->
+<property name="jdbcdriver.home" value="../lib/"/>
+<property name="jdbcdriver.jars" value="mysql-connector-java-5.0.7-bin.jar"/>
+<property name="jdbcdriver.className" value="com.mysql.jdbc.Driver"/>
+<property name="jdbcdriver.url" value="jdbc:mysql://localhost:3306/ajedrez"/>
+<property name="jdbcdriver.databaseName" value="MySQL"/>
+
+<!-- User and password -->
+<property name="jdbcdriver.user" value="root"/>
+<property name="jdbcdriver.password" value="alvaro"/>
+
+<!-- J2SE JavaDoc -->
+<property name="j2se.javadocurl" value="http://java.sun.com/j2se/1.4.2/docs/api/"/>
+
+<!-- ==================== Development environment options ================== -->
+
+<!--
+If not using Jikes, select "modern" as the value of "build.compiler".
+-->
+
+<!-- Java compiler -->
+<!--<property name="build.compiler" value="jikes"/> -->
+<property name="build.compiler" value="modern"/>
+<property name="javac.debug" value="on"/>
+<property name="javac.optimize" value="off"/>
+<property name="javac.deprecation" value="on"/>
+
+<!-- =========================== Distribution ============================== -->
+
+<!-- ajedrez properties -->
+<property name="ajedrez.name" value="ajedrez"/>
+<property name="ajedrez.version" value="1.0"/>
+<property name="ajedrez.author" value="IS2 - Grupo 1"/>
+<property name="ajedrez.backupextension" value=".bck"/>
+<property name="propertiesconfiguration.home"
+		  value="${ajedrez.home}/PropertiesConfiguration"/>          
+

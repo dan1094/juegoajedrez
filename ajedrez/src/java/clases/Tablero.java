@@ -9,7 +9,7 @@
 
 package clases;
 
-import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
+//import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

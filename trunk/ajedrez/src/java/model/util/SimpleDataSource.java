@@ -60,8 +60,8 @@ public class SimpleDataSource implements DataSource {
         try {
             String driverClassName = "com.mysql.jdbc.Driver";
             url = "jdbc:mysql://localhost:3306/ajedrez";
-            user = "root";
-            password = "alvaro";
+            user = "alvaro";
+            password = "alvarete";
             Class.forName(driverClassName);
         
         } catch (Exception e) {

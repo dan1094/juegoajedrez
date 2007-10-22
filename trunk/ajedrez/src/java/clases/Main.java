@@ -10,6 +10,10 @@
 package clases;
 
 import java.io.*;
+import model.facade.*;
+import model.user.*;
+import model.util.*;
+import view.*;
 
 /**
  *
@@ -31,6 +35,8 @@ public class Main {
         
         System.out.println("BIENVENIDO AL AJEDREZ");
         
+        //CasosDeUsoEnNegro instancia= new CasosDeUsoEnNegro();
+        //instancia.casosDeUso();
         /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
          tablero, el que asociamos a setTablero de la partida. */
         Partida partida =  new Partida();

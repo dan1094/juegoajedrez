@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.jar.Pack200;
+import view.MostrarTablero;
 
 /**
  *
@@ -261,7 +262,9 @@ public class Partida {
         System.out.print("El turno es de las: ");
         if(this.getTurno()) System.out.println("NEGRAS");
         else System.out.println("BLANCAS");
+        MostrarTablero mostrarTablero = new MostrarTablero(); 
         do{
+            mostrarTablero.mostrar(tablero);
             System.out.println("COORDENADAS ORIGEN:");
             int filaorigen=this.controller.ofrecer_fila();
             int columnaorigen=this.controller.ofrecer_columna();

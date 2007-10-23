@@ -256,7 +256,7 @@ public class Partida {
         
         return(this);
    }
-    
+    //ATENCION: ESTE METODO DEBERÍA IR ENTERO EN EL CONTROLER
     public void comenzar(){
         System.out.println("COMIENZO DE LA PARTIDA");
         System.out.print("El turno es de las: ");

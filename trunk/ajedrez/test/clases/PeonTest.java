@@ -34,15 +34,18 @@ public class PeonTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Peon.
      */
-    public void testMovimiento_correspondiente_ficha() {
-        System.out.println("movimiento_correspondiente_ficha");
+    public void testMovimiento_sencillo_peon() {
+        System.out.println("movimiento_sencillo_peon");
         
-        Tablero tablero = new Tablero();
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
         
-        int fo = 5;
-        int co = 2;
-        int fd = 4;
-        int cd = 2;
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 1;
+        int co = 1;
+        int fd = 2;
+        int cd = 1;
         
         Peon instance = new Peon(0,false);
         
@@ -52,5 +55,49 @@ public class PeonTest extends TestCase {
         
         
     }
+    
+    public void testMovimiento_doble_peon() {
+        System.out.println("movimiento_doble_peon");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 1;
+        int co = 1;
+        int fd = 3;
+        int cd = 1;
+        
+        Peon instance = new Peon(0,false);
+        
+        boolean expResult = true;
+        boolean resultadoObtenido = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, resultadoObtenido);
+        
+        
+    }
+    
+    /*public void testMovimiento_comer_peon() {
+        System.out.println("movimiento_comer_peon");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 1;
+        int co = 1;
+        int fd = 2;
+        int cd = 1;
+        
+        Peon instance = new Peon(0,false);
+        
+        boolean expResult = true;
+        boolean resultadoObtenido = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, resultadoObtenido);
+        
+        
+    }*/
     
 }

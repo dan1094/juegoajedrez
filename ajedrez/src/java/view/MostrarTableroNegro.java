@@ -22,6 +22,7 @@ public class MostrarTableroNegro extends MostrarTablero {
     public void mostrar(Tablero tablero){
         Casilla casillaAux;
         Ficha fichaAux;
+        
         System.out.println("     a    b    c    d    e    f    g    h  ");
         for(int i=0;i<8;i++){
             System.out.println("  ·········································");

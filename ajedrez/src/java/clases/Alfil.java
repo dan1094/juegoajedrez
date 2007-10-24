@@ -58,5 +58,4 @@ public class Alfil extends Ficha{
     
     
     }    
-    
 }

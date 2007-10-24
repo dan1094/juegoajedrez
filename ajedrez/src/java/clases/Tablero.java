@@ -13,6 +13,7 @@ package clases;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.jar.Pack200;
 
 /**
  *
@@ -134,6 +135,8 @@ public class Tablero {
     /**Crea un tablero como indique el usuario*/
     public Tablero inicializar_tablero_personalizado(Partida partida){
         
+        int coordenadas[];
+        coordenadas = new int[2];
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         int opcion_ficha=0, fila=0, columna=0, id=0, m=0, n=0, id_casilla=0;
         boolean cumple_reglas=false, color=false;
@@ -144,20 +147,32 @@ public class Tablero {
                 partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n);
                 id_casilla++;
             }
-        
+        boolean rb=false,rn=false,ot=false,dosreyes=false;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("PERSONALIZACION DEL TABLERO");
         do{
+           
             opcion_ficha=partida.controller.ofrecer_ficha();
             if(opcion_ficha!=0){
                 color=partida.controller.pedir_color();
-                fila=partida.controller.ofrecer_fila();
-                columna=partida.controller.ofrecer_columna();
+                coordenadas=partida.controller.pedir_coordenadas_ficha();
+                fila=coordenadas[1];
+                columna=coordenadas[0];
                 Ficha ficha = partida.tablero.crear_ficha(opcion_ficha,color,id);
                 partida.tablero.tablero[fila][columna].setFicha(ficha);
+                if(ficha.tipo_ficha.equals("rey")&&(ficha.getColor()==false)){
+                    //rey blanco
+                    if(rb==true){
+                        dosreyes=true;
+                    }else rb=true;
+                }else if(ficha.tipo_ficha.equals("rey")&&(ficha.getColor()==true)){
+                        if(rn==true){
+                            dosreyes=true;
+                        }else rn=true;
+                       }else ot=true;
                 
             }
-        }while((opcion_ficha!=0)||(!partida.tablero.cumple_reglas()));
+        }while((opcion_ficha!=0)||(!partida.tablero.cumple_reglas(rn,rb,ot,dosreyes)));
         
         return(partida.tablero);
     }
@@ -181,9 +196,12 @@ public class Tablero {
     }
     
     /**Comprueba que los dos reyes y, al menos, otra ficha mas,han sido incluidas*/
-    public boolean cumple_reglas(){
-        //HACER!!!
-     return(true);   
+    public boolean cumple_reglas(boolean rn, boolean rb, boolean ot, boolean dosreyes){
+        if(rb&&rn&&ot&&!dosreyes) return(true);
+        else {
+            System.out.println("Debe introducir mas fichas.");
+            return(false);
+        }   
     }
   
     /**Crea fichas a partir de la opcion introducida anteriormente*/

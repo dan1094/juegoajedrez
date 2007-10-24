@@ -146,6 +146,7 @@ public class Partida {
         boolean destino_dentro=this.tablero.dentro_tablero(filadestino,columnadestino);
         boolean origen_turno=this.ocupada_color(tablero,filaorigen,columnaorigen);
         
+        
         //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
         if(origen_dentro&&destino_dentro&&origen_turno){
         
@@ -193,7 +194,7 @@ public class Partida {
                //Origen no valido o destino no valido o origen vacio
                 if(!origen_dentro) System.out.println("El origen no es valido. No pertenece al tablero.");
                 if(!destino_dentro)  System.out.println("El destino no es valido. No pertenece al tablero.");
-                if(!origen_turno) System.out.println("La ficha de la casilla DESTINO es de su color.");
+                if(!origen_turno) System.out.println("La ficha de la casilla ORIGEN no es de su color.");
                 return(false);//No se da la condicion del if. No estan dentro del tablero
         }
         
@@ -229,9 +230,9 @@ public class Partida {
     
     public boolean ocupada_color(Tablero tablero, int fo, int co){
       Ficha ficha;
-      if(tablero.tablero[fo][co].getOcupada()) ficha=tablero.tablero[fo][co].getFicha();
+      if(this.tablero.tablero[fo][co].getOcupada()) ficha=this.tablero.tablero[fo][co].getFicha();
       else return(false);
-      if(ficha.color==this.turno) return(true);
+      if(ficha.getColor()==this.getTurno()) return(true);
       else return(false);
    }
     
@@ -249,6 +250,7 @@ public class Partida {
         if(personal){
             //La partida es personalizada.
             this.tablero=this.tablero.inicializar_tablero_personalizado(this);
+            this.turno=this.controller.obtener_turno_personalizado(this);
         }else{
             //La partida es estandar
             this.tablero=this.tablero.inicializar_tablero_estandar(this);
@@ -256,8 +258,13 @@ public class Partida {
         
         return(this);
    }
-    //ATENCION: ESTE METODO DEBERÍA IR ENTERO EN EL CONTROLER
+    
     public void comenzar(){
+        //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
+        int coordenadas[];
+        coordenadas = new int[4];
+        
+        
         System.out.println("COMIENZO DE LA PARTIDA");
         System.out.print("El turno es de las: ");
         if(this.getTurno()) System.out.println("NEGRAS");
@@ -265,12 +272,11 @@ public class Partida {
         MostrarTablero mostrarTablero = new MostrarTableroNegro(); 
         do{
             mostrarTablero.mostrar(tablero);
-            System.out.println("COORDENADAS ORIGEN:");
-            int filaorigen=this.controller.ofrecer_fila();
-            int columnaorigen=this.controller.ofrecer_columna();
-            System.out.println("COORDENADAS DESTINO:");
-            int filadestino=this.controller.ofrecer_fila();
-            int columnadestino=this.controller.ofrecer_columna();
+            coordenadas = this.controller.pedir_coordenadas_movimiento();
+            int filaorigen=coordenadas[1];
+            int columnaorigen=coordenadas[0];
+            int filadestino=coordenadas[3];
+            int columnadestino=coordenadas[2];
             
             boolean movida=this.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
             if(movida)
@@ -306,11 +312,13 @@ public class Partida {
     
     /**Mira si se ha llegado a tablas en la prtida*/
     public boolean son_tablas(Partida partida){
+        
         return(false);
     }
     
     /**Mira si ha habido jaque-mate*/
     public boolean es_mate(Partida partida){
+        
         return(false);
     }
     

@@ -37,6 +37,7 @@ public class Main {
         
         //CasosDeUsoEnNegro instancia= new CasosDeUsoEnNegro();
         //instancia.casosDeUso();
+        
         /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
          tablero, el que asociamos a setTablero de la partida. */
         Partida partida =  new Partida();

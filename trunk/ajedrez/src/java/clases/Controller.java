@@ -86,9 +86,12 @@ public class Controller {
      /**Funcion para pedir al usuario la fila de la ficha solicitada*/
      public int ofrecer_columna(){
         int columna=0;
+        char columna_letra;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("COLUMNA: ");
+           // this.convertir();
+           // columna_letra = (char) System.in.read();
             columna = Integer.parseInt(in.readLine())-1;
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
@@ -119,7 +122,7 @@ public class Controller {
          BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
          
           try {
-            System.out.println("Ha coronado un peon. ¿Que ficha desea obtener?(ej. 1)");
+            System.out.println("Ha coronado un peon. ¿Que ficha desea obtener?");
             System.out.println("1.- Reina");
             System.out.println("2.- Torre");
             System.out.println("3.- Alfil");
@@ -134,4 +137,117 @@ public class Controller {
             return(0);
         }
      }
+
+    /**Esta funcion convierte la columna, introducida en letras por el usuario,
+     *a numeros, para la aplicacion*/
+     public int convertir(char letra){
+         switch(letra){
+             case 'A':
+             case 'a':  return(0);
+             case 'B':
+             case 'b':  return(1);
+             case 'C':
+             case 'c':  return(2);
+             case 'D':
+             case 'd':  return(3);
+             case 'E':
+             case 'e':  return(4);
+             case 'F':
+             case 'f':  return(5);
+             case 'G':
+             case 'g':  return(6);
+             case 'H':
+             case 'h':  return(7);
+             default: return(8);
+         }
+                 
+     }
+     
+     public int convertir_int(char letra){
+         switch(letra){
+             
+             case '1':  return(7);             
+             case '2':  return(6);
+             case '3':  return(5);
+             case '4':  return(4);
+             case '5':  return(3);
+             case '6':  return(2);
+             case '7':  return(1);
+             case '8':  return(0);
+             default: return(8);
+         }
+                 
+     }
+     
+     
+     public int[] pedir_coordenadas_movimiento(){
+        
+        char coor_cadena[];
+        coor_cadena = new char[5];
+        int coordenadas[];
+        coordenadas = new int[4];
+        
+        System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
+         
+        try {
+            //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
+            //llamamos a convertir, que pasa de char a entero. Y lo metemos en un array de enteros.
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            coor_cadena=in.readLine().toCharArray();
+            coordenadas[0]=this.convertir(coor_cadena[0]);
+            coordenadas[1]=this.convertir_int(coor_cadena[1]);
+            coordenadas[2]=this.convertir(coor_cadena[2]);
+            coordenadas[3]=this.convertir_int(coor_cadena[3]);
+            
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }return(coordenadas);
+     }
+     
+     public int[] pedir_coordenadas_ficha(){
+         
+         char coor_cadena[];
+         coor_cadena = new char[2];
+         int coordenadas[];
+         coordenadas = new int[2];
+        System.out.println("Introduzca las coordenadas para la ficha (FIDE):");
+         
+        try {
+            //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
+            //llamamos a convertir, que pasa de char a entero. Y lo metemos en un array de enteros.
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            coor_cadena=in.readLine().toCharArray();
+            coordenadas[0]=this.convertir(coor_cadena[0]);
+            coordenadas[1]=this.convertir_int(coor_cadena[1]);
+                      
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }return(coordenadas);
+     }
+     
+     public boolean obtener_turno_personalizado(Partida partida){
+         boolean turno=false;
+         try {
+                        
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            int turn=in.read();
+            
+            if(turn==0) turno=false;
+            else turno=true;
+                      
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+         return(turno);
+     }
+             
+             
 }

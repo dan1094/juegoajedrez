@@ -26,7 +26,7 @@ public class MostrarTableroNegro extends MostrarTablero {
         System.out.println("     a    b    c    d    e    f    g    h  ");
         for(int i=0;i<8;i++){
             System.out.println("  ·········································");
-            System.out.print((i+1)+" ·"); 
+            System.out.print((8-i)+" ·"); 
             for(int j=0;j<8;j++){
                 //Guardo la ficha con la que estoy trabajando
                 casillaAux = tablero.getCasilla(i,j);

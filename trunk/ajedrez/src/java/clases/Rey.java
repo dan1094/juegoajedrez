@@ -98,4 +98,29 @@ public class Rey extends Ficha{
             }else return((!tablero.tablero[fo][5].getOcupada())&&(!tablero.tablero[fo][6].getOcupada()));
     }
     
+   public Tablero amenazar_casillas(Tablero tablero, int fila, int columna){
+        if(this.getColor()){
+            if(super.dentro(fila-1,columna-1)) tablero.tablero[fila-1][columna-1].setAmenazada_por_negras(true);
+            if(super.dentro(fila-1,columna)) tablero.tablero[fila-1][columna].setAmenazada_por_negras(true);
+            if(super.dentro(fila-1,columna+1)) tablero.tablero[fila-1][columna+1].setAmenazada_por_negras(true);
+            if(super.dentro(fila,columna-1)) tablero.tablero[fila][columna-1].setAmenazada_por_negras(true);
+            if(super.dentro(fila,columna+1)) tablero.tablero[fila][columna+1].setAmenazada_por_negras(true);
+            if(super.dentro(fila+1,columna-1)) tablero.tablero[fila+1][columna-1].setAmenazada_por_negras(true);
+            if(super.dentro(fila+1,columna)) tablero.tablero[fila+1][columna].setAmenazada_por_negras(true);
+            if(super.dentro(fila+1,columna+1)) tablero.tablero[fila+1][columna+1].setAmenazada_por_negras(true);
+            
+        }else{
+             if(super.dentro(fila-1,columna-1)) tablero.tablero[fila-1][columna-1].setAmenazada_por_blancas(true);
+            if(super.dentro(fila-1,columna)) tablero.tablero[fila-1][columna].setAmenazada_por_blancas(true);
+            if(super.dentro(fila-1,columna+1)) tablero.tablero[fila-1][columna+1].setAmenazada_por_blancas(true);
+            if(super.dentro(fila,columna-1)) tablero.tablero[fila][columna-1].setAmenazada_por_blancas(true);
+            if(super.dentro(fila,columna+1)) tablero.tablero[fila][columna+1].setAmenazada_por_blancas(true);
+            if(super.dentro(fila+1,columna-1)) tablero.tablero[fila+1][columna-1].setAmenazada_por_blancas(true);
+            if(super.dentro(fila+1,columna)) tablero.tablero[fila+1][columna].setAmenazada_por_blancas(true);
+            if(super.dentro(fila+1,columna+1)) tablero.tablero[fila+1][columna+1].setAmenazada_por_blancas(true);
+        }
+        
+        return(tablero);
+    }   
+    
 }

@@ -55,4 +55,31 @@ public class Caballo extends Ficha{
             return(false);
         }
     }
+  public Tablero amenazar_casillas(Tablero tablero, int fila, int columna){
+        
+      if(this.getColor()){//FICHA NEGRA
+          
+          if(super.dentro(fila+1,columna+2))  tablero.tablero[fila+1][columna+2].setAmenazada_por_negras(true);
+          if(super.dentro(fila+2,columna+1))  tablero.tablero[fila+2][columna+1].setAmenazada_por_negras(true);
+          if(super.dentro(fila+1,columna-2))  tablero.tablero[fila+1][columna-2].setAmenazada_por_negras(true);
+          if(super.dentro(fila+2,columna-1))  tablero.tablero[fila+2][columna-1].setAmenazada_por_negras(true);
+          if(super.dentro(fila-1,columna-2))  tablero.tablero[fila-1][columna-2].setAmenazada_por_negras(true);
+          if(super.dentro(fila-2,columna-1))  tablero.tablero[fila-2][columna-1].setAmenazada_por_negras(true);
+          if(super.dentro(fila-1,columna+2))  tablero.tablero[fila-1][columna+2].setAmenazada_por_negras(true);
+          if(super.dentro(fila-2,columna+1))  tablero.tablero[fila-2][columna+1].setAmenazada_por_negras(true);
+       }else {//FICHA BLANCA
+          if(super.dentro(fila+1,columna+2))  tablero.tablero[fila+1][columna+2].setAmenazada_por_blancas(true);
+          if(super.dentro(fila+2,columna+1))  tablero.tablero[fila+2][columna+1].setAmenazada_por_blancas(true);
+          if(super.dentro(fila+1,columna-2))  tablero.tablero[fila+1][columna-2].setAmenazada_por_blancas(true);
+          if(super.dentro(fila+2,columna-1))  tablero.tablero[fila+2][columna-1].setAmenazada_por_blancas(true);
+          if(super.dentro(fila-1,columna-2))  tablero.tablero[fila-1][columna-2].setAmenazada_por_blancas(true);
+          if(super.dentro(fila-2,columna-1))  tablero.tablero[fila-2][columna-1].setAmenazada_por_blancas(true);
+          if(super.dentro(fila-1,columna+2))  tablero.tablero[fila-1][columna+2].setAmenazada_por_blancas(true);
+          if(super.dentro(fila-2,columna+1))  tablero.tablero[fila-2][columna+1].setAmenazada_por_blancas(true);
+       }
+      
+        return(tablero);
+    }   
+  
+  
 }

@@ -55,7 +55,55 @@ public class Alfil extends Ficha{
                 "el paso.");
              return(false);
         }
+    }
     
-    
+    public Tablero amenazar_casillas(Tablero tablero,int fila, int columna){
+        int i,j;
+        boolean libre=true;
+        if(this.getColor()){//FICHA NEGRA
+            for(i=fila-1,j=columna-1;(i>=0)&&(j>=0)&&libre;i--,j--){
+                tablero.tablero[i][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila-1,j=columna+1;(i>=0)&&(j<=7)&&libre;i--,j++){
+                tablero.tablero[i][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1,j=columna-1;(i<=7)&&(j>=0)&&libre;i++,j--){
+                tablero.tablero[i][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1,j=columna+1;(i<=7)&&(j<=7)&&libre;i++,j++){
+                tablero.tablero[i][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            
+        }else{//FICHA BLANCA
+            for(i=fila-1,j=columna-1;(i>=0)&&(j>=0)&&libre;i--,j--){
+                tablero.tablero[i][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila-1,j=columna+1;(i>=0)&&(j<=7)&&libre;i--,j++){
+                tablero.tablero[i][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1,j=columna-1;(i<=7)&&(j>=0)&&libre;i++,j--){
+                tablero.tablero[i][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1,j=columna+1;(i<=7)&&(j<=7)&&libre;i++,j++){
+                tablero.tablero[i][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][j].getOcupada();
+            }
+        }
+        
+        
+        return(tablero);
     }    
 }

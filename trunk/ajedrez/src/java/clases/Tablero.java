@@ -85,7 +85,7 @@ public class Tablero {
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n);
+                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
                 id_casilla++;
             }
         
@@ -144,7 +144,7 @@ public class Tablero {
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n);
+                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
                 id_casilla++;
             }
         boolean rb=false,rn=false,ot=false,dosreyes=false;
@@ -217,6 +217,20 @@ public class Tablero {
             case 6:return(ficha = new Peon(id,color));
             default: return(null);
         }
+    }
+    
+    /**Esta funcion recorre el tablero, marcando las casillas amenazadas*/
+    public void amenazas(){
+        for(int i=0;i<8;i++)
+            for(int j=0;j<8;j++)
+            {
+                //Si no esta vacia, se coge la ficha y se llama a amenazar_casillas
+                if(this.tablero[i][j].getOcupada()){
+                Ficha ficha =this.tablero[i][j].getFicha();
+                ficha.amenazar_casillas(this,i,j);
+                }
+                
+            }
     }
   
 }

@@ -43,7 +43,7 @@ public class Main {
         Partida partida =  new Partida();
         Tablero tablero = new Tablero(0);
         partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
-        partida.obtener_tablero(partida);
+        partida.obtener_tablero(partida); //
         partida.comenzar();
         
         

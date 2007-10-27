@@ -86,5 +86,51 @@ public class Torre extends Ficha{
        
        
     }
+    public Tablero amenazar_casillas(Tablero tablero,int fila, int columna){
+        int i,j;
+        boolean libre=true;
+        
+        if(this.getColor()){//FICHA NEGRA(torre)
+            for(i=fila-1;(i>=0)&&libre;i--){
+                tablero.tablero[i][columna].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][columna].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1;(i<=7)&&libre;i++){
+                tablero.tablero[i][columna].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[i][columna].getOcupada();
+            }
+            libre=true;
+            for(j=columna+1;(j<=7)&&libre;j++){
+                tablero.tablero[fila][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[fila][j].getOcupada();
+            }libre=true;
+            for(j=columna-1;(j>=0)&&libre;j--){
+                tablero.tablero[fila][j].setAmenazada_por_negras(true);
+                libre=!tablero.tablero[fila][j].getOcupada();
+            }
+        }else{
+            for(i=fila-1;(i>=0)&&libre;i--){
+                tablero.tablero[i][columna].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][columna].getOcupada();
+            }
+            libre=true;
+            for(i=fila+1;(i<=7)&&libre;i++){
+                tablero.tablero[i][columna].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[i][columna].getOcupada();
+            }
+            libre=true;
+            for(j=columna+1;(j<=7)&&libre;j++){
+                tablero.tablero[fila][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[fila][j].getOcupada();
+            }libre=true;
+            for(j=columna-1;(j>=0)&&libre;j--){
+                tablero.tablero[fila][j].setAmenazada_por_blancas(true);
+                libre=!tablero.tablero[fila][j].getOcupada();
+            }libre=true;
+            
+        }
+        return(tablero);
+    }   
     
 }

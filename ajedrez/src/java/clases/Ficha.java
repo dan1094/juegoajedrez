@@ -73,5 +73,9 @@ public abstract class Ficha {
         else return(false);
     }
     
+    /**Esta funcion marca cada casilla amenazada por una ficha*/
+    public abstract Tablero amenazar_casillas(Tablero tablero,int fila, int columna);
+    
+    
         
 }

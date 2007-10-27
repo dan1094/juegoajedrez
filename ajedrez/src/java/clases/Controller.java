@@ -90,9 +90,9 @@ public class Controller {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("COLUMNA: ");
-           // this.convertir();
-           // columna_letra = (char) System.in.read();
-            columna = Integer.parseInt(in.readLine())-1;
+            columna_letra=(char)in.read();
+            columna=this.convertir(columna_letra);
+            //columna = Integer.parseInt(in.readLine())-1;
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -183,7 +183,7 @@ public class Controller {
      public int[] pedir_coordenadas_movimiento(){
         
         char coor_cadena[];
-        coor_cadena = new char[5];
+        coor_cadena = new char[10];
         int coordenadas[];
         coordenadas = new int[4];
         
@@ -195,11 +195,8 @@ public class Controller {
             
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             coor_cadena=in.readLine().toCharArray();
-            coordenadas[0]=this.convertir(coor_cadena[0]);
-            coordenadas[1]=this.convertir_int(coor_cadena[1]);
-            coordenadas[2]=this.convertir(coor_cadena[2]);
-            coordenadas[3]=this.convertir_int(coor_cadena[3]);
-            
+            coordenadas=this.de_fide_a_modelo(coor_cadena);
+                        
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -235,6 +232,7 @@ public class Controller {
          boolean turno=false;
          try {
                         
+             
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             int turn=in.read();
             
@@ -249,5 +247,10 @@ public class Controller {
          return(turno);
      }
              
-             
+     /**Convierte el movimiento FIDE al comprensible por el MODELO*/
+     public  int[] de_fide_a_modelo(char[] fide){
+         int coordenadas[];
+         coordenadas = new int[4];
+         return(coordenadas);
+     }
 }

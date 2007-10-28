@@ -26,18 +26,26 @@ public class Controller {
     
      /**Ofrece la personalizacion del tablero de la partida*/
      public boolean tablero_personalizado(){
-        
-        System.out.println("¿Desea jugar una partida estandar o desea personalizar el tablero?");
-        System.out.println("(0=Estandar, 1=Personalizada)");
         int tipo_partida=0;
+        do
+        {
+            System.out.println("Introduzca el tipo de partida que desea empezar");
+            System.out.println("0 .- Partida Estandar");
+            System.out.println("1 .- Partida Personalizada");
+            
+            try{
+                tipo_partida = Integer.parseInt(in.readLine());
+            }catch(NumberFormatException ex){
+                
+                System.out.println("Caracter invalido");
+                
+            }catch(IOException ex){
+                
+                System.out.println("Caracter invalido");
+            }
+            
         
-        try {
-            tipo_partida = Integer.parseInt(in.readLine());
-        } catch (NumberFormatException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        }while((tipo_partida!=0)&&(tipo_partida!=1));
         
         if(tipo_partida==0) return(false);
         else return(true);

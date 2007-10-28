@@ -199,7 +199,7 @@ public class Controller {
          
         try {
             //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
-            //llamamos a convertir, que pasa de char a entero. Y lo metemos en un array de enteros.
+            //y llamamos a "de_fide_a_modelo"
             
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             coor_cadena=in.readLine().toCharArray();
@@ -259,6 +259,22 @@ public class Controller {
      public  int[] de_fide_a_modelo(char[] fide){
          int coordenadas[];
          coordenadas = new int[4];
+         //Vamos leyendo de caracter en caracter, lo introducido en "fide[]"
+         switch(fide[0]){
+             case 'T':
+             case 't':
+             case 'C':
+             case 'c':
+             case 'A':
+             case 'a':
+             case 'D':
+             case 'd':
+             case 'R':
+             case 'r':
+        }
+         
+         
+         
          return(coordenadas);
      }
 }

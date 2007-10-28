@@ -216,6 +216,7 @@ public class Partida {
                 origen.setFicha(null);
                 this.cambio_turno();
                 System.out.println("Ficha movida.");
+                this.tablero.amenazas();
                 if(turno)  System.out.println("ES EL TURNO DE LAS NEGRAS");
                 else System.out.println("ES EL TURNO DE LAS BLANCAS");
                 
@@ -310,17 +311,102 @@ public class Partida {
         return(tablas||mate);
     }
     
-    /**Mira si se ha llegado a tablas en la prtida*/
+    /**Mira si se ha llegado a tablas en la partida*/
     public boolean son_tablas(Partida partida){
-        
-        return(false);
+        //Busca los reyes y comprueba si pueden mover
+                int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
+       
+        for(int i=0;i<8;i++)
+            for(int j=0;j<8;j++){
+                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
+                {//Si es un rey, y si es blanco
+                    filarey_blanco=i;
+                    columnarey_blanco=j;
+                }
+                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
+                {//Si es un rey, y si es negro
+                    filarey_negro=i;
+                    columnarey_negro=j;
+                }
+            }
+        if(this.tablero.tablero[filarey_blanco][columnarey_blanco].getFicha().getColor()==false){
+            //se comprueba si el rey blanco puede mover
+            if(this.tablero.tablero[filarey_blanco-1][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco-1][columnarey_blanco].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco-1][columnarey_blanco+1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco][columnarey_blanco+1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco+1].getAmenazada_por_negras()&&
+               !this.tablero.tablero[filarey_blanco][columnarey_blanco].getAmenazada_por_negras())
+            return(true);
+        else return(false);
+        }else{
+            //se comprueba si el rey negro puede mover
+            if(this.tablero.tablero[filarey_negro-1][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro-1][columnarey_negro].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro-1][columnarey_negro+1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro][columnarey_negro+1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro+1].getAmenazada_por_blancas()&&
+               !this.tablero.tablero[filarey_negro][columnarey_negro].getAmenazada_por_blancas())
+            return(true);
+        else return(false);        
+        }
+                
     }
     
     /**Mira si ha habido jaque-mate*/
     public boolean es_mate(Partida partida){
-        
-        return(false);
+        //Busca los reyes y comprueba si pueden mover
+                int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
+       
+        for(int i=0;i<8;i++)
+            for(int j=0;j<8;j++){
+                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
+                {//Si es un rey, y si es blanco
+                    filarey_blanco=i;
+                    columnarey_blanco=j;
+                }
+                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
+                {//Si es un rey, y si es negro
+                    filarey_negro=i;
+                    columnarey_negro=j;
+                }
+            }
+        if(this.tablero.tablero[filarey_blanco][columnarey_blanco].getFicha().getColor()==false){
+            //se comprueba si el rey blanco puede mover
+            if(this.tablero.tablero[filarey_blanco-1][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco-1][columnarey_blanco].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco-1][columnarey_blanco+1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco][columnarey_blanco+1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco-1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco+1][columnarey_blanco+1].getAmenazada_por_negras()&&
+                this.tablero.tablero[filarey_blanco][columnarey_blanco].getAmenazada_por_negras())
+                //Esta ultima linea diferencia el mate de las tablas. Si esta en jaque->es mate, si no son tablas
+            return(true);
+        else return(false);
+        }else{
+            //se comprueba si el rey negro puede mover
+            if(this.tablero.tablero[filarey_negro-1][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro-1][columnarey_negro].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro-1][columnarey_negro+1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro][columnarey_negro+1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro-1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro+1][columnarey_negro+1].getAmenazada_por_blancas()&&
+                this.tablero.tablero[filarey_negro][columnarey_negro].getAmenazada_por_blancas())
+                //Esta ultima linea diferencia el mate de las tablas. Si esta en jaque->es mate, si no son tablas
+            return(true);
+        else return(false);        
+        }
+                
     }
-    
-    
+   
 }

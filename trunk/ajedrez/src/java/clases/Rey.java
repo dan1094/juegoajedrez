@@ -37,8 +37,9 @@ public class Rey extends Ficha{
      *debe a que puede estar amenazada por una ficha del oponente*/
     public boolean esta_amenazada(Tablero tablero, int fd, int cd){
         //Tengo que tener en cuenta el color de la ficha.
+        if(this.getColor()) return(tablero.tablero[fd][cd].getAmenazada_por_blancas());
+        else return(tablero.tablero[fd][cd].getAmenazada_por_negras());
         
-    return(false);
     }
     
     

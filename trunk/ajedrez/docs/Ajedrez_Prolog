@@ -26,6 +26,15 @@ cambiarTurno(estado(Tablero, negro)) :-  retract(estado(Tablero, negro)),
 casillaAmenazada(estado(Tablero, Turno0), I, J) :-
         turnoContrario(Turno0, Turno1),
         condicionMovimientoSalvoAmenazas(estado(Tablero, Turno1), _F, _I0, _J0, I, J).
+        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% casillaAmenazada/3       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+igualColor(estado(Tablero,Turno0),I0,J0,I1,J1):-
+        contenido(Tablero,I0,J0,ficha(X,C1)),contenido(Tablero,I0,J0,ficha(Y,C2)),
+        C1=C2.
+
 
 %%%%%%%%%%%%%%%%%%
 % columna/1      %
@@ -52,6 +61,21 @@ columnaNumero(5, e).
 columnaNumero(6, f).
 columnaNumero(7, g).
 columnaNumero(8, h).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       comer            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+comer(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
+        not (hayFicha(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
+        contenido(Tablero0,I1,J1,ficha(Figura,negro)),
+        retract(contenido(Tablero0, I1, J1, ficha(Figura, negro))),
+        assert(contenido(Tablero0, I1, J1, ficha(Figura, blanco))),
+        retract(contenido(Tablero0, I0, J0, ficha(Figura, blanco))), %quita la ficha de su posicion
+        cambiarTurno(estado(Tablero0, blanco)).
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % condicionGeneralMovimiento/6    %
@@ -153,6 +177,65 @@ fila(6).
 fila(7).
 fila(8).   
      
+%%%%%%%%%%%%%%%%%%%%%
+% hayficha/6        %
+%%%%%%%%%%%%%%%%%%%%%
+
+%ARRIBA ABAJO
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0, J0, I1, J1):- J1>J0, JF is J1-1, hayFicha(I0,J0,I1,JF).
+
+%ABAJO ARRIBA        
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0, J0, I1, J1):- J1<J0, JF is J1+1, hayFicha(I0,J0,I1,JF).
+        
+%IZQUIERDA DERECHA        
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0, J0, I1, J0):- numeroColumna(I0,NI0), numeroColumna(I1,NI1),
+                           NI1>NI0, NIF is NI1-1, columnaNumero(NIF,IF),
+                           hayFicha(I0,J0,IF,J0).
+%DERECHA IZQUIERDA                     
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0, J0, I1, J0):- numeroColumna(I0,NI0), numeroColumna(I1,NI1),
+                           NI1<NI0, NIF is NI1+1, columnaNumero(NIF,IF),
+                           hayFicha(I0,J0,IF,J0).
+                           
+                          
+%DIAGONAL ARRIBA DERECHA
+
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0,J0,I1,J1):- J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+        NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
+        
+%DIAGONAL ARRIBA IZQUIERDA
+
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0,J0,I1,J1):- J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+        NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).        
+        
+        
+%DIAGONAL ABAJO DERECHA
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0,J0,I1,J1):- J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+        NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
+        
+%DIAGONAL ABAJO IZQUIERDA
+hayFicha(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0)
+        ,I0,J0,I1,J1):- J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+        NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
+        
+                           
+
+                           
+
 %%%%%%%%%%%%%%%%%%%
 % hayficha        %
 %%%%%%%%%%%%%%%%%%%
@@ -287,10 +370,11 @@ turnoContrario(negro, blanco).
 % estamos en el tablero to, en la columna e en la fila 1 con el rey blanco
         %y el rey negro en la columna e en fila 8
 
-contenido(t0, e, 1, ficha(rey, blanco)). %esto es como un insertar al inicio
-contenido(t0, e, 8, ficha(rey, negro)).
-contenido(t0, c, 3, ficha(alfil,negro)).
+contenido(t0, d, 4, ficha(rey, blanco)). %esto es como un insertar al inicio
+contenido(t0, b, 7, ficha(rey, negro)).
+contenido(t0, c, 2, ficha(alfil,negro)).
 contenido(t0, d, 5, ficha(reina,blanco)).
 contenido(t0, f, 7, ficha(alfil,blanco)).
+contenido(t0, b, 5, ficha(reina,negro)).
 
 estado(t0, blanco).%aqui dice: primer turno para 

@@ -73,6 +73,11 @@ public abstract class Ficha {
         else return(false);
     }
     
+    public boolean dentro_amenaza(int fila, int col){
+        if((fila>=0)&&(fila<=7)&&(col>=0)&&(col<=7)) return(true);
+        else return(false);
+    }
+    
     /**Esta funcion marca cada casilla amenazada por una ficha*/
     public abstract Tablero amenazar_casillas(Tablero tablero,int fila, int columna);
     

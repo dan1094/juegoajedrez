@@ -230,7 +230,11 @@ public class Controller {
             
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             coor_cadena=in.readLine().toCharArray();
-            coordenadas=this.de_fide_a_modelo(coor_cadena);
+            coordenadas[0]=this.convertir(coor_cadena[0]);
+            coordenadas[1]=this.convertir_int(coor_cadena[1]);
+            coordenadas[2]=this.convertir(coor_cadena[2]);
+            coordenadas[3]=this.convertir_int(coor_cadena[3]);
+            /*coordenadas=this.de_fide_a_modelo(coor_cadena);*/
                         
         } catch (NumberFormatException ex) {
             ex.printStackTrace();

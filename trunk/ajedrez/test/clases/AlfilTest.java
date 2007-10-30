@@ -31,7 +31,27 @@ public class AlfilTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Alfil.
      */
-    public void testMovimiento_correspondiente_ficha() {
+    public void testMovimiento_correspondiente_ficha_No_Valido() {
+        System.out.println("movimiento_correspondiente_ficha");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        int fo = 0;
+        int co = 2;
+        int fd = 2;
+        int cd = 2;
+        
+        Ficha instance = new Alfil(0,false);
+        instance = tablero.crear_ficha(5,false,0);
+        
+        boolean expResult = false;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+        
+        
+    }
+    public void testMovimiento_correspondiente_ficha_Hacia_Delante() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -40,6 +60,26 @@ public class AlfilTest extends TestCase {
         int fo = 0;
         int co = 2;
         int fd = 1;
+        int cd = 1;
+        
+        Ficha instance = new Alfil(0,false);
+        instance = tablero.crear_ficha(5,false,0);
+        
+        boolean expResult = true;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+        
+        
+    }
+    public void testMovimiento_correspondiente_ficha_Hacia_Atras() {
+        System.out.println("movimiento_correspondiente_ficha");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        int fo = 5;
+        int co = 2;
+        int fd = 4;
         int cd = 1;
         
         Ficha instance = new Alfil(0,false);

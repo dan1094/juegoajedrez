@@ -31,7 +31,7 @@ public class CaballoTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Caballo.
      */
-    public void testMovimiento_correspondiente_ficha() {
+    public void testMovimiento_correspondiente_ficha_Hacia_Delante() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -47,6 +47,52 @@ public class CaballoTest extends TestCase {
         Caballo instance = new Caballo(0,false);
         
         boolean expResult = true;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+        
+        
+    }
+    
+    
+    public void testMovimiento_correspondiente_ficha_Hacia_Atras() {
+        System.out.println("movimiento_correspondiente_ficha");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 4;
+        int co = 6;
+        int fd = 2;
+        int cd = 5;
+        
+        Caballo instance = new Caballo(0,false);
+        
+        boolean expResult = true;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+        
+        
+    }
+    
+    
+     public void testMovimiento_correspondiente_ficha_No_Valido() {
+        System.out.println("movimiento_correspondiente_ficha");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 4;
+        int co = 6;
+        int fd = 2;
+        int cd = 6;
+        
+        Caballo instance = new Caballo(0,false);
+        
+        boolean expResult = false;
         boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
         assertEquals(expResult, result);
         

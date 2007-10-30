@@ -226,6 +226,8 @@ public class PartidaTest extends TestCase {
     public void testFin_partida() {
         System.out.println("fin_partida");
         
+      
+        
         Partida partida = null;
         Partida instance = new Partida();
         

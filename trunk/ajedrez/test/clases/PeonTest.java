@@ -78,6 +78,51 @@ public class PeonTest extends TestCase {
         
     }
     
+    
+     public void testMovimiento_No_Valido_Vertical() {
+        System.out.println("movimiento_doble_peon");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 1;
+        int co = 1;
+        int fd = 4;
+        int cd = 1;
+        
+        Peon instance = new Peon(0,false);
+        
+        boolean expResult = false;
+        boolean resultadoObtenido = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, resultadoObtenido);
+        
+        
+    }
+     
+     public void testMovimiento_No_Valido_Horizontal() {
+        System.out.println("movimiento_doble_peon");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero = tablero.inicializar_tablero_estandar(partida);
+        
+        int fo = 1;
+        int co = 1;
+        int fd = 1;
+        int cd = 2;
+        
+        Peon instance = new Peon(0,false);
+        
+        boolean expResult = false;
+        boolean resultadoObtenido = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, resultadoObtenido);
+        
+        
+    }
+    
     //FALTAN LOS TEST DE MOVER MAL!!
     
     /*public void testMovimiento_comer_peon() {

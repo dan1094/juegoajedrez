@@ -78,12 +78,12 @@ public class Peon extends Ficha{
        //En el caso de los peones, amenazan las casillas en diagonal. Teniendo
        //en cuenta que pueden estar en la primera/ultima columna.
        if(this.getColor()){ //FICHA NEGRA
-           if(super.dentro(fila+1,columna+1)) tablero.tablero[fila+1][columna+1].setAmenazada_por_negras(true);
-           if(super.dentro(fila+1,columna-1)) tablero.tablero[fila+1][columna-1].setAmenazada_por_negras(true);
+           if(super.dentro_amenaza(fila+1,columna+1)) tablero.tablero[fila+1][columna+1].setAmenazada_por_negras(true);
+           if(super.dentro_amenaza(fila+1,columna-1)) tablero.tablero[fila+1][columna-1].setAmenazada_por_negras(true);
           
        }else { //FICHA BLANCA
-           if(super.dentro(fila-1,columna+1)) tablero.tablero[fila-1][columna+1].setAmenazada_por_blancas(true);
-           if(super.dentro(fila-1,columna-1)) tablero.tablero[fila-1][columna-1].setAmenazada_por_blancas(true);
+           if(super.dentro_amenaza(fila-1,columna+1)) tablero.tablero[fila-1][columna+1].setAmenazada_por_blancas(true);
+           if(super.dentro_amenaza(fila-1,columna-1)) tablero.tablero[fila-1][columna-1].setAmenazada_por_blancas(true);
        }
         
         return(tablero);

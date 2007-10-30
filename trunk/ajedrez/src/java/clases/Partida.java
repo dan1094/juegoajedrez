@@ -318,12 +318,13 @@ public class Partida {
        
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++){
-                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
-                {//Si es un rey, y si es blanco
+                if((this.tablero.tablero[i][j].getFicha()!=null)&&(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey"))&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
+                {
+                    //Si es un rey, y si es blanco
                     filarey_blanco=i;
                     columnarey_blanco=j;
                 }
-                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
+                 if((this.tablero.tablero[i][j].getFicha()!=null)&&(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey"))&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
                 {//Si es un rey, y si es negro
                     filarey_negro=i;
                     columnarey_negro=j;
@@ -366,12 +367,12 @@ public class Partida {
        
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++){
-                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
+                if((this.tablero.tablero[i][j].getFicha()!=null)&&this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
                 {//Si es un rey, y si es blanco
                     filarey_blanco=i;
                     columnarey_blanco=j;
                 }
-                if(this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
+                if((this.tablero.tablero[i][j].getFicha()!=null)&&this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
                 {//Si es un rey, y si es negro
                     filarey_negro=i;
                     columnarey_negro=j;

@@ -177,7 +177,17 @@ public class Tablero {
         return(partida.tablero);
     }
     
-    
+    public Tablero vacio(Partida partida)
+    {
+        int m, n, id_casilla=0;
+        for(m=0;m<8;m++)
+            for(n=0;n<8;n++)
+            {
+                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
+                id_casilla++;
+            }
+        return (partida.tablero);
+    }
     /**Busca la casilla solicitada en el tablero, si no la encuentra devuelve null*/
     public Casilla getCasilla(int fila, int columna){
         

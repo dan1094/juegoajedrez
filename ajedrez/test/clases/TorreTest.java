@@ -37,10 +37,12 @@ public class TorreTest extends TestCase {
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
         
+        tablero=tablero.vacio(partida);
+        
         int fo = 0;
         int co = 1;
-        int fd = 0;
-        int cd = 0;
+        int fd = 6;
+        int cd = 1;
         
         Ficha instance = new Torre(0,false);
         instance = tablero.crear_ficha(3,false,0);
@@ -58,15 +60,41 @@ public class TorreTest extends TestCase {
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
         
+        tablero=tablero.vacio(partida);
+        
         int fo = 0;
         int co = 0;
         int fd = 0;
-        int cd = 1;
+        int cd = 4;
         
         Ficha instance = new Torre(0,false);
         instance = tablero.crear_ficha(3,false,0);
         
         boolean expResult = true;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+        
+        
+    }
+    
+    
+     public void testMovimiento_torre_No_Valido() {
+        System.out.println("movimiento_torre_No_Valido");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        
+        tablero=tablero.vacio(partida);
+        
+        int fo = 0;
+        int co = 0;
+        int fd = 1;
+        int cd = 4;
+        
+        Ficha instance = new Torre(0,false);
+        instance = tablero.crear_ficha(3,false,0);
+        
+        boolean expResult = false;
         boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
         assertEquals(expResult, result);
         

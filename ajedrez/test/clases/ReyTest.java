@@ -28,55 +28,9 @@ public class ReyTest extends TestCase {
         this.tablero = null;
     }
 
-    /**
-     * Test of getPuede_enrocar method, of class clases.Rey.
-     */
-    public void testGetPuede_enrocar() {
-        System.out.println("getPuede_enrocar");
-        
-        Rey instance = null;
-        
-        boolean expResult = true;
-        boolean result = instance.getPuede_enrocar();
-        assertEquals(expResult, result);
-        
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  
 
-    /**
-     * Test of setPuede_enrocar method, of class clases.Rey.
-     */
-    public void testSetPuede_enrocar() {
-        System.out.println("setPuede_enrocar");
-        
-        boolean enrocar = true;
-        Rey instance = null;
-        
-        instance.setPuede_enrocar(enrocar);
-        
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of esta_amenazada method, of class clases.Rey.
-     */
-    public void testEsta_amenazada() {
-        System.out.println("esta_amenazada");
-        
-        Tablero tablero = null;
-        int fd = 0;
-        int cd = 0;
-        Rey instance = null;
-        
-        boolean expResult = true;
-        boolean result = instance.esta_amenazada(tablero, fd, cd);
-        assertEquals(expResult, result);
-        
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+   
 
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Rey.
@@ -86,6 +40,7 @@ public class ReyTest extends TestCase {
         
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
         
         int fo = 0;
         int co = 4;
@@ -105,6 +60,7 @@ public class ReyTest extends TestCase {
         
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
         
         int fo = 0;
         int co = 4;
@@ -119,6 +75,25 @@ public class ReyTest extends TestCase {
         assertEquals(expResult, result);
     }
 
+    public void testMovimiento_rey_no_valido() {
+        System.out.println("movimiento_rey_no_valido");
+        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
+        
+        int fo = 0;
+        int co = 4;
+        int fd = 0;
+        int cd = 7;
+        
+        Ficha instance = new Rey(0,false);
+        instance = tablero.crear_ficha(1,false,0);
+        
+        boolean expResult = false;
+        boolean result = instance.movimiento_correspondiente_ficha(tablero, fo, co, fd, cd);
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of enroque method, of class clases.Rey.

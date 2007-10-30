@@ -155,7 +155,7 @@ public class CasillaTest extends TestCase {
         
         Casilla instance = new Casilla();
         
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.getOcupada();
         assertEquals(expResult, result);
         

@@ -270,9 +270,9 @@ public class Partida {
         System.out.print("El turno es de las: ");
         if(this.getTurno()) System.out.println("NEGRAS");
         else System.out.println("BLANCAS");
-        MostrarTablero mostrarTablero = new MostrarTableroNegro(); 
+        Controller controller = new Controller(); 
         do{
-            mostrarTablero.mostrar(tablero);
+            controller.notifyObserver(tablero);
             coordenadas = this.controller.pedir_coordenadas_movimiento();
             int filaorigen=coordenadas[1];
             int columnaorigen=coordenadas[0];

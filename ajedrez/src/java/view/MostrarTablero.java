@@ -14,11 +14,11 @@ import clases.*;
  *
  * @author Alvarete
  */
-public abstract class MostrarTablero {
+public abstract class MostrarTablero implements IObserver  {
     
     /** Creates a new instance of MostrarTablero */
     public MostrarTablero() {
     }
-    public abstract void mostrar(Tablero tablero);
+    public abstract void update(Tablero tablero);
     
 }

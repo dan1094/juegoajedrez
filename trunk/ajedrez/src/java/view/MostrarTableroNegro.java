@@ -19,14 +19,15 @@ public class MostrarTableroNegro extends MostrarTablero {
     /** Creates a new instance of MostrarTableroNegro */
     public MostrarTableroNegro() {
     }
-    public void mostrar(Tablero tablero){
+     public void update( Tablero tablero )
+    {
         Casilla casillaAux;
         Ficha fichaAux;
         
         System.out.println("     a    b    c    d    e    f    g    h  ");
         for(int i=0;i<8;i++){
-            System.out.println("  ·········································");
-            System.out.print((8-i)+" ·"); 
+            System.out.println("  ----------------------------------------·");
+            System.out.print((8-i)+" |"); 
             for(int j=0;j<8;j++){
                 //Guardo la ficha con la que estoy trabajando
                 casillaAux = tablero.getCasilla(i,j);
@@ -58,11 +59,12 @@ public class MostrarTableroNegro extends MostrarTablero {
                 else{
                     System.out.print("    ");
                 }
-                System.out.print("·");
+                System.out.print("|");
             }
             System.out.println();
         }
-        System.out.println("  ·········································");
-    }
+        System.out.println("  -----------------------------------------");
+        
+     }
     
 }

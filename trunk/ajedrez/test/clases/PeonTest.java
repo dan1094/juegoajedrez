@@ -78,6 +78,8 @@ public class PeonTest extends TestCase {
         
     }
     
+    //FALTAN LOS TEST DE MOVER MAL!!
+    
     /*public void testMovimiento_comer_peon() {
         System.out.println("movimiento_comer_peon");
         

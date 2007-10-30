@@ -10,6 +10,7 @@
 package clases;
 
 import java.io.*;
+import java.util.ArrayList;
 
 
 /**
@@ -18,10 +19,36 @@ import java.io.*;
  */
 public class Controller {
     
+     private ArrayList misObservers = new ArrayList();
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     
     /** Creates a new instance of Controller */
     public Controller() {
+    }
+     public void addObserver(IObserver obs)
+    {
+        System.out.println("Añadiendo Observer");
+        misObservers.add(obs);
+        System.out.println("Observer Añadido");
+    }
+    //metodo para quitar a un observador de la lista de observadores de mi aplicacion
+    public void removeObserver(IObserver obs)
+    {
+        System.out.println("Eliminando Observer");
+        misObservers.remove(misObservers.indexOf(obs));
+        System.out.println("Observer Eliminado");
+        
+    }
+    //notifica al observador un cambio
+    public void notifyObserver(Tablero tablero)
+    {
+        
+        for(int i=0;i < misObservers.size();i++)
+        {   
+            IObserver obs = (IObserver)misObservers.get(i);
+            obs.update(tablero);
+        }
+        
     }
     
      /**Ofrece la personalizacion del tablero de la partida*/

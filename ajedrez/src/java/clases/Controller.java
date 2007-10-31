@@ -11,6 +11,8 @@ package clases;
 
 import java.io.*;
 import java.util.ArrayList;
+import model.partida.Partida;
+import model.partida.Tablero;
 
 
 /**

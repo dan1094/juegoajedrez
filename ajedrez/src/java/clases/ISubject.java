@@ -9,6 +9,7 @@
 
 package clases;
 import clases.*;
+import model.partida.Tablero;
 
 /**
  *

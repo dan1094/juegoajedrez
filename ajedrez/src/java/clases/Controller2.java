@@ -12,6 +12,9 @@ package clases;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import model.partida.Ficha;
+import model.partida.Partida;
+import model.partida.Tablero;
 import view.*;
 
 /**
@@ -335,9 +338,9 @@ public class Controller2 {
         MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
         MostrarTablero mostrarTableroNegro2 = new MostrarTableroNegro();
         
-        partida.addObserver(mostrarTableroNegro);
-        partida.addObserver(mostrarTableroNegro2);
-        partida.removeObserver(mostrarTableroNegro);
+        //partida.addObserver(mostrarTableroNegro);
+        //partida.addObserver(mostrarTableroNegro2);
+        //partida.removeObserver(mostrarTableroNegro);
         
        
         

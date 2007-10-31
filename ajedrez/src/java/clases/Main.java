@@ -11,6 +11,8 @@ package clases;
 
 import java.io.*;
 import model.facade.*;
+import model.partida.Partida;
+import model.partida.Tablero;
 import model.user.*;
 import model.util.*;
 import view.*;

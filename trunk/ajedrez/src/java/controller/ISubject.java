@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package clases;
+package controller;
 import clases.*;
 import model.partida.Tablero;
 

@@ -12,9 +12,7 @@ package model.partida;
 //import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.jar.Pack200;
 
 /**
  *
@@ -24,6 +22,7 @@ public class Tablero {
     
     protected int id_tablero; //numero de tablero
     protected Casilla tablero[][];
+    protected Fide fide;
     
     /** Creates a new instance of Tablero */
     public Tablero() {        
@@ -137,8 +136,9 @@ public class Tablero {
     /**Crea un tablero como indique el usuario*/
     public Tablero inicializar_tablero_personalizado(Partida partida){
         
-        int coordenadas[];
-        coordenadas = new int[2];
+        int coordenadas[] = new int[2];
+        char coor_fide[] = new char[10];
+        
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         int opcion_ficha=0, fila=0, columna=0, id=0, m=0, n=0, id_casilla=0;
         boolean cumple_reglas=false, color=false;
@@ -157,7 +157,8 @@ public class Tablero {
             opcion_ficha=partida.controller.ofrecer_ficha();
             if(opcion_ficha!=0){
                 color=partida.controller.pedir_color();
-                coordenadas=partida.controller.pedir_coordenadas_ficha();
+                coor_fide=partida.controller.pedir_coordenadas_ficha();
+                coordenadas=partida.tablero.fide.de_fide_a_modelo(partida,coor_fide);
                 fila=coordenadas[1];
                 columna=coordenadas[0];
                 Ficha ficha = partida.tablero.crear_ficha(opcion_ficha,color,id);

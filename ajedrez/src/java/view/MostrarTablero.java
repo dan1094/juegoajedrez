@@ -10,6 +10,7 @@
 package view;
 
 import clases.*;
+import controller.IObserver;
 import model.partida.Tablero;
 /**
  *

@@ -264,8 +264,7 @@ public class Partida {
     
     public void comenzar(){
         //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
-        int coordenadas[];
-        coordenadas = new int[4];
+        int coordenadas[] = new int[4];
         
         
         System.out.println("COMIENZO DE LA PARTIDA");
@@ -275,7 +274,8 @@ public class Partida {
         Controller controller = new Controller(); 
         do{
             controller.notifyObserver(tablero);
-            coordenadas = this.controller.pedir_coordenadas_movimiento();
+            coordenadas = this.tablero.fide.de_fide_a_modelo(this,this.controller.pedir_coordenadas_movimiento());
+           
             int filaorigen=coordenadas[1];
             int columnaorigen=coordenadas[0];
             int filadestino=coordenadas[3];

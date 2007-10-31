@@ -80,7 +80,8 @@ public class Tablero {
         System.out.println("Creando las casillas del tablero");
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
        
-        int m=0,n=0,id=0;
+        this.vacio(partida);
+        /*int m=0,n=0,id=0;
         int id_casilla= 0;
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
@@ -88,7 +89,7 @@ public class Tablero {
                 partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
                 id_casilla++;
             }
-        
+        */
         System.out.println("Asociando las fichas a las casillas del tablero");
         //Asociamos las fichas a sus posiciones en el tablero.
         partida.tablero.tablero[0][2].setFicha(alf_n_1);

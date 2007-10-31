@@ -7,8 +7,9 @@
  * and open the template in the editor.
  */
 
-package clases;
+package model.partida;
 
+import clases.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -9,6 +9,9 @@
 
 package view;
 import clases.*;
+import model.partida.Casilla;
+import model.partida.Ficha;
+import model.partida.Tablero;
 
 /**
  *

@@ -10,6 +10,7 @@
 package view;
 
 import clases.*;
+import model.partida.Tablero;
 /**
  *
  * @author Alvarete

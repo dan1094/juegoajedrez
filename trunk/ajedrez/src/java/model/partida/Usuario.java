@@ -7,7 +7,9 @@
  * and open the template in the editor.
  */
 
-package clases;
+package model.partida;
+
+import clases.*;
 
  /*
  * @author Miguel1

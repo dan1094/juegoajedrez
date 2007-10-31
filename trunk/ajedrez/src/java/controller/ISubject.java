@@ -8,7 +8,7 @@
  */
 
 package controller;
-import clases.*;
+
 import model.partida.Tablero;
 
 /**

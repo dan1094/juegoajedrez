@@ -9,7 +9,7 @@
 
 package model.partida;
 
-import clases.*;
+
 
  /*
  * @author Miguel1

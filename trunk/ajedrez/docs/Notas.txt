@@ -1,5 +1,5 @@
 1.- Comer al paso del peon.
-2.- Movimiento FIDE (Cambiar pedir_coordenadas_de_movimiento en Controller).
-3.- son_tablas
-4.- es_mate
+2.- Movimiento FIDE.
+3.- Son_tablas-> Cambiar (puede estar rodeado por fichas)
+4.- Es_mate -> Cambiar (lo mismo).
 5.- 

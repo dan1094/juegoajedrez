@@ -137,8 +137,8 @@ public class Tablero {
     public Tablero inicializar_tablero_personalizado(Partida partida){
         
         int coordenadas[] = new int[2];
-        char coor_fide[] = new char[10];
-        
+        String coor_fide;
+                
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         int opcion_ficha=0, fila=0, columna=0, id=0, m=0, n=0, id_casilla=0;
         boolean cumple_reglas=false, color=false;

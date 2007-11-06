@@ -137,13 +137,13 @@ public class Partida implements ISubject {
      System.out.println("Cambio de ficha. ("+fd+","+cd+").");
      System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
       switch(eleccion){
-          case 1: tablero.tablero[fd][cd].setFicha(new Reina(33,this.getTurno()));
+          case 1: tablero.tablero[fd][cd].setFicha(new Reina(this.getTurno()));
                     return(tablero);
-          case 2: tablero.tablero[fd][cd].setFicha(new Torre(33,this.getTurno()));
+          case 2: tablero.tablero[fd][cd].setFicha(new Torre(this.getTurno()));
                     return(tablero);
-          case 3: tablero.tablero[fd][cd].setFicha(new Alfil(33,this.getTurno()));
+          case 3: tablero.tablero[fd][cd].setFicha(new Alfil(this.getTurno()));
                     return(tablero);
-          case 4: tablero.tablero[fd][cd].setFicha(new Caballo(33,this.getTurno()));
+          case 4: tablero.tablero[fd][cd].setFicha(new Caballo(this.getTurno()));
                     return(tablero);
           default: return(tablero);
       }

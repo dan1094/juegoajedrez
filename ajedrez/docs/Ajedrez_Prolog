@@ -68,13 +68,20 @@ columnaNumero(8, h).
 
 comer(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
         not (hayFichaCamino(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
-        contenido(Tablero0,I1,J1,ficha(Figura,negro)),
-        retract(contenido(Tablero0, I1, J1, ficha(Figura, negro))),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,negro)),
+        retract(contenido(Tablero0, I1, J1, ficha(FiguraComida, negro))),
         assert(contenido(Tablero0, I1, J1, ficha(Figura, blanco))),
         retract(contenido(Tablero0, I0, J0, ficha(Figura, blanco))), %quita la ficha de su posicion
         cambiarTurno(estado(Tablero0, blanco)).
 
 
+comer(estado(Tablero0, negro), ficha(Figura,negro),I0,J0,I1,J1):-
+        not (hayFichaCamino(estado(Tablero0,negro),ficha(Figura,negro),I0,J0,I1,J1)),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,blanco)),
+        retract(contenido(Tablero0, I1, J1, ficha(FiguraComida, blanco))),
+        assert(contenido(Tablero0, I1, J1, ficha(Figura, negro))),
+        retract(contenido(Tablero0, I0, J0, ficha(Figura, negro))), %quita la ficha de su posicion
+        cambiarTurno(estado(Tablero0, negro)).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -373,8 +380,38 @@ numeroColumna(d, 4).
 numeroColumna(e, 5).
 numeroColumna(f, 6).
 numeroColumna(g, 7).
-numeroColumna(h, 8).                
+numeroColumna(h, 8).
 
+%%%%%%%%%%%%%%%%%%%%%%
+% posiblecomida/6    % 
+%%%%%%%%%%%%%%%%%%%%%%   
+
+posibleComida(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
+        not (hayFichaCamino(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,negro)).
+        
+posibleComida(estado(Tablero0, negro), ficha(Figura,negro),I0,J0,I1,J1):-
+        not (hayFichaCamino(estado(Tablero0,negro),ficha(Figura,negro),I0,J0,I1,J1)),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,blanco)).
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% posiblemovimiento/6% 
+%%%%%%%%%%%%%%%%%%%%%%  
+
+posibleMovimiento(estado(Tablero0, Turno0),
+    ficha(Figura, Turno0),
+    I0, J0, I1, J1) :-
+                condicionMovimiento(estado(Tablero0, Turno0),
+                                    ficha(Figura, Turno0),
+                                    I0, J0, I1, J1),
+                not(hayFicha(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1)).               
+                
+
+
+
+
+                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % turnoContrario/2         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -395,4 +432,4 @@ contenido(t0, e, 4, ficha(reina,blanco)).
 contenido(t0, g, 2, ficha(alfil,blanco)).
 contenido(t0, e, 2, ficha(reina,negro)).
 
-estado(t0, blanco).%aqui dice: primer turno para 
+estado(t0, blanco).%aqui dice: primer turno para aa

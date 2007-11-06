@@ -10,6 +10,7 @@
 package model.facade;
 
 import javax.sql.DataSource;
+import model.partida.Partida;
 import model.user.UserDTO;
 import model.util.DataSourceLocator;
 import model.util.DuplicateInstanceException;
@@ -141,11 +142,60 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         }
     
     }
+    
+    public Partida mover(int filaOrigen, int columnaOrigen,int filaDestino,int columnaDestino,Partida partida) 
+        throws InternalErrorException
+    {
+        try
+        {
+            MoverAction moverAction = new MoverAction(filaOrigen,columnaOrigen,filaDestino,columnaDestino,partida);
+        
+            return (Partida) moverAction.execute();
+            
+        } catch (InternalErrorException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new InternalErrorException(e);
+        }
+    }
+    public boolean esTablas(Partida partida) throws InternalErrorException 
+    {
+         try
+        {
+            EsTablasAction esTablasAction = new EsTablasAction(partida);
+        
+            return esTablasAction.execute();
+            
+        } catch (InternalErrorException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new InternalErrorException(e);
+        }
+    }
 
+    public boolean esJaqueMate(Partida partida) throws InternalErrorException 
+    {
+         try
+        {
+            EsJaqueMateAction esJaqueMateAction = new EsJaqueMateAction(partida);
+        
+            return esJaqueMateAction.execute();
+            
+        } catch (InternalErrorException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new InternalErrorException(e);
+        }
+    }
+    
+   
     
     private DataSource getDataSource() throws InternalErrorException {
         return DataSourceLocator.getDataSource(
             GlobalNames.MYPORTAL_DATA_SOURCE);       
     }
+
+   
+   
     
 }

@@ -10,6 +10,7 @@
 package model.facade;
 
 import java.io.Serializable;
+import model.partida.Partida;
 import model.user.UserDTO;
 import model.util.DuplicateInstanceException;
 import model.util.IncorrectPasswordException;
@@ -37,5 +38,12 @@ public interface PortalFacadeDelegate extends Serializable {
 
     public void changePassword(String oldPassword, String newPassword) 
         throws IncorrectPasswordException, InternalErrorException;
+    
+    public Partida mover(int filaOrigen, int columnaOrigen,int filaDestino,int columnaDestino,Partida partida) 
+        throws InternalErrorException;
+    public boolean esTablas(Partida partida) throws InternalErrorException;
+    
+    public boolean esJaqueMate(Partida partida) throws InternalErrorException; 
+    
     
 }

@@ -45,5 +45,6 @@ public interface PortalFacadeDelegate extends Serializable {
     
     public boolean esJaqueMate(Partida partida) throws InternalErrorException; 
     
+    public Partida nuevaPartida() throws InternalErrorException; 
     
 }

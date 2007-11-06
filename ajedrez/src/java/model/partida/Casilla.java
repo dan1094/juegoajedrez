@@ -18,7 +18,6 @@ package model.partida;
 
 public class Casilla {
    
-    protected int id_casilla; 
     protected Ficha ficha;
     protected int fila;
     protected int columna;
@@ -30,22 +29,13 @@ public class Casilla {
     public Casilla() {
     }
     
-    public Casilla(int id_casilla, Ficha ficha, int fila, int columna, 
+    public Casilla(Ficha ficha, int fila, int columna, 
             boolean amenazada_por_blancas, boolean amenazada_por_negras){
-        this.id_casilla=id_casilla;
         this.columna=columna;
         this.fila=fila;
         this.ficha=ficha;
         this.amenazada_por_blancas=false;
         this.amenazada_por_negras=false;
-    }
-
-    public int getId_casilla() {
-        return this.id_casilla;
-    }
-
-    public void setId_casilla(int id_casilla) {
-        this.id_casilla = id_casilla;
     }
 
     public Ficha getFicha() {

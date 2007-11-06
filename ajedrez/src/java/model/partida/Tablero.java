@@ -139,14 +139,13 @@ public class Tablero {
         String coor_fide;
                 
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
-        int opcion_ficha=0, fila=0, columna=0, m=0, n=0, id_casilla=0;
+        int opcion_ficha=0, fila=0, columna=0, m=0, n=0;
         boolean cumple_reglas=false, color=false;
                
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
-                id_casilla++;
+                partida.tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
             }
         boolean rb=false,rn=false,ot=false,dosreyes=false;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -181,12 +180,11 @@ public class Tablero {
     
     public Tablero vacio(Partida partida)
     {
-        int m, n, id_casilla=0;
+        int m, n;
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
-                id_casilla++;
+                partida.tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
             }
         return (partida.tablero);
     }

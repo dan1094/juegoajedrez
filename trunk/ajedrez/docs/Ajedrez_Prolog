@@ -67,7 +67,7 @@ columnaNumero(8, h).
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 comer(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
-        not (hayFicha(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
+        not (hayFichaCamino(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
         contenido(Tablero0,I1,J1,ficha(Figura,negro)),
         retract(contenido(Tablero0, I1, J1, ficha(Figura, negro))),
         assert(contenido(Tablero0, I1, J1, ficha(Figura, blanco))),
@@ -118,7 +118,7 @@ condicionMovimiento(
                                     ficha(alfil, Turno0),
                                     I0, J0, I1, J1),
                 mismaDiagonal(I0,J0,I1,J1),
-                not(hayFicha(I0, J0, I1, J1)).
+                not(hayFichaCamino(estado(Tablero0,Turno0),ficha(alfil,Turno0),I0,J0,I1,J1)).
  
 % Movimiento Torre
                
@@ -130,7 +130,7 @@ condicionMovimiento(
                                     ficha(torre, Turno0),
                                     I0, J0, I1, J1),
                 mismaFilaColumna(I0, J0, I1, J1),
-                not(hayFicha(I0, J0, I1, J1)).
+                not(hayFichaCamino(estado(Tablero0,Turno0),ficha(torre,Turno0),I0,J0,I1,J1)).
 
 % Movimiento Reina
 
@@ -142,7 +142,7 @@ condicionMovimiento(
                                     ficha(reina, Turno0),
                                     I0, J0, I1, J1),
                 mismaFilaColumnaDiagonal(I0, J0, I1, J1),
-                not(hayFicha(I0, J0, I1, J1)).
+                not(hayFichaCamino(estado(Tablero0,Turno0),ficha(reina,Turno0),I0,J0,I1,J1)).
 
                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -177,128 +177,145 @@ fila(6).
 fila(7).
 fila(8).   
      
-%%%%%%%%%%%%%%%%%%%%%
-% hayficha/6        %
-%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hayFichaCamino/6        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %ARRIBA ABAJO
-hayFicha(estado(Tablero0, Turno0),
+hayFichaCamino(estado(Tablero0, Turno0),
         ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J1):- J1>J0, JF is J1-1, hayFicha(I0,J0,I1,JF).
+        ,I0, J0, I1, J1):- J1>J0, JF is J1-1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,JF).
 
 %ABAJO ARRIBA        
-hayFicha(estado(Tablero0, Turno0),
+hayFichaCamino(estado(Tablero0, Turno0),
         ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J1):- J1<J0, JF is J1+1, hayFicha(I0,J0,I1,JF).
+        ,I0, J0, I1, J1):- J1<J0, JF is J1+1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,JF).
         
 %IZQUIERDA DERECHA        
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J0):- numeroColumna(I0,NI0), numeroColumna(I1,NI1),
-                           NI1>NI0, NIF is NI1-1, columnaNumero(NIF,IF),
-                           hayFicha(I0,J0,IF,J0).
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0, J0, I1, J0):- 
+                numeroColumna(I0,NI0), numeroColumna(I1,NI1),
+                NI1>NI0, NIF is NI1-1, columnaNumero(NIF,IF),
+                hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,J0).
+                
 %DERECHA IZQUIERDA                     
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J0):- numeroColumna(I0,NI0), numeroColumna(I1,NI1),
-                           NI1<NI0, NIF is NI1+1, columnaNumero(NIF,IF),
-                           hayFicha(I0,J0,IF,J0).
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0, J0, I1, J0):- 
+                numeroColumna(I0,NI0), numeroColumna(I1,NI1),
+                NI1<NI0, NIF is NI1+1, columnaNumero(NIF,IF),
+                hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,J0).
                            
                           
 %DIAGONAL ARRIBA DERECHA
-
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0,J0,I1,J1):- J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
-        NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0,J0,I1,J1):- 
+                J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+                NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), 
+                hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,JF).
         
 %DIAGONAL ARRIBA IZQUIERDA
-
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0,J0,I1,J1):- J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
-        NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).        
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0,J0,I1,J1):- 
+                J0>J1, JF is J1+1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+                NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF),
+                hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,JF).        
         
         
 %DIAGONAL ABAJO DERECHA
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0,J0,I1,J1):- J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
-        NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0,J0,I1,J1):- 
+                J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+                NI0<NI1, NIF is NI1 - 1, columnaNumero(NIF, IF), 
+                hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,JF).
         
 %DIAGONAL ABAJO IZQUIERDA
-hayFicha(estado(Tablero0, Turno0),
-        ficha(Ficha0, Turno0)
-        ,I0,J0,I1,J1):- J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
-        NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), hayFicha(I0,J0,IF,JF).
-        
-                           
-
-                           
+hayFichaCamino(estado(Tablero0, Turno0),
+        ficha(Ficha0, Turno0),I0,J0,I1,J1):- 
+        J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
+        NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,JF).                      
 
 %%%%%%%%%%%%%%%%%%%
 % hayficha        %
 %%%%%%%%%%%%%%%%%%%
 %ARRIBA ABAJO
-hayFicha(I0,J0,I0,J1) :- J1>J0, J01 is J0+1, contenido(Tablero, I0, J01, ficha(X, Y)),!.
-hayFicha(I0,J0,I0,J1) :- J1>J0, J01 is J0+1, hayFicha(I0,J01,I0,J1).
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,J1) :- 
+        J1>J0, J01 is J0+1, contenido(Tablero0, I0, J01, ficha(X, Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,J1) :-
+         J1>J0, J01 is J0+1, hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J01,I0,J1).
 
 %ABAJO ARRIBA
-hayFicha(I0,J0,I0,J1) :- J1<J0, J01 is J0-1, contenido(Tablero, I0, J01, ficha(X, Y)),!.
-hayFicha(I0,J0,I0,J1) :- J1<J0, J01 is J0-1, hayFicha(I0,J01,I0,J1).
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,J1) :- 
+        J1<J0, J01 is J0-1, contenido(Tablero0, I0, J01, ficha(X, Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,J1) :- 
+        J1<J0, J01 is J0-1,
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J01,I0,J1).
 
 %IZQUIERDA DERECHA
-hayFicha(I0,J0,I1,J0) :- 
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J0) :- 
                         numeroColumna(I0, NI0), numeroColumna(I1,NI1),
                         NI1>NI0, NI01 is NI0+1, 
-                        columnaNumero(NI01,R0), contenido(Tablero, R0, J0, ficha(X, Y)),!.
-hayFicha(I0,J0,I1,J0) :- 
+                        columnaNumero(NI01,R0), contenido(Tablero0, R0, J0, ficha(X, Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J0) :- 
                         numeroColumna(I0, NI0), numeroColumna(I1,NI1),
                         NI1>NI0, NI01 is NI0+1, 
-                        columnaNumero(NI01,R0), hayFicha(R0, J0, I1, J0).
+                        columnaNumero(NI01,R0), 
+                        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0, J0, I1, J0).
 %DERECHA IZQUIERDA
 
-hayFicha(I0,J0,I1,J0) :- 
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J0) :- 
                         numeroColumna(I0, NI0), numeroColumna(I1,NI1),
                         NI1<NI0, NI01 is NI0-1, 
-                        columnaNumero(NI01,R0), contenido(Tablero, R0, J0, ficha(X, Y)),!.
-hayFicha(I0,J0,I1,J0) :- 
+                        columnaNumero(NI01,R0), contenido(Tablero0, R0, J0, ficha(X, Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J0) :- 
                         numeroColumna(I0, NI0), numeroColumna(I1,NI1),
                         NI1<NI0, NI01 is NI0-1, 
-                        columnaNumero(NI01,R0), hayFicha(R0,J0,I1,J0).
+                        columnaNumero(NI01,R0), 
+                        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J0,I1,J0).
 %DIAGONAL ARRIBA DERECHA
 
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0<NI1 , NI01 is NI0 + 1,columnaNumero(NI01,R0),
-                         J0>J1, J01 is J0 - 1, contenido(Tablero, R0, J01, ficha(X,Y)),!.
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0<NI1 , NI01 is NI0 + 1,columnaNumero(NI01,R0),
-                         J0>J1, J01 is J0 - 1, hayFicha(R0,J01,I1,J1).
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+         numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0<NI1 , NI01 is NI0 + 1,columnaNumero(NI01,R0),
+         J0>J1, J01 is J0 - 1, contenido(Tablero0, R0, J01, ficha(X,Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :- 
+        numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0<NI1 , NI01 is NI0 + 1,
+        columnaNumero(NI01,R0),J0>J1, J01 is J0 - 1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J01,I1,J1).
 
 %DIAGONAL ARRIBA IZQUIERDA
 
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,columnaNumero(NI01,R0),
-                         J0>J1, J01 is J0 - 1, contenido(Tablero, R0, J01, ficha(X,Y)),!.
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,columnaNumero(NI01,R0),
-                         J0>J1, J01 is J0 - 1, hayFicha(R0,J01,I1,J1).
-
-
-
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+        numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , 
+        NI01 is NI0 - 1,columnaNumero(NI01,R0),
+        J0>J1, J01 is J0 - 1, contenido(Tablero0, R0, J01, ficha(X,Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+        numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,
+        columnaNumero(NI01,R0), J0>J1, J01 is J0 - 1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J01,I1,J1).
 
 %DIAGONAL ABAJO DERECHA
 
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 < NI1 , NI01 is NI0 + 1,columnaNumero(NI01,R0),
-                         J0 < J1, J01 is J0 + 1, contenido(Tablero, R0, J01, ficha(X,Y)),!.
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 < NI1 , NI01 is NI0 + 1,columnaNumero(NI01,R0),
-                         J0 < J1, J01 is J0 + 1, hayFicha(R0,J01,I1,J1).
-
-
-
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+         numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 < NI1 , NI01 is NI0 + 1,
+         columnaNumero(NI01,R0), J0 < J1, J01 is J0 + 1, 
+         contenido(Tablero0, R0, J01, ficha(X,Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :- 
+        numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 < NI1 , NI01 is NI0 + 1,
+        columnaNumero(NI01,R0),J0 < J1, J01 is J0 + 1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J01,I1,J1).
 
 %DIAGONAL ABAJO IZQUIERDA                        
 
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,columnaNumero(NI01,R0),
-                         J0 < J1, J01 is J0 + 1, contenido(Tablero, R0, J01, ficha(X,Y)),!.
-hayFicha(I0,J0,I1,J1) :- numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,columnaNumero(NI01,R0),
-                         J0 < J1, J01 is J0 + 1, hayFicha(R0,J01,I1,J1).
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+         numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,
+         columnaNumero(NI01,R0),J0 < J1, J01 is J0 + 1,
+         contenido(Tablero0, R0, J01, ficha(X,Y)),!.
+hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
+        numeroColumna(I0,NI0), numeroColumna(I1,NI1), NI0 > NI1 , NI01 is NI0 - 1,
+        columnaNumero(NI01,R0),J0 < J1, J01 is J0 + 1,
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J01,I1,J1).
 
 
 
@@ -340,6 +357,7 @@ moverFicha(
                 condicionMovimiento(estado(Tablero0, Turno0),
                                     ficha(Figura, Turno0),
                                     I0, J0, I1, J1),
+                not(hayFicha(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1)),
                 retract(contenido(Tablero0, I0, J0, ficha(Figura, Turno0))), %quita la ficha de su posicion
                 assert(contenido(Tablero0, I1, J1, ficha(Figura, Turno0))),  %la pone en su nueva posicio. 
                 cambiarTurno(estado(Tablero0, Turno0)).
@@ -370,11 +388,11 @@ turnoContrario(negro, blanco).
 % estamos en el tablero to, en la columna e en la fila 1 con el rey blanco
         %y el rey negro en la columna e en fila 8
 
-contenido(t0, d, 4, ficha(rey, blanco)). %esto es como un insertar al inicio
-contenido(t0, b, 7, ficha(rey, negro)).
-contenido(t0, c, 2, ficha(alfil,negro)).
-contenido(t0, d, 5, ficha(reina,blanco)).
-contenido(t0, f, 7, ficha(alfil,blanco)).
-contenido(t0, b, 5, ficha(reina,negro)).
+contenido(t0, g, 6, ficha(rey, blanco)). %esto es como un insertar al inicio
+contenido(t0, b, 4, ficha(rey, negro)).
+contenido(t0, e, 7, ficha(alfil,negro)).
+contenido(t0, e, 4, ficha(reina,blanco)).
+contenido(t0, g, 2, ficha(alfil,blanco)).
+contenido(t0, e, 2, ficha(reina,negro)).
 
 estado(t0, blanco).%aqui dice: primer turno para 

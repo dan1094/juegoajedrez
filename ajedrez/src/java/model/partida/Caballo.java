@@ -18,8 +18,8 @@ package model.partida;
 public class Caballo extends Ficha{
     
     /** Creates a new instance of Caballo */
-    public Caballo(int id_ficha, boolean color){
-        super(id_ficha,color);
+    public Caballo(boolean color){
+        super(color);
         this.setTipo_ficha("caballo");
     }
     

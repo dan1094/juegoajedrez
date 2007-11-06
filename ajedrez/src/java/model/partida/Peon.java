@@ -18,8 +18,8 @@ public class Peon extends Ficha{
     
     
     /** Creates a new instance of Peon */
-    public Peon(int id_ficha, boolean color){
-        super(id_ficha,color);
+    public Peon(boolean color){
+        super(color);
         this.setTipo_ficha("peon");
     }
     

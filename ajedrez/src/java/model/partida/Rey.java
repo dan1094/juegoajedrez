@@ -19,8 +19,8 @@ public class Rey extends Ficha{
     protected boolean puede_enrocar;
     
     /** Creates a new instance of Rey */
-    public Rey(int id_ficha, boolean color){
-        super(id_ficha,color);
+    public Rey(boolean color){
+        super(color);
         this.setTipo_ficha("rey");
         this.puede_enrocar=true;
   

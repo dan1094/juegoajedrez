@@ -19,8 +19,8 @@ public class Torre extends Ficha{
     /**
      * Creates a new instance of Torre
      */
-    public Torre(int id_ficha, boolean color){
-        super(id_ficha,color);
+    public Torre(boolean color){
+        super(color);
         this.setTipo_ficha("torre");
     }
     

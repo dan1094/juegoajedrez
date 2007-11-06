@@ -20,7 +20,7 @@ public interface ISubject {
     /** Creates a new instance of ISubject */
     public void addObserver(IObserver obs);
     public void removeObserver(IObserver obs);
-    public void notifyObserver(Tablero tablero);
+    public void notifyObserver();
     
     
 }

@@ -11,7 +11,8 @@ package view;
 
 import model.partida.Casilla;
 import model.partida.Ficha;
-import model.partida.Tablero;
+import model.partida.*;
+
 
 /**
  *
@@ -22,7 +23,7 @@ public class MostrarTableroNegro extends MostrarTablero {
     /** Creates a new instance of MostrarTableroNegro */
     public MostrarTableroNegro() {
     }
-     public void update( Tablero tablero )
+     public void update(Partida partida)
     {
         Casilla casillaAux;
         Ficha fichaAux;
@@ -33,7 +34,7 @@ public class MostrarTableroNegro extends MostrarTablero {
             System.out.print((8-i)+" |"); 
             for(int j=0;j<8;j++){
                 //Guardo la ficha con la que estoy trabajando
-                casillaAux = tablero.getCasilla(i,j);
+                casillaAux = partida.getTablero().getCasilla(i,j);
                 //Hay ficha por lo tanto imprimimos su contenido
                 if(casillaAux.getOcupada()){
                     //Guardo la ficha en un auxiliar

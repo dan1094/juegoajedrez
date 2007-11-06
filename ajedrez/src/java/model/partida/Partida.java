@@ -11,9 +11,12 @@ package model.partida;
 
 
 import controller.Controller;
+import controller.IObserver;
+import controller.ISubject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.jar.Pack200;
 import view.*;
 
@@ -21,7 +24,7 @@ import view.*;
  *
  * @author Pablo
  */
-public class Partida {
+public class Partida implements ISubject {
     
     protected int id_partida;
     protected boolean turno;
@@ -29,9 +32,36 @@ public class Partida {
     protected boolean blanco_puede_enrocar;
     protected boolean negro_puede_enrocar;
     protected Controller controller;
+    private ArrayList misObservers;
+
     
     /**Instancia vacia de Partida*/
     public Partida(){
+        
+        misObservers = new ArrayList();
+    }
+    
+     public void addObserver(IObserver obs) {
+         System.out.println("Añadiendo Observer");
+         misObservers.add(obs);
+         System.out.println("Observer añadido");
+     }
+
+    public void removeObserver(IObserver obs) {
+        System.out.println("Eliminando Observer");
+        misObservers.remove(misObservers.indexOf(obs));
+        System.out.println("Observer eliminado");
+    }
+    public void notifyObserver() 
+    {
+        
+        for( int i = 0; i < misObservers.size(); i++ )
+        {
+            IObserver obs = ( IObserver )misObservers.get(i);
+            obs.update(this);
+        }
+
+        
     }
     
     /** Creates a new instance of Partida */
@@ -273,7 +303,7 @@ public class Partida {
         else System.out.println("BLANCAS");
         Controller controller = new Controller(); 
         do{
-            controller.notifyObserver(tablero);
+           
             coordenadas = this.tablero.fide.de_fide_a_modelo(this,this.controller.pedir_coordenadas_movimiento());
            
             int filaorigen=coordenadas[1];
@@ -411,6 +441,8 @@ public class Partida {
         }
                 
     }
+
+   
     
    
 }

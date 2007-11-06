@@ -37,7 +37,11 @@ public class Partida implements ISubject {
     
     /**Instancia vacia de Partida*/
     public Partida(){
-        
+        id_partida = 0;
+        turno = false;
+        blanco_puede_enrocar = true;
+        negro_puede_enrocar = true;
+        tablero.inicializar_tablero_estandar(this);
         misObservers = new ArrayList();
     }
     
@@ -71,6 +75,7 @@ public class Partida implements ISubject {
         this.turno=turno;
         this.blanco_puede_enrocar=blanco_puede_enrocar;
         this.negro_puede_enrocar=negro_puede_enrocar;
+        misObservers = new ArrayList();
     }
     
     //GETTERS Y SETTERS

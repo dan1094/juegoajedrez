@@ -18,15 +18,12 @@ package model.partida;
  */
 public abstract class Ficha {
     
-    protected int id_ficha;
-        //Añado un id_casilla donde se deberá introducir el id de la casilla en la
-        //que esta situada la ficha.
+    
     protected int id_casilla;
     protected boolean color;
     protected String tipo_ficha;
     
-    public Ficha(int id_ficha, boolean color){
-        this.id_ficha=id_ficha;
+    public Ficha(boolean color){
         this.color=color;
         
     }
@@ -40,14 +37,6 @@ public abstract class Ficha {
         //color=true -> BLANCAS
         //color=false -> NEGRAS
         this.color=color;
-    }
-    
-    public int getId_ficha(){
-        return(this.id_ficha);
-    }
-    
-    public void setId_ficha(int id_ficha){
-        this.id_ficha=id_ficha;
     }
     
     public String getTipo_ficha(){

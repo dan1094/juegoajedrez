@@ -18,8 +18,8 @@ package model.partida;
 public class Alfil extends Ficha{
     
     /** Creates a new instance of Alfil */
-    public Alfil(int id_ficha, boolean color){
-        super(id_ficha,color);
+    public Alfil(boolean color){
+        super(color);
         this.setTipo_ficha("alfil");
     }
     

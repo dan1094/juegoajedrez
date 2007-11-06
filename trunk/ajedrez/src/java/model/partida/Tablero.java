@@ -39,43 +39,42 @@ public class Tablero {
         
         
         int i=0,j=0;
-        int id_ficha = 0;
         System.out.println("Creando las fichas");
         //CREAMOS LAS FICHAS BLANCAS. (sus ids iran del 0 al 15)
-        Ficha peon_b_1 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_2 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_3 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_4 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_5 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_6 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_7 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha peon_b_8 = new Peon(id_ficha,false);      id_ficha++;
-        Ficha tor_b_1 = new Torre(id_ficha,false);      id_ficha++;
-        Ficha tor_b_2 = new Torre(id_ficha,false);      id_ficha++;
-        Ficha cab_b_1 = new Caballo(id_ficha,false);    id_ficha++;
-        Ficha cab_b_2 = new Caballo(id_ficha,false);    id_ficha++;
-        Ficha alf_b_1 = new Alfil(id_ficha,false);      id_ficha++;
-        Ficha alf_b_2 = new Alfil(id_ficha,false);      id_ficha++;
-        Ficha reina_b = new Reina(id_ficha,false);      id_ficha++;
-        Ficha rey_b = new Rey(id_ficha,false);          id_ficha++;
+        Ficha peon_b_1 = new Peon(false);
+        Ficha peon_b_2 = new Peon(false);
+        Ficha peon_b_3 = new Peon(false);
+        Ficha peon_b_4 = new Peon(false);
+        Ficha peon_b_5 = new Peon(false);
+        Ficha peon_b_6 = new Peon(false);
+        Ficha peon_b_7 = new Peon(false);
+        Ficha peon_b_8 = new Peon(false);
+        Ficha tor_b_1 = new Torre(false);
+        Ficha tor_b_2 = new Torre(false);
+        Ficha cab_b_1 = new Caballo(false);
+        Ficha cab_b_2 = new Caballo(false);
+        Ficha alf_b_1 = new Alfil(false);
+        Ficha alf_b_2 = new Alfil(false);
+        Ficha reina_b = new Reina(false);
+        Ficha rey_b = new Rey(false);
 
-        //CREAMOS LAS FICHAS NEGRAS (ids del 16 al 31) 
-        Ficha peon_n_1 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_2 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_3 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_4 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_5 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_6 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_7 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha peon_n_8 = new Peon(id_ficha,true);       id_ficha++;
-        Ficha tor_n_1 = new Torre(id_ficha,true);       id_ficha++;
-        Ficha tor_n_2 = new Torre(id_ficha,true);       id_ficha++;
-        Ficha cab_n_1 = new Caballo(id_ficha,true);     id_ficha++;
-        Ficha cab_n_2 = new Caballo(id_ficha,true);     id_ficha++;
-        Ficha alf_n_1 = new Alfil(id_ficha,true);       id_ficha++;
-        Ficha alf_n_2 = new Alfil(id_ficha,true);       id_ficha++;
-        Ficha reina_n = new Reina(id_ficha,true);       id_ficha++;
-        Ficha rey_n = new Rey(id_ficha,true);
+        //CREAMOS LAS FICHAS NEGRAS 
+        Ficha peon_n_1 = new Peon(true);
+        Ficha peon_n_2 = new Peon(true);
+        Ficha peon_n_3 = new Peon(true);
+        Ficha peon_n_4 = new Peon(true);
+        Ficha peon_n_5 = new Peon(true);
+        Ficha peon_n_6 = new Peon(true);
+        Ficha peon_n_7 = new Peon(true);
+        Ficha peon_n_8 = new Peon(true);
+        Ficha tor_n_1 = new Torre(true);
+        Ficha tor_n_2 = new Torre(true);
+        Ficha cab_n_1 = new Caballo(true);
+        Ficha cab_n_2 = new Caballo(true);
+        Ficha alf_n_1 = new Alfil(true);
+        Ficha alf_n_2 = new Alfil(true);
+        Ficha reina_n = new Reina(true);
+        Ficha rey_n = new Rey(true);
           
         System.out.println("Creando las casillas del tablero");
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
@@ -140,7 +139,7 @@ public class Tablero {
         String coor_fide;
                 
         int filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
-        int opcion_ficha=0, fila=0, columna=0, id=0, m=0, n=0, id_casilla=0;
+        int opcion_ficha=0, fila=0, columna=0, m=0, n=0, id_casilla=0;
         boolean cumple_reglas=false, color=false;
                
         for(m=0;m<8;m++)
@@ -161,7 +160,7 @@ public class Tablero {
                 coordenadas=partida.tablero.fide.de_fide_a_modelo(partida,coor_fide);
                 fila=coordenadas[1];
                 columna=coordenadas[0];
-                Ficha ficha = partida.tablero.crear_ficha(opcion_ficha,color,id);
+                Ficha ficha = partida.tablero.crear_ficha(opcion_ficha,color);
                 partida.tablero.tablero[fila][columna].setFicha(ficha);
                 if(ficha.tipo_ficha.equals("rey")&&(ficha.getColor()==false)){
                     //rey blanco
@@ -218,16 +217,16 @@ public class Tablero {
     }
   
     /**Crea fichas a partir de la opcion introducida anteriormente*/
-    public Ficha crear_ficha(int opcion, boolean color, int id){
+    public Ficha crear_ficha(int opcion, boolean color){
         Ficha ficha;
         
         switch(opcion){
-            case 1:return(ficha = new Rey(id,color));
-            case 2:return(ficha = new Reina(id,color));
-            case 3:return(ficha = new Torre(id,color));
-            case 4:return(ficha = new Caballo(id,color));
-            case 5:return(ficha = new Alfil(id,color));
-            case 6:return(ficha = new Peon(id,color));
+            case 1:return(ficha = new Rey(color));
+            case 2:return(ficha = new Reina(color));
+            case 3:return(ficha = new Torre(color));
+            case 4:return(ficha = new Caballo(color));
+            case 5:return(ficha = new Alfil(color));
+            case 6:return(ficha = new Peon(color));
             default: return(null);
         }
     }

@@ -298,23 +298,23 @@ public class Partida {
                  else this.setNegro_puede_enrocar(false);
                  }
              }  
-        }while(!this.fin_partida(this));
+        }while(!this.fin_partida());
         
     }
     
-    public boolean fin_partida(Partida partida){
+    public boolean fin_partida(){
         //Una partida termina cuando hay jaque-mate o cuando hay tablas.
         boolean tablas=false;
         boolean mate=false;
         
-        tablas=this.son_tablas(this);
-        mate=this.es_mate(this);
+        tablas=this.son_tablas();
+        mate=this.es_mate();
         
         return(tablas||mate);
     }
     
     /**Mira si se ha llegado a tablas en la partida*/
-    public boolean son_tablas(Partida partida){
+    public boolean son_tablas(){
         //Busca los reyes y comprueba si pueden mover
                 int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
        
@@ -363,7 +363,7 @@ public class Partida {
     }
     
     /**Mira si ha habido jaque-mate*/
-    public boolean es_mate(Partida partida){
+    public boolean es_mate(){
         //Busca los reyes y comprueba si pueden mover
                 int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
        
@@ -411,5 +411,6 @@ public class Partida {
         }
                 
     }
+    
    
 }

@@ -11,7 +11,7 @@ package view;
 
 
 import controller.IObserver;
-import model.partida.Tablero;
+import model.partida.*;
 /**
  *
  * @author Alvarete
@@ -21,6 +21,6 @@ public abstract class MostrarTablero implements IObserver  {
     /** Creates a new instance of MostrarTablero */
     public MostrarTablero() {
     }
-    public abstract void update(Tablero tablero);
+    public abstract void update(Partida partida);
     
 }

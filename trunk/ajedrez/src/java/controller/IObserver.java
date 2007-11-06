@@ -8,7 +8,8 @@
  */
 
 package controller;
-import model.partida.Tablero;
+import model.partida.Partida;
+
 
 /**
  *
@@ -16,6 +17,6 @@ import model.partida.Tablero;
  */
 public interface IObserver {
     
-    public void update(Tablero tablero);
+    public void update(Partida partida);
  
 }

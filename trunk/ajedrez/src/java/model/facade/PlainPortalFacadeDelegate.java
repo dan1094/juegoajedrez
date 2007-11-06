@@ -187,6 +187,19 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
             throw new InternalErrorException(e);
         }
     }
+    public Partida nuevaPartida() throws InternalErrorException
+    {
+        try{
+            NuevaPartidaAction nuevaPartidaAction = new NuevaPartidaAction();
+            return (Partida) nuevaPartidaAction.execute();
+            
+        }catch (InternalErrorException e) {
+            throw e;
+        }
+        catch (Exception e){
+            throw new InternalErrorException(e);
+        }
+    }
     
    
     

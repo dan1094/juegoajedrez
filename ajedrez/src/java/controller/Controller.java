@@ -45,7 +45,7 @@ public class Controller {
         else System.out.println("BLANCAS");
         do{
            
-           //coordenadas = partida.getTablero().fide.de_fide_a_modelo(partida,this.pedir_coordenadas_movimiento());
+           //coordenadas = partida.getTablero().fide.de_fide_a_modelo(partida,this.pedir_coordenadas_movimiento()); //XQ tablero tiene un atributo FIDE???
            
             int filaorigen=coordenadas[1];
             int columnaorigen=coordenadas[0];

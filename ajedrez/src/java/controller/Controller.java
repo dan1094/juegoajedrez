@@ -11,8 +11,12 @@ package controller;
 
 import java.io.*;
 import java.util.ArrayList;
-import model.partida.Partida;
-import model.partida.Tablero;
+import model.facade.*;
+import model.partida.*;
+import model.user.*;
+import model.util.*;
+
+
 
 
 /**
@@ -183,6 +187,27 @@ public class Controller {
          
          return(turno);
      }
+     public static void main(String[] args){ 
+        boolean mate=false;
+        int i=1, filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println("BIENVENIDO AL AJEDREZ");
+        
+        //CasosDeUsoEnNegro instancia= new CasosDeUsoEnNegro();
+        //instancia.casosDeUso();
+        
+        /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
+         tablero, el que asociamos a setTablero de la partida. */
+        Partida partida =  new Partida();
+        Tablero tablero = new Tablero(0);
+        partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
+        partida.obtener_tablero(partida); //
+        partida.comenzar();
+        
+        
+      
+ }
              
      
 }

@@ -276,13 +276,13 @@ public class Partida implements ISubject {
     
     /**Esta funcion se invoca desde MAIN. Recibe la partida creada anteriormente y devuelve un tablero
      *personalizado o estandar, dependiendo de lo que pida el usuario*/
-    public Partida obtener_tablero(Partida partida){
+    public Partida obtener_tablero(){
         boolean personal=true;
         Tablero tablero=null;
         //Creo un controlador
         Controller controller = new Controller();
         //Asocio el controlador a la partida
-        partida.setController(controller);
+        this.setController(controller);
         //Le pido al controlador un tipo de partida
         personal = controller.tablero_personalizado();
         if(personal){
@@ -297,46 +297,7 @@ public class Partida implements ISubject {
         return(this);
    }
     
-    public void comenzar(){
-        //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
-        int coordenadas[] = new int[4];
-        
-        
-        System.out.println("COMIENZO DE LA PARTIDA");
-        System.out.print("El turno es de las: ");
-        if(this.getTurno()) System.out.println("NEGRAS");
-        else System.out.println("BLANCAS");
-        Controller controller = new Controller(); 
-        do{
-           
-            coordenadas = this.tablero.fide.de_fide_a_modelo(this,this.controller.pedir_coordenadas_movimiento());
-           
-            int filaorigen=coordenadas[1];
-            int columnaorigen=coordenadas[0];
-            int filadestino=coordenadas[3];
-            int columnadestino=coordenadas[2];
-            
-            boolean movida=this.mover(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
-            if(movida)
-            { 
-              //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
-              Ficha ficha=tablero.getCasilla(filadestino,columnadestino).getFicha();
-              System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
-              if(ficha.getColor()) System.out.println("negro.");
-              else System.out.println("blanco.");
-              if(tablero.tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
-                 {
-                 //Si lo movido es un rey, ya no puede enrocar.
-                 //de que color es?
-                 if(ficha.getColor()==false) 
-                   this.setBlanco_puede_enrocar(false);
-                 else this.setNegro_puede_enrocar(false);
-                 }
-             }  
-        }while(!this.fin_partida());
-        
-    }
-    
+  
     public boolean fin_partida(){
         //Una partida termina cuando hay jaque-mate o cuando hay tablas.
         boolean tablas=false;

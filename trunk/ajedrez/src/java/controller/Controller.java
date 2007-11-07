@@ -31,6 +31,47 @@ public class Controller {
     /** Creates a new instance of Controller */
     public Controller() {
     }
+    public void comenzar(Partida partida)
+    {
+        
+    
+        //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
+        int coordenadas[] = new int[4];
+        
+        
+        System.out.println("COMIENZO DE LA PARTIDA");
+        System.out.print("El turno es de las: ");
+        if(partida.getTurno()) System.out.println("NEGRAS");
+        else System.out.println("BLANCAS");
+        do{
+           
+           //coordenadas = partida.getTablero().fide.de_fide_a_modelo(partida,this.pedir_coordenadas_movimiento());
+           
+            int filaorigen=coordenadas[1];
+            int columnaorigen=coordenadas[0];
+            int filadestino=coordenadas[3];
+            int columnadestino=coordenadas[2];
+            
+            boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
+            if(movida)
+            { 
+              //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
+              Ficha ficha=partida.getTablero().getCasilla(filadestino,columnadestino).getFicha();
+              System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+              if(ficha.getColor()) System.out.println("negro.");
+              else System.out.println("blanco.");
+             /* if(partida.getTablero().tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
+                 {
+                 //Si lo movido es un rey, ya no puede enrocar.
+                 //de que color es?
+                 if(ficha.getColor()==false) 
+                   partida.setBlanco_puede_enrocar(false);
+                 else partida.setNegro_puede_enrocar(false);
+                 }*/
+             } 
+        }while(!partida.fin_partida());
+        
+    }
        
      /**Ofrece la personalizacion del tablero de la partida*/
      public boolean tablero_personalizado(){
@@ -188,22 +229,37 @@ public class Controller {
          return(turno);
      }
      public static void main(String[] args){ 
+       
         boolean mate=false;
         int i=1, filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        Controller controller=null;
         
         System.out.println("BIENVENIDO AL AJEDREZ");
+        
+        System.out.println("Inicializando Partida....");
+        Partida partida =  new Partida();
+        System.out.println("Partida Inicializada");
+        System.out.println("Creando un tablero vacio......");
+        Tablero tablero = new Tablero(0);
+        System.out.println("Tablero inicializado vacio");
+        System.out.println("Asociando el tablero a la partida...");
+        partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
+        System.out.println("Tablero asociado...........");
+        partida.obtener_tablero(); 
+        System.out.println("Comienzo de la partida.......");
+        controller.comenzar(partida);
         
         //CasosDeUsoEnNegro instancia= new CasosDeUsoEnNegro();
         //instancia.casosDeUso();
         
         /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
          tablero, el que asociamos a setTablero de la partida. */
-        Partida partida =  new Partida();
-        Tablero tablero = new Tablero(0);
-        partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
-        partida.obtener_tablero(partida); //
-        partida.comenzar();
+        
+       
+        
+        //
+        
         
         
       

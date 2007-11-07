@@ -41,7 +41,7 @@ public class Partida implements ISubject {
         turno = false;
         blanco_puede_enrocar = true;
         negro_puede_enrocar = true;
-        tablero.inicializar_tablero_estandar(this);
+        //tablero.inicializar_tablero_estandar(this);
         misObservers = new ArrayList();
     }
     

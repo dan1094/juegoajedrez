@@ -21,8 +21,8 @@ public class Fide {
     public Fide() {
     }
     
-    public int[] de_fide_a_modelo(Partida partida, String mov_en_fide){
+   /* public int[] de_fide_a_modelo(Partida partida, String mov_en_fide){
         
-    }
+    }*/
     
 }

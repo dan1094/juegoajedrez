@@ -11,6 +11,7 @@ package model.partida;
 
 //import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
 
+import controller.Fide;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -21,7 +22,7 @@ import java.io.InputStreamReader;
 public class Tablero {
     
     protected int id_tablero; //numero de tablero
-    protected Casilla tablero[][];
+    public Casilla tablero[][];
     protected Fide fide;
     
     /** Creates a new instance of Tablero */
@@ -33,6 +34,14 @@ public class Tablero {
         this.id_tablero=id;
         tablero = new Casilla[8][8];
         }
+    
+    public Casilla[][] getTablero(){
+        return(this.tablero);
+    }
+    
+    public void setTablero(Casilla[][] tablero){
+        this.tablero=tablero;
+    }
     
     /**Coloca las fichas en sus posiciones iniciales*/
     public Tablero inicializar_tablero_estandar(Partida partida){
@@ -55,7 +64,7 @@ public class Tablero {
         Ficha cab_b_2 = new Caballo(false);
         Ficha alf_b_1 = new Alfil(false);
         Ficha alf_b_2 = new Alfil(false);
-        Ficha reina_b = new Reina(false);
+        Ficha reina_b = new Dama(false);
         Ficha rey_b = new Rey(false);
 
         //CREAMOS LAS FICHAS NEGRAS 
@@ -73,22 +82,14 @@ public class Tablero {
         Ficha cab_n_2 = new Caballo(true);
         Ficha alf_n_1 = new Alfil(true);
         Ficha alf_n_2 = new Alfil(true);
-        Ficha reina_n = new Reina(true);
+        Ficha reina_n = new Dama(true);
         Ficha rey_n = new Rey(true);
           
         System.out.println("Creando las casillas del tablero");
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
        
         this.vacio(partida);
-        /*int m=0,n=0,id=0;
-        int id_casilla= 0;
-        for(m=0;m<8;m++)
-            for(n=0;n<8;n++)
-            {
-                partida.tablero.tablero[m][n] = new Casilla(id_casilla,null,m,n,false,false);
-                id_casilla++;
-            }
-        */
+       
         System.out.println("Asociando las fichas a las casillas del tablero");
         //Asociamos las fichas a sus posiciones en el tablero.
         partida.tablero.tablero[0][2].setFicha(alf_n_1);
@@ -152,10 +153,10 @@ public class Tablero {
         System.out.println("PERSONALIZACION DEL TABLERO");
         do{
            
-            opcion_ficha=partida.controller.ofrecer_ficha();
+            opcion_ficha=partida.ofrecer_ficha();
             if(opcion_ficha!=0){
-                color=partida.controller.pedir_color();
-                coor_fide=partida.controller.pedir_coordenadas_ficha();
+                color=partida.pedir_color();
+                coor_fide=partida.pedir_coordenadas_ficha();
                 coordenadas=partida.tablero.fide.de_fide_a_modelo(partida,coor_fide);
                 fila=coordenadas[1];
                 columna=coordenadas[0];
@@ -220,7 +221,7 @@ public class Tablero {
         
         switch(opcion){
             case 1:return(ficha = new Rey(color));
-            case 2:return(ficha = new Reina(color));
+            case 2:return(ficha = new Dama(color));
             case 3:return(ficha = new Torre(color));
             case 4:return(ficha = new Caballo(color));
             case 5:return(ficha = new Alfil(color));

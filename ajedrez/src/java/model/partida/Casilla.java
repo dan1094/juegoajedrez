@@ -9,8 +9,6 @@
 
 package model.partida;
 
-
-
 /**
  *
  * @author Pablo

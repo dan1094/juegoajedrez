@@ -31,7 +31,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args){ 
-       /* boolean mate=false;
+        boolean mate=false;
         int i=1, filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
@@ -42,11 +42,11 @@ public class Main {
         
         /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
          tablero, el que asociamos a setTablero de la partida. */
-       /* Partida partida =  new Partida();
+        Partida partida =  new Partida();
         Tablero tablero = new Tablero(0);
         partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
-        partida.obtener_tablero(partida);
-        partida.comenzar();*/
+        partida.obtener_tablero();
+        //partida.comenzar();
         
         
       

@@ -20,9 +20,9 @@ public class Dama extends Ficha{
     /**
      * Creates a new instance of Dama
      */
-    public Dama(int id_ficha, boolean color){
-        super(id_ficha,color);
-        this.setTipo_ficha("reina");
+    public Dama(boolean color){
+        super(color);
+        this.setTipo_ficha("dama");
     }
     
     public boolean movimiento_correspondiente_ficha(Tablero tablero,int filaorigen, 

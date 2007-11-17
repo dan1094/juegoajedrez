@@ -380,26 +380,35 @@ public class Fide {
     public int[] buscarMovimiento4_6(Partida partida, String tipo_ficha, int filaDestino, int colDestino){
         int[] coordenadas=new int[4];
         int[][] fichas=new int[2][8];
+        fichas=inicializacion(fichas);
         int[][] fichas_validas=new int[2][8];
-        int filaOrigen=0,colOrigen=0;
+        fichas_validas=inicializacion(fichas_validas);
+        int filaOrigen=0,colOrigen=0,i=0;;
         boolean bien=false;
+        boolean hFicha=true;
         
         fichas=buscarFichas(partida,tipo_ficha);
         
-        for(int j=0;(j<8);j++){
+        
+        for(int j=0;(j<8)&&hFicha;j++){
             filaOrigen=fichas[0][j];
             colOrigen=fichas[1][j];
+            hFicha=hayFicha(fichas,i);
+            i++;
             if(partida.comprobar_movimiento(filaOrigen,colOrigen,filaDestino,colDestino,partida.tablero))
+                System.out.println();
                 fichas_validas=aniadir(filaOrigen,colOrigen,fichas_validas);
         }
-        
-        bien=correcto(fichas_validas);
-        if(bien) coordenadas=transformar(fichas_validas,filaDestino,colDestino);
-        else return(null);
-        
+    
+        coordenadas=transformar(fichas_validas,filaDestino,colDestino);
+       
         return(coordenadas);
     }
     
+    public boolean hayFicha(int[][] fichas, int i){
+        if(fichas[0][i]!=-1) return(false);
+        else return(false);
+    }
     public int[] buscarMovimiento10_11(Partida partida, int cO, int fD, int cD, String tipo_ficha){
         int[] coordenadas = new int[4];
         int[] ficha = new int[2];
@@ -448,18 +457,23 @@ public class Fide {
     }
     
     public int[][] aniadir(int filaO, int colO,int[][] fichas_validas){
-        for(int i=0;i<8;i++)
+        
+        for(int i=0;i<8;i++){
             if(fichas_validas[0][i]==-1){
                 fichas_validas[0][i]=filaO;
                 fichas_validas[1][i]=colO;
             }
-        
+        }
         return(fichas_validas);
     }
     
     /**Esta funcion comprueba que solo una ficha puede realizar el movimiento solicitado*/
     public boolean correcto(int[][] lista){
-        if(lista[0][1]==-1) return(true);
+        System.out.println("Dentro de correcto.");
+        for(int i=0;i<2;i++)
+            for(int j=0;j<8;j++)
+                System.out.print(lista[i][j]);
+        if((lista[0][2]==-1)) return(true);
         else return(false);
     }
     
@@ -630,11 +644,12 @@ public class Fide {
             {
                 if(partida.tablero.tablero[i][j].getOcupada()&&
                         partida.tablero.tablero[i][j].getFicha().getColor()==partida.getTurno()&&
-                        partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha))
+                        partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha)){
                             System.out.println("I="+i+" ,J="+j);
                             fichas[0][m]=i;
                             fichas[1][m]=j;
                             m++;
+                }
             }
         return(fichas);
     }

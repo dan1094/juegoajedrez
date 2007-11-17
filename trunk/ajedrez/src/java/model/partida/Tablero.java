@@ -129,6 +129,7 @@ public class Tablero {
         
         partida.tablero.tablero[0][4].setFicha(rey_n);
         partida.tablero.tablero[7][4].setFicha(rey_b);
+        partida.setTurno(false);
        
         return(partida.tablero);  
     }

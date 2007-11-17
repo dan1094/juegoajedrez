@@ -19,6 +19,8 @@ import model.partida.Partida;
 
 public class Fide {
     
+    String traduciendo;
+    
     /** Creates a new instance of Fide */
     public Fide() {
     }
@@ -28,61 +30,64 @@ public class Fide {
      *coordenadas correspondientes comprensibles por el modelo*/
     public int[] de_fide_a_modelo(Partida partida, String coordenadas_fide){
         int coordenadas[] = new int[4];
-        String traduciendo = new String (coordenadas_fide); //Copia del String para no modificarlo
-        
-        coordenadas=iniciar_parser(partida, traduciendo);
+        this.traduciendo=coordenadas_fide;
+            
+        coordenadas=iniciar_parser(partida);
         
      return(coordenadas);   
     }
     
     
-    public int[] iniciar_parser(Partida partida, String traduciendo){
+    public int[] iniciar_parser(Partida partida){
         int coordenadas[] = new int[4];
         
-        char c= obtenerCaracter(traduciendo);
-       
-        if(esMayuscula(c)) coordenadas=state1(partida,c,traduciendo);
-        else    if(esMinuscula(c)) coordenadas=state22(partida,c,traduciendo);    
-                else if(c=='O') coordenadas=state18(partida,traduciendo);
+        char c= obtenerCaracter();
+        if(esMayuscula(c)) coordenadas=state1(partida,c );
+        else    if(esMinuscula(c)) coordenadas=state22(partida,c);    
+                else if(c=='O') coordenadas=state18(partida );
      return(coordenadas);   
     }
     
    
     //Es Mayuscula (Ficha)
-    public int[] state1(Partida partida, char c, String traduciendo){
+    public int[] state1(Partida partida, char c ){
+        System.out.println("state1");
         int coordenadas[] = new int[4];
         String tipo_ficha=this.asociarTipoficha(c);
-        c=obtenerCaracter(traduciendo);
-        if(esMinuscula(c)) coordenadas=state5(partida,traduciendo,c,tipo_ficha);
-        else    if(esNumero(c)) coordenadas=state12(partida,traduciendo,c,tipo_ficha);
-                else    if(c=='x') coordenadas=state2(partida,traduciendo,tipo_ficha);
+        c=obtenerCaracter( );
+        if(esMinuscula(c)) coordenadas=state5(partida, c,tipo_ficha);
+        else    if(esNumero(c)) coordenadas=state12(partida, c,tipo_ficha);
+                else    if(c=='x') coordenadas=state2(partida, tipo_ficha);
                         else return(null);
            return(coordenadas);
     }
     
-    public int[] state2(Partida partida, String traduciendo, String tipo_ficha){
+    public int[] state2(Partida partida,String tipo_ficha){
+        System.out.println("state2");
         int[] coordenadas = new int[4];
-        char c=obtenerCaracter(traduciendo);
-        if(esMinuscula(c)) coordenadas=state3(partida, traduciendo, c, tipo_ficha);
+        char c=obtenerCaracter( );
+        if(esMinuscula(c)) coordenadas=state3(partida,   c, tipo_ficha);
         else    return(null);
         
         return(coordenadas);
     } 
     
-    public int[] state3(Partida partida, String traduciendo, char c, String tipo_ficha){
+    public int[] state3(Partida partida, char c, String tipo_ficha){
+        System.out.println("state3");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
-        c=obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state4(partida,traduciendo,colDestino,c,tipo_ficha);
+        c=obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state4(partida, colDestino,c,tipo_ficha);
         else    return(null);
         
         return(coordenadas);
     }
     
-    public int[] state4(Partida partida, String traduciendo ,int colDestino, char c, String tipo_ficha){
+    public int[] state4(Partida partida,int colDestino, char c, String tipo_ficha){
+        System.out.println("state4");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin();
         if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada())
             return(null);
         else    if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
@@ -92,64 +97,70 @@ public class Fide {
         
     }
     
-    public int[] state5(Partida partida, String traduciendo, char c, String tipo_ficha){
+    public int[] state5(Partida partida,char c, String tipo_ficha){
+        System.out.println("state5");
         int[] coordenadas = new int[4];
         int columna=this.convertirColumna(c);
-        c=this.obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state6(partida,traduciendo,columna,c,tipo_ficha);
-        else    if(esMinuscula(c)) coordenadas=state8(partida,traduciendo,columna,c,tipo_ficha);
-                else    if(c=='x') coordenadas=state7(partida,traduciendo,columna,tipo_ficha);
+        c=this.obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state6(partida, columna,c,tipo_ficha);
+        else    if(esMinuscula(c)) coordenadas=state8(partida, columna,c,tipo_ficha);
+                else    if(c=='x') coordenadas=state7(partida, columna,tipo_ficha);
                 else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state6(Partida partida, String traduciendo, int colDestino, char c_sig, String tipo_ficha){
+    public int[] state6(Partida partida, int colDestino, char c_sig, String tipo_ficha){
+        System.out.println("state6");
         //TIPO_FICHA, FILADESTINO, COLUMNADESTINO.
         int[] coordenadas=new int[4];
         int filaDestino=this.convertirFila(c_sig);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin( );
         if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
         else return(null);
                
         return(coordenadas);
     }
     
-    public int[] state7(Partida partida, String traduciendo, int colOrigen, String tipo_ficha){
+    public int[] state7(Partida partida,int colOrigen, String tipo_ficha){
+        System.out.println("state7");
         int[] coordenadas=new int[4];
-        char c=this.obtenerCaracter(traduciendo);
-        if(esMinuscula(c)) coordenadas=state9(partida,traduciendo,c,colOrigen,tipo_ficha);
+        char c=this.obtenerCaracter( );
+        if(esMinuscula(c)) coordenadas=state9(partida, c,colOrigen,tipo_ficha);
         else return(null);
         
         return(coordenadas);
         
     }
     
-    public int[] state8(Partida partida, String traduciendo, int colOrigen, char c_sig, String tipo_ficha){
+    public int[] state8(Partida partida, int colOrigen, char c_sig, String tipo_ficha){
+        System.out.println("state8");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c_sig);
-        char c=this.obtenerCaracter(traduciendo);
+        char c=this.obtenerCaracter( );
                
-        if(esNumero(c)) coordenadas=state11(partida, traduciendo, colOrigen, c, colDestino,tipo_ficha);
+        if(esNumero(c)) coordenadas=state11(partida,   colOrigen, c, colDestino,tipo_ficha);
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state9(Partida partida, String traduciendo, char c, int colOrigen, String tipo_ficha){
+    public int[] state9(Partida partida,char c, int colOrigen, String tipo_ficha){
+        System.out.println("state9");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
-        c=this.obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state10(partida,traduciendo,c,colOrigen, colDestino,tipo_ficha);
+        c=this.obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state10(partida, c,colOrigen, colDestino,tipo_ficha);
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state10(Partida partida, String traduciendo,char c, int colOrigen, int colDestino, String tipo_ficha){
+    public int[] state10(Partida partida,char c, int colOrigen, int colDestino, String tipo_ficha){
+        System.out.println("state10");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin( );
         if(fin&&partida.tablero.tablero[filaDestino][colDestino].getOcupada()) 
             coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino, tipo_ficha);
         else return(null);
@@ -157,10 +168,11 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state11(Partida partida, String traduciendo, int colOrigen, char c, int colDestino, String tipo_ficha){
+    public int[] state11(Partida partida,int colOrigen, char c, int colDestino, String tipo_ficha){
+        System.out.println("state11");
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin( );
         
         if(fin) coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino,tipo_ficha);
         else return(null);
@@ -168,52 +180,57 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state12(Partida partida, String traduciendo, char c, String tipo_ficha){
+    public int[] state12(Partida partida,char c, String tipo_ficha){
+        System.out.println("state12");
         int[] coordenadas = new int[4];
         int filaOrigen=this.convertirFila(c);
-        c=obtenerCaracter(traduciendo);
-        if(c=='x') coordenadas=state13(partida, traduciendo, filaOrigen, tipo_ficha);
-        else    if(esMinuscula(c)) coordenadas=state14(partida, traduciendo, c, filaOrigen, tipo_ficha);
+        c=obtenerCaracter( );
+        if(c=='x') coordenadas=state13(partida,   filaOrigen, tipo_ficha);
+        else    if(esMinuscula(c)) coordenadas=state14(partida,   c, filaOrigen, tipo_ficha);
                 else    return(null);
         
         return(coordenadas);
         
     }
     
-    public int[] state13(Partida partida, String traduciendo, int filaOrigen, String tipo_ficha){
+    public int[] state13(Partida partida,int filaOrigen, String tipo_ficha){
+        System.out.println("state13");
         int[] coordenadas=new int[4];
         
-        char c=this.obtenerCaracter(traduciendo);
-        if(esMinuscula(c)) coordenadas=state15(partida, traduciendo, filaOrigen, c, tipo_ficha);
+        char c=this.obtenerCaracter( );
+        if(esMinuscula(c)) coordenadas=state15(partida,   filaOrigen, c, tipo_ficha);
         else    return(null);
         
         return(coordenadas);
     }
     
-    public int[] state14(Partida partida, String traduciendo, char c, int filaOrigen, String tipo_ficha){
+    public int[] state14(Partida partida,char c, int filaOrigen, String tipo_ficha){
+        System.out.println("state14");
         int[] coordenadas=new int[4];
         int colDestino=this.convertirColumna(c);
-        c=this.obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state16(partida, traduciendo, c, filaOrigen, colDestino, tipo_ficha);
+        c=this.obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state16(partida,   c, filaOrigen, colDestino, tipo_ficha);
         else return(null);
                
         return(coordenadas);
     }
     
-    public int[] state15(Partida partida, String traduciendo, int filaOrigen, char c, String tipo_ficha){
+    public int[] state15(Partida partida,int filaOrigen, char c, String tipo_ficha){
+        System.out.println("state15");
         int[] coordenadas=new int[4];
         int colDestino=this.convertirColumna(c);
-        c=this.obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state17(partida, traduciendo, filaOrigen, c, colDestino, tipo_ficha);
+        c=this.obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state17(partida,   filaOrigen, c, colDestino, tipo_ficha);
         else    return(null);
         
         return(coordenadas);
     }
     
-    public int[] state16(Partida partida, String traduciendo, char c, int filaOrigen, int colDestino, String tipo_ficha){
+    public int[] state16(Partida partida,char c, int filaOrigen, int colDestino, String tipo_ficha){
+        System.out.println("state16");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin( );
         
         if(fin) coordenadas=buscarMovimiento16(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
         else return(null);
@@ -221,10 +238,11 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state17(Partida partida, String traduciendo, int filaOrigen, char c, int colDestino, String tipo_ficha){
+    public int[] state17(Partida partida,int filaOrigen, char c, int colDestino, String tipo_ficha){
+        System.out.println("state17");
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
-        boolean fin=comprobarfin(traduciendo);
+        boolean fin=comprobarfin( );
         
         if(fin) coordenadas = buscarMovimiento17(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
         else return(null);
@@ -232,38 +250,42 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state18(Partida partida, String traduciendo){
+    public int[] state18(Partida partida ){
+        System.out.println("state18");
         int[] coordenadas=new int[4];
-        char c=obtenerCaracter(traduciendo);
-        if(c=='-') coordenadas=state19(partida,traduciendo);
+        char c=obtenerCaracter( );
+        if(c=='-') coordenadas=state19(partida );
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state19(Partida partida, String traduciendo){
+    public int[] state19(Partida partida ){
+        System.out.println("state19");
         int[] coordenadas = new int[4];
-        char c=obtenerCaracter(traduciendo);
-        if(c=='O') coordenadas= state20(partida, traduciendo);
+        char c=obtenerCaracter( );
+        if(c=='O') coordenadas= state20(partida);
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state20(Partida partida, String traduciendo){
+    public int[] state20(Partida partida ){
+        System.out.println("state20");
         int[] coordenadas = new int[4];
-        char c=obtenerCaracter(traduciendo);
-        if(c=='-') coordenadas=state21(partida,traduciendo);
-        else    if(comprobarfin(traduciendo)) coordenadas=enroqueCorto(partida);
+        char c=obtenerCaracter( );
+        if(c=='-') coordenadas=state21(partida );
+        else    if(comprobarfin( )) coordenadas=enroqueCorto(partida);
                 else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state21(Partida partida, String traduciendo){
+    public int[] state21(Partida partida ){
+        System.out.println("state21");
         int[] coordenadas = new int[4];
-        char c=obtenerCaracter(traduciendo);
-        boolean fin=comprobarfin(traduciendo);
+        char c=obtenerCaracter( );
+        boolean fin=comprobarfin( );
         if(fin){
             if(c=='O') coordenadas=enroqueLargo(partida);
             else return(null);
@@ -272,62 +294,69 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state22(Partida partida, char c, String traduciendo){
+    public int[] state22(Partida partida, char c ){
+        System.out.println("state22");
         int[] coordenadas = new int[4];
         int columna=this.convertirColumna(c);
-        c=obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state23(partida,columna,c,traduciendo);
-        else    if(c=='x') coordenadas=state24(partida,columna,traduciendo);
+        c=obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state23(partida,columna,c );
+        else    if(c=='x') coordenadas=state24(partida,columna );
                 else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state23(Partida partida, int colDestino,char c, String traduciendo){
+    public int[] state23(Partida partida, int colDestino,char c ){
+        System.out.println("state23");
+        int colOrigen=colDestino;
+        int[] ficha=new int[2];
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
-        boolean fin=this.comprobarfin(traduciendo);
+        boolean fin=this.comprobarfin( );
         if(!fin) return(null);
         if(partida.getTurno()){
-                int filaOrigen=filaDestino-1;
-                int colOrigen=colDestino;
-                coordenadas[0]=filaOrigen;
-                coordenadas[1]=colOrigen;
+                ficha=buscarPeon(partida,colOrigen,filaDestino,colDestino);
+                coordenadas[0]=ficha[0];
+                coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
+                
            }else{
-                int filaOrigen=filaDestino+1;
-                int colOrigen=colDestino;
-                coordenadas[0]=filaOrigen;
-                coordenadas[1]=colOrigen;
+                ficha=buscarPeon(partida,colOrigen,filaDestino,colDestino);
+                coordenadas[0]=ficha[0];
+                coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
+                
            }
         
         return(coordenadas);
       
     }
     
-    public int[] state24(Partida partida, int columna, String traduciendo){
+    public int[] state24(Partida partida, int columna ){
+        System.out.println("state24");
         int[] coordenadas = new int[4];
-        char c=obtenerCaracter(traduciendo);
-        if(esMinuscula(c)) coordenadas=state25(partida, columna, c, traduciendo);
+        char c=obtenerCaracter( );
+        if(esMinuscula(c)) coordenadas=state25(partida, columna, c);
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state25(Partida partida, int colOrigen, char c, String traduciendo){
+    public int[] state25(Partida partida, int colOrigen, char c ){
+        System.out.println("state25");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
-        c=obtenerCaracter(traduciendo);
-        if(esNumero(c)) coordenadas=state26(partida,c,colOrigen,colDestino,traduciendo);
+        c=obtenerCaracter( );
+        if(esNumero(c)) coordenadas=state26(partida,c,colOrigen,colDestino );
         else return(null);
         
         return(coordenadas);
     }
     
-    public int[] state26(Partida partida, char c, int colOrigen, int colDestino, String traduciendo){
+    public int[] state26(Partida partida, char c, int colOrigen, int colDestino ){
+        System.out.println("state26");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
@@ -443,10 +472,13 @@ public class Fide {
         return(coordenadas);
     }
     
-    public char obtenerCaracter(String traduciendo){
+    public char obtenerCaracter(){
      char c=traduciendo.charAt(0);
      traduciendo=traduciendo.substring(1);
-        return(c);
+     this.traduciendo=traduciendo;
+     System.out.println("CARACTER: "+c);
+     
+     return(c);
     }
     
     public String asociarTipoficha(char c){
@@ -526,6 +558,27 @@ public class Fide {
         
         return(coor);
     }
+    
+    public int[] buscarPeon(Partida partida, int colOrigen, int filaDestino, int colDestino){
+        int[] coordenadas = new int[4];
+        for(int i=0;i<8;i++){
+            if(partida.getTurno()){//TURNO NEGRAS
+                if(partida.tablero.tablero[i][colDestino].getOcupada()&&
+                   partida.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
+                    
+                    
+                }
+                    
+            }else{ //TURNO BLANCAS
+                if(partida.tablero.tablero[i][colDestino].getOcupada()&&
+                   partida.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
+                    
+                }
+                   
+            }
+        }
+        return(coordenadas);
+    }
            
     public int[][] inicializacion(int[][] coordenadas){
         for(int i=0;i<2;i++)
@@ -534,8 +587,8 @@ public class Fide {
         return(coordenadas);
     }
     
-    public boolean comprobarfin(String trad){
-        if(trad.length()==0) return(true);
+    public boolean comprobarfin(){
+        if(this.traduciendo.length()==0) return(true);
         else return(false);
     }   
     
@@ -578,6 +631,7 @@ public class Fide {
                 if(partida.tablero.tablero[i][j].getOcupada()&&
                         partida.tablero.tablero[i][j].getFicha().getColor()==partida.getTurno()&&
                         partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha))
+                            System.out.println("I="+i+" ,J="+j);
                             fichas[0][m]=i;
                             fichas[1][m]=j;
                             m++;

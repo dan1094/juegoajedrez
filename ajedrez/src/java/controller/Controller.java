@@ -32,81 +32,13 @@ public class Controller {
     /** Creates a new instance of Controller */
     public Controller() {
     }
-    public void comenzar(Partida partida)
-    {
     
-    
-    
-        //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
-        int coordenadas[] = new int[4];
-        Fide fide= new Fide();
-        
-        System.out.println("COMIENZO DE LA PARTIDA");
-        System.out.print("El turno es de las: ");
-        if(partida.getTurno()) System.out.println("NEGRAS");
-        else System.out.println("BLANCAS");
-        do{
-           do{
-            coordenadas = fide.de_fide_a_modelo(partida,this.pedir_coordenadas_movimiento());
-            }while(coordenadas==null);
-           
-            int filaorigen=coordenadas[1];
-            int columnaorigen=coordenadas[0];
-            int filadestino=coordenadas[3];
-            int columnadestino=coordenadas[2];
-            
-            boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
-            if(movida)
-            { 
-              //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
-              Ficha ficha=partida.getTablero().getCasilla(filadestino,columnadestino).getFicha();
-              System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
-              if(ficha.getColor()) System.out.println("negro.");
-              else System.out.println("blanco.");
-             /* if(partida.getTablero().tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
-                 {
-                 //Si lo movido es un rey, ya no puede enrocar.
-                 //de que color es?
-                 if(ficha.getColor()==false) 
-                   partida.setBlanco_puede_enrocar(false);
-                 else partida.setNegro_puede_enrocar(false);
-                 }*/
-             } 
-        }while(!partida.fin_partida());
-        
-    }
-       
-     
-     
-    
-     
-    
-    
-     
-
-     public String pedir_coordenadas_movimiento(){
-        
-        String coordenadas="";
-        System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
-         
-        try {
-            //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
-            //y llamamos a "de_fide_a_modelo", de la clase FIDE.
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            coordenadas=in.readLine();
-                      
-                        
-        } catch (NumberFormatException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }return(coordenadas);
-     }
+      
      
      
      
-     public static void main(String[] args){ 
+     
+     /*public static void main(String[] args){ 
        
         boolean mate=false;
         int i=1, filaorigen=0, columnaorigen=0, filadestino=0, columnadestino=0;
@@ -137,11 +69,10 @@ public class Controller {
        
         
         //
-        
+        /**/
         
         
       
  }
              
      
-}

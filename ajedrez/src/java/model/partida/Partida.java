@@ -9,6 +9,7 @@
 
 package model.partida;
 
+import controller.Fide;
 import controller.IObserver;
 import controller.ISubject;
 import java.io.BufferedReader;
@@ -121,6 +122,54 @@ public class Partida implements ISubject {
             this.setTurno(false);
         else this.setTurno(true);
     }
+    public void comenzar(Partida partida)
+    {
+    
+    
+    
+        //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
+        int coordenadas[] = new int[4];
+        Fide fide= new Fide();
+        
+        System.out.println("COMIENZO DE LA PARTIDA");
+        System.out.print("El turno es de las: ");
+        if(partida.getTurno()) System.out.println("NEGRAS");
+        else System.out.println("BLANCAS");
+        do{
+           do{
+            coordenadas = fide.de_fide_a_modelo(partida,pedir_coordenadas_movimiento());
+            }while(coordenadas==null);
+           
+            int filaorigen=coordenadas[1];
+            int columnaorigen=coordenadas[0];
+            int filadestino=coordenadas[3];
+            int columnadestino=coordenadas[2];
+            
+            System.out.println("FILA ORIGEN: "+filaorigen);
+            System.out.println("COL ORIGEN: "+columnaorigen);
+            System.out.println("FILA DESTINO: "+filadestino);
+            System.out.println("COL DESTINO: "+columnadestino);
+            
+            boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
+            if(movida)
+            { 
+              //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
+              Ficha ficha=partida.getTablero().getCasilla(filadestino,columnadestino).getFicha();
+              System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+              if(ficha.getColor()) System.out.println("negro.");
+              else System.out.println("blanco.");
+             /* if(partida.getTablero().tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
+                 {
+                 //Si lo movido es un rey, ya no puede enrocar.
+                 //de que color es?
+                 if(ficha.getColor()==false) 
+                   partida.setBlanco_puede_enrocar(false);
+                 else partida.setNegro_puede_enrocar(false);
+                 }*/
+             } 
+        }while(!partida.fin_partida());
+        
+    }
     
     /**Recibe la eleccion del cambio y realiza el cambio de ficha*/
     public Tablero cambio_ficha(Tablero tablero, int eleccion, int fd, int cd){
@@ -170,7 +219,7 @@ public class Partida implements ISubject {
         //comprueba que el origen y el destino estan dentro del tablero
         boolean origen_dentro=this.tablero.dentro_tablero(filaorigen,columnaorigen); 
         boolean destino_dentro=this.tablero.dentro_tablero(filadestino,columnadestino);
-        boolean origen_turno=this.ocupada_color(tablero,filaorigen,columnaorigen);
+        boolean origen_turno=this.tablero.tablero[filaorigen][columnaorigen].getFicha().getColor();
         
         
         //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
@@ -229,6 +278,7 @@ public class Partida implements ISubject {
     
     public boolean mover(int filaorigen, int columnaorigen, int filadestino, 
             int columnadestino, Tablero tablero){
+        System.out.println("Entra en mover.");
         
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
         if(mov_per){
@@ -528,7 +578,26 @@ public class Partida implements ISubject {
         } catch (IOException ex) {
             ex.printStackTrace();
         }return(coordenadas);
+     } 
+        public String pedir_coordenadas_movimiento(){
+        
+        String coordenadas="";
+        System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
+         
+        try {
+            //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
+            //y llamamos a "de_fide_a_modelo", de la clase FIDE.
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            coordenadas=in.readLine();
+                      
+                        
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }return(coordenadas);
      }
-    
+           
    
 }

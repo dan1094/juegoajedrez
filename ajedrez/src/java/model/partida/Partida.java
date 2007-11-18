@@ -124,9 +124,6 @@ public class Partida implements ISubject {
     }
     public void comenzar(Partida partida)
     {
-    
-    
-    
         //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
         int coordenadas[] = new int[4];
         Fide fide= new Fide();
@@ -140,10 +137,10 @@ public class Partida implements ISubject {
             coordenadas = fide.de_fide_a_modelo(partida,pedir_coordenadas_movimiento());
             }while(coordenadas==null);
            
-            int filaorigen=coordenadas[1];
-            int columnaorigen=coordenadas[0];
-            int filadestino=coordenadas[3];
-            int columnadestino=coordenadas[2];
+            int filaorigen=coordenadas[0];
+            int columnaorigen=coordenadas[1];
+            int filadestino=coordenadas[2];
+            int columnadestino=coordenadas[3];
             
             System.out.println("FILA ORIGEN: "+filaorigen);
             System.out.println("COL ORIGEN: "+columnaorigen);
@@ -223,7 +220,7 @@ public class Partida implements ISubject {
         
         
         //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
-        if(origen_dentro&&destino_dentro&&origen_turno){
+        if(origen_dentro&&destino_dentro&&(origen_turno)==this.getTurno()){
         
         System.out.println("Origen y Destino dentro del tablero.");
         System.out.println("La ficha de la casilla ORIGEN es de su color.");

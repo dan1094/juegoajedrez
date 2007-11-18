@@ -16,18 +16,18 @@ import junit.framework.*;
 
 public class ReinaTest extends TestCase {
     
-    private Reina reina;
-    private Tablero tablero;
+   // private Reina reina;
+   // private Tablero tablero;
     
 
     protected void setUp() throws Exception {
-        reina = new Reina(true);
-        tablero = new Tablero();
+     //   reina = new Reina(true);
+     //   tablero = new Tablero();
     }
 
     protected void tearDown() throws Exception {
-        this.reina=null;
-        this.tablero = null;
+     //   this.reina=null;
+     //   this.tablero = null;
     }
 
     /**
@@ -94,6 +94,7 @@ public class ReinaTest extends TestCase {
         
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
+        
         tablero = tablero.vacio(partida);
         
         int fo = 3;

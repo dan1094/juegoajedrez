@@ -32,34 +32,9 @@ public class CasillaTest extends TestCase {
         this.casilla = null;
     }
 
-    /**
-     * Test of getId_casilla method, of class clases.Casilla.
-     */
-    public void testGetId_casilla() {
-        System.out.println("getId_casilla");
-        
-        Casilla instance = new Casilla();
-        
-        int expResult = 0;
-        int result = this.casilla.getId_casilla(); //llama al metodo de la clase casilla
-        assertEquals(expResult, result);
-        
-        
-    }
+   
 
-    /**
-     * Test of setId_casilla method, of class clases.Casilla.
-     */
-    public void testSetId_casilla() {
-        System.out.println("setId_casilla");
-        
-        int id_casilla = 0;
-        Casilla instance = new Casilla();
-        
-        instance.setId_casilla(id_casilla);
-        
-        
-    }
+  
 
     /**
      * Test of getFicha method, of class clases.Casilla.
@@ -68,6 +43,8 @@ public class CasillaTest extends TestCase {
         System.out.println("getFicha");
         
         Casilla instance = new Casilla();
+        
+   
         
         Ficha expResult = null;
         Ficha result = instance.getFicha();
@@ -142,6 +119,7 @@ public class CasillaTest extends TestCase {
         int columna = 0;
         Casilla instance = new Casilla();
         
+   
         instance.setColumna(columna);
         
         
@@ -158,6 +136,14 @@ public class CasillaTest extends TestCase {
         boolean expResult = false;
         boolean result = instance.getOcupada();
         assertEquals(expResult, result);
+        
+        
+    }
+    
+    public void testAmenazada_por_blancos() {
+        System.out.println("Amenazada por blancos");
+        
+        Casilla instance = new Casilla();
         
         
     }

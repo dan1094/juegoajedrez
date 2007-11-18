@@ -24,10 +24,10 @@ public class EsTablasAction {
        this.partida=partida;
    
    }
-    public boolean execute() 
+    public boolean execute(Partida partida) 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        return  partida.son_tablas();               
+        return  partida.son_tablas(partida);               
 
        
     }

@@ -26,10 +26,10 @@ public class EsJaqueMateAction {
        this.partida=partida;
    
    }
-    public boolean execute() 
+    public boolean execute(Partida partida) 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        return  partida.es_mate();               
+        return  partida.es_mate(partida);               
 
        
     }

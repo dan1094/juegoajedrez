@@ -164,7 +164,7 @@ public class Partida implements ISubject {
                  else partida.setNegro_puede_enrocar(false);
                  }*/
              } 
-        }while(!partida.fin_partida());
+        }while(!partida.fin_partida(partida));
         
     }
     
@@ -352,13 +352,13 @@ public class Partida implements ISubject {
      }
     
   
-    public boolean fin_partida(){
+    public boolean fin_partida(Partida partida){
         //Una partida termina cuando hay jaque-mate o cuando hay tablas.
         boolean tablas=false;
         boolean mate=false;
         
-        tablas=this.son_tablas();
-        mate=this.es_mate();
+        tablas=this.son_tablas(partida);
+        mate=this.es_mate(partida);
         
         return(tablas||mate);
     }
@@ -393,7 +393,7 @@ public class Partida implements ISubject {
      
     
     /**Mira si se ha llegado a tablas en la partida*/
-    public boolean son_tablas(){
+    public boolean son_tablas(Partida partida){
         //Busca los reyes y comprueba si pueden mover
                 int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
        
@@ -442,53 +442,34 @@ public class Partida implements ISubject {
     }
     
     /**Mira si ha habido jaque-mate*/
-    public boolean es_mate(){
+    public boolean es_mate(Partida partida){
         //Busca los reyes y comprueba si pueden mover
-                int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
+        int filarey_blanco=0,columnarey_blanco=0,filarey_negro=0,columnarey_negro=0;
+        int[] reyBlanco=this.buscarRey(partida,false);
+        int[] reyNegro=this.buscarRey(partida,true);
+        boolean mate=false;
        
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++){
-                if((this.tablero.tablero[i][j].getFicha()!=null)&&this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==false))
-                {//Si es un rey, y si es blanco
-                    filarey_blanco=i;
-                    columnarey_blanco=j;
-                }
-                if((this.tablero.tablero[i][j].getFicha()!=null)&&this.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")&&(this.tablero.tablero[i][j].getFicha().getColor()==true))
-                {//Si es un rey, y si es negro
-                    filarey_negro=i;
-                    columnarey_negro=j;
-                }
-            }
-        if(this.tablero.tablero[filarey_blanco][columnarey_blanco].getFicha().getColor()==false){
-            //se comprueba si el rey blanco puede mover
-            if(this.tablero.tablero[filarey_blanco-1][columnarey_blanco-1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco-1][columnarey_blanco].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco-1][columnarey_blanco+1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco][columnarey_blanco-1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco][columnarey_blanco+1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco+1][columnarey_blanco-1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco+1][columnarey_blanco].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco+1][columnarey_blanco+1].getAmenazada_por_negras()&&
-                this.tablero.tablero[filarey_blanco][columnarey_blanco].getAmenazada_por_negras())
-                //Esta ultima linea diferencia el mate de las tablas. Si esta en jaque->es mate, si no son tablas
-            return(true);
-        else return(false);
-        }else{
-            //se comprueba si el rey negro puede mover
-            if(this.tablero.tablero[filarey_negro-1][columnarey_negro-1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro-1][columnarey_negro].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro-1][columnarey_negro+1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro][columnarey_negro-1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro][columnarey_negro+1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro+1][columnarey_negro-1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro+1][columnarey_negro].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro+1][columnarey_negro+1].getAmenazada_por_blancas()&&
-                this.tablero.tablero[filarey_negro][columnarey_negro].getAmenazada_por_blancas())
-                //Esta ultima linea diferencia el mate de las tablas. Si esta en jaque->es mate, si no son tablas
-            return(true);
-        else return(false);        
-        }
+        if(partida.getTurno()){ //Turno negras
+            if(partida.tablero.tablero[reyNegro[0]][reyNegro[1]].getAmenazada_por_blancas()&&
+                    !reyPuedeMover(partida,reyNegro)){
                 
+            }else return(false);
+        }else{
+            if(partida.tablero.tablero[reyBlanco[0]][reyBlanco[1]].getAmenazada_por_negras()&&
+                    !reyPuedeMover(partida,reyBlanco)){
+                
+            }else return(false);
+        }
+        
+        
+        return(mate);
+                
+    }
+    
+    public boolean reyPuedeMover(Partida partida, int[] rey){
+        boolean puede=true;
+        
+        return(puede);
     }
     
     /**Ofrece al usuario el cambio de ficha al coronar un peon*/
@@ -513,7 +494,6 @@ public class Partida implements ISubject {
         }
      }
 
-   /**Ofrece al usuario las fichas que quiere para crear el tablero*/
      public int ofrecer_ficha(){
         
         int opcion=0;
@@ -539,7 +519,6 @@ public class Partida implements ISubject {
         return(opcion);
     }
      
-      /**Pide al usuario el color de la deseado de la ficha*/
      public boolean pedir_color(){
         int columna=0, color=0;
         System.out.println("¿Que color?");
@@ -576,7 +555,8 @@ public class Partida implements ISubject {
             ex.printStackTrace();
         }return(coordenadas);
      } 
-        public String pedir_coordenadas_movimiento(){
+     
+     public String pedir_coordenadas_movimiento(){
         
         String coordenadas="";
         System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
@@ -595,6 +575,19 @@ public class Partida implements ISubject {
             ex.printStackTrace();
         }return(coordenadas);
      }
-           
    
+     public int[] buscarRey(Partida partida, boolean color){
+         int[] rey=new int[2];
+         for(int i=0;i<8;i++)
+             for(int j=0;j<8;j++)
+                if(partida.tablero.tablero[i][j].getOcupada()&&
+                   partida.tablero.tablero[i][j].getFicha().getColor()==color&&
+                   partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals("rey")){
+                            rey[0]=i;
+                            rey[1]=j;
+                }
+                    
+             return(rey);
+     
+     }
 }

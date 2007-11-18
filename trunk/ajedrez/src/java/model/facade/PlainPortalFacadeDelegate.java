@@ -164,7 +164,7 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         {
             EsTablasAction esTablasAction = new EsTablasAction(partida);
         
-            return esTablasAction.execute();
+            return esTablasAction.execute(partida);
             
         } catch (InternalErrorException e) {
             throw e;
@@ -179,7 +179,7 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         {
             EsJaqueMateAction esJaqueMateAction = new EsJaqueMateAction(partida);
         
-            return esJaqueMateAction.execute();
+            return esJaqueMateAction.execute(partida);
             
         } catch (InternalErrorException e) {
             throw e;
@@ -192,6 +192,21 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         try{
             NuevaPartidaAction nuevaPartidaAction = new NuevaPartidaAction();
             return (Partida) nuevaPartidaAction.execute();
+            
+        }catch (InternalErrorException e) {
+            throw e;
+        }
+        catch (Exception e){
+            throw new InternalErrorException(e);
+        }
+    }
+    
+    public Partida coronar(int filaOrigen, int columnaOrigen,
+            Partida partida, int eleccion) throws InternalErrorException
+    {
+        try{
+            CoronarAction coronarAction = new CoronarAction(filaOrigen,columnaOrigen,partida,eleccion);
+            return (Partida) coronarAction.execute();
             
         }catch (InternalErrorException e) {
             throw e;

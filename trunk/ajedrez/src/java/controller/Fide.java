@@ -115,8 +115,11 @@ public class Fide {
         int[] coordenadas=new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin( );
-        if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
-        else return(null);
+        if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
+        else{
+            if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+            else return(null);
+        }
                
         return(coordenadas);
     }
@@ -242,10 +245,11 @@ public class Fide {
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
         boolean fin=comprobarfin( );
-        
-        if(fin) coordenadas = buscarMovimiento17(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
-        else return(null);
-        
+        if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
+        else{
+                if(fin) coordenadas = buscarMovimiento17(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
+                else return(null);
+        }
         return(coordenadas);
     }
     

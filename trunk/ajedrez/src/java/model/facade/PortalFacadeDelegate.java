@@ -47,4 +47,7 @@ public interface PortalFacadeDelegate extends Serializable {
     
     public Partida nuevaPartida() throws InternalErrorException; 
     
+    public Partida coronar(int filaOrigen, int columnaOrigen,
+            Partida partida, int eleccion) throws InternalErrorException;
+    
 }

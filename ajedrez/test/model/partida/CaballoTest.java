@@ -34,7 +34,7 @@ public class CaballoTest extends TestCase {
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
         
-        tablero = tablero.inicializar_tablero_estandar(partida);
+        tablero = tablero.vacio(partida);
         
         int fo = 0;
         int co = 1;
@@ -58,7 +58,7 @@ public class CaballoTest extends TestCase {
         Tablero tablero = new Tablero(1);
         Partida partida = new Partida(1,true,tablero,true,true);
         
-        tablero = tablero.inicializar_tablero_estandar(partida);
+        tablero = tablero.vacio(partida);
         
         int fo = 4;
         int co = 6;

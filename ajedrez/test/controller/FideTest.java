@@ -9,6 +9,9 @@ package controller;
 
 import junit.framework.*;
 import model.partida.Partida;
+import model.partida.Casilla;
+import model.partida.Ficha;
+import model.partida.Tablero;
 
 /**
  *
@@ -977,6 +980,65 @@ public class FideTest extends TestCase {
         
         int[] expResult = null;
         int[] result = instance.enroqueLargo(partida);
+        assertEquals(expResult, result);
+        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hayFicha method, of class controller.Fide.
+     */
+    public void testHayFicha() {
+        System.out.println("hayFicha");
+        
+        int[][] fichas = null;
+        int i = 0;
+        Fide instance = new Fide();
+        
+        boolean expResult = true;
+        boolean result = instance.hayFicha(fichas, i);
+        assertEquals(expResult, result);
+        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of buscarPeon method, of class controller.Fide.
+     */
+    public void testBuscarPeon() {
+        System.out.println("buscarPeon");
+        
+        Partida partida = null;
+        int colOrigen = 0;
+        int filaDestino = 0;
+        int colDestino = 0;
+        Fide instance = new Fide();
+        
+        int[] expResult = null;
+        int[] result = instance.buscarPeon(partida, colOrigen, filaDestino, colDestino);
+        assertEquals(expResult, result);
+        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of comprobar_movimiento method, of class controller.Fide.
+     */
+    public void testComprobar_movimiento() {
+        System.out.println("comprobar_movimiento");
+        
+        int filaorigen = 0;
+        int columnaorigen = 0;
+        int filadestino = 0;
+        int columnadestino = 0;
+        Partida partida = null;
+        Fide instance = new Fide();
+        
+        boolean expResult = true;
+        boolean result = instance.comprobar_movimiento(filaorigen, columnaorigen, filadestino, columnadestino, partida);
         assertEquals(expResult, result);
         
         // TODO review the generated test code and remove the default call to fail.

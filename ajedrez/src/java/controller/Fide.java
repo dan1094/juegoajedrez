@@ -9,7 +9,10 @@
 
 package controller;
 
+import model.partida.Casilla;
+import model.partida.Ficha;
 import model.partida.Partida;
+import model.partida.Tablero;
 
 
   /**
@@ -54,7 +57,7 @@ public class Fide {
         System.out.println("state1");
         int coordenadas[] = new int[4];
         String tipo_ficha=this.asociarTipoficha(c);
-        c=obtenerCaracter( );
+        c=obtenerCaracter();
         if(esMinuscula(c)) coordenadas=state5(partida, c,tipo_ficha);
         else    if(esNumero(c)) coordenadas=state12(partida, c,tipo_ficha);
                 else    if(c=='x') coordenadas=state2(partida, tipo_ficha);
@@ -110,11 +113,11 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state6(Partida partida, int colDestino, char c_sig, String tipo_ficha){
+    public int[] state6(Partida partida, int colDestino, char c, String tipo_ficha){
         System.out.println("state6");
         //TIPO_FICHA, FILADESTINO, COLUMNADESTINO.
         int[] coordenadas=new int[4];
-        int filaDestino=this.convertirFila(c_sig);
+        int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin( );
         if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
         else return(null);
@@ -389,14 +392,17 @@ public class Fide {
         
         fichas=buscarFichas(partida,tipo_ficha);
         
-        
         for(int j=0;(j<8)&&hFicha;j++){
             filaOrigen=fichas[0][j];
             colOrigen=fichas[1][j];
-            hFicha=hayFicha(fichas,i);
+            hFicha=hayFicha(fichas,i+1);
             i++;
+            System.out.println("Antes de comprobar movimiento");
+            System.out.println("FOrigen= "+filaOrigen);
+            System.out.println("COrigen= "+colOrigen);
+            System.out.println("FDestino= "+filaDestino);
+            System.out.println("CDestino= "+colDestino);
             if(partida.comprobar_movimiento(filaOrigen,colOrigen,filaDestino,colDestino,partida.tablero))
-                System.out.println();
                 fichas_validas=aniadir(filaOrigen,colOrigen,fichas_validas);
         }
     
@@ -406,15 +412,16 @@ public class Fide {
     }
     
     public boolean hayFicha(int[][] fichas, int i){
-        if(fichas[0][i]!=-1) return(false);
-        else return(false);
+        System.out.println("hayFicha: I="+i+"FICHAS[0][i]="+fichas[0][i]);
+        if(fichas[0][i]==-1) return(false);
+        else return(true);
     }
     public int[] buscarMovimiento10_11(Partida partida, int cO, int fD, int cD, String tipo_ficha){
         int[] coordenadas = new int[4];
         int[] ficha = new int[2];
               
         ficha=buscarFichaMismaFila(partida,tipo_ficha,cO);
-        if(partida.comprobar_movimiento(ficha[0],ficha[1],fD,cD,partida.tablero)){
+        if(this.comprobar_movimiento(ficha[0],ficha[1],fD,cD,partida)){
         coordenadas[0]=ficha[0];
         coordenadas[1]=ficha[1];
         coordenadas[2]=fD;
@@ -430,7 +437,7 @@ public class Fide {
         
         ficha=buscarFichaMismaColumna(partida,tipo_ficha,filaOrigen);
         if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
-            if(partida.comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida.tablero)){
+            if(comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida)){
                 coordenadas[0]=ficha[0];
                 coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
@@ -447,7 +454,7 @@ public class Fide {
          
          ficha=buscarFichaMismaColumna(partida,tipo_ficha,filaOrigen);
          
-         if(partida.comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida.tablero)){
+         if(this.comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida)){
                 coordenadas[0]=ficha[0];
                 coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
@@ -457,11 +464,15 @@ public class Fide {
     }
     
     public int[][] aniadir(int filaO, int colO,int[][] fichas_validas){
+        boolean fin=false;
+        System.out.println("Dentro de añadir");
         
-        for(int i=0;i<8;i++){
+        for(int i=0;(i<8)&&(!fin);i++){
             if(fichas_validas[0][i]==-1){
+                System.out.println("Añade la fila="+filaO+" columna="+colO);
                 fichas_validas[0][i]=filaO;
                 fichas_validas[1][i]=colO;
+                fin=true;
             }
         }
         return(fichas_validas);
@@ -479,8 +490,8 @@ public class Fide {
     
     public int[] transformar(int[][] fichas, int fD, int cD){
         int[] coordenadas = new int[4];
-        coordenadas[0]=fichas[0][0];
-        coordenadas[1]=fichas[1][0];
+        coordenadas[0]=fichas[1][0];
+        coordenadas[1]=fichas[0][0];
         coordenadas[2]=fD;
         coordenadas[3]=cD;
         return(coordenadas);
@@ -524,29 +535,7 @@ public class Fide {
         else return(false);
     }
         
-    public int[][] obtenerFichas(Partida partida, String tipo_ficha, boolean color){
-        boolean existedestino;
-        int[][] coor = new int[2][8];   //como maximo podremo encontrarnos 8 fichas (peones).
-        coor=this.inicializacion(coor); //inicializamos la matriz a -1's.  
-        int m=0;
-               
-        //Se recorre el tablero, añadiendo todas las coordenadas de las fichas que cumplan
-        //con el primer requisito(posision inicial,turno=color,tipoficha).
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++){
-              if(partida.tablero.tablero[i][j].getOcupada()&&
-                    partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha)&&
-                    partida.tablero.tablero[i][j].getFicha().getColor()==color){
-                        //Ha encontrado una de las fichas que puede cumplir el movimiento
-                        //guardamos sus coordenadas
-                        coor[0][0]=i;
-                        coor[1][0]=j;
-                        m++;
-            }
-        }
-        return(coor);
-    }
-    
+  
     public int[] buscarFichaMismaFila(Partida partida, String tipo_ficha, int col){
         int[] coor=new int[2];
         for(int i=0;i<8;i++)
@@ -594,11 +583,13 @@ public class Fide {
         return(coordenadas);
     }
            
-    public int[][] inicializacion(int[][] coordenadas){
+    public int[][] inicializacion(int[][] fichas){
         for(int i=0;i<2;i++)
             for(int j=0;j<8;j++)
-                coordenadas[i][j]=-1;
-        return(coordenadas);
+                fichas[i][j]=-1;
+        
+        
+        return(fichas);
     }
     
     public boolean comprobarfin(){
@@ -639,6 +630,8 @@ public class Fide {
         int[][] fichas=new int[2][8];
         int m=0;
         
+        fichas=inicializacion(fichas);
+        
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
             {
@@ -651,6 +644,7 @@ public class Fide {
                             m++;
                 }
             }
+        
         return(fichas);
     }
     
@@ -686,5 +680,60 @@ public class Fide {
             coordenadas[3]=4;
         }
         return(coordenadas);
+    }
+    
+    public boolean comprobar_movimiento(int filaorigen, int columnaorigen, 
+        int filadestino, int columnadestino, Partida partida){
+       
+        //comprueba que el origen y el destino estan dentro del tablero
+        boolean origen_dentro=partida.tablero.dentro_tablero(filaorigen,columnaorigen); 
+        boolean destino_dentro=partida.tablero.dentro_tablero(filadestino,columnadestino);
+        boolean origen_turno=partida.tablero.tablero[filaorigen][columnaorigen].getFicha().getColor();
+        
+        
+        //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
+        if(origen_dentro&&destino_dentro&&origen_turno){
+        
+        System.out.println("Origen y Destino dentro del tablero.");
+        System.out.println("La ficha de la casilla ORIGEN es de su color.");
+        
+        //Para comprobar el movimiento necesitamos saber la ficha que se mueve
+        Ficha fichaorigen=partida.tablero.tablero[filaorigen][columnaorigen].getFicha();
+        Ficha fichadestino;
+        boolean mcf;
+        
+        Casilla casilladestino = partida.tablero.tablero[filadestino][columnadestino];
+        
+                if(fichaorigen.getColor()!=partida.getTurno()){ 
+                    System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
+                    return(false);
+                }else if(!casilladestino.getOcupada()){
+                                //origen del mismo color que el turno y casilla destino vacia
+                                 System.out.println("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
+                                         " destino esta vacia.");
+                                 mcf=fichaorigen.movimiento_correspondiente_ficha(partida.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
+                                 return(mcf);
+                      }else if(casilladestino.getFicha().getColor()!=partida.getTurno()){
+                                //origen=turno, y destino del color diferente. Se puede comer la ficha del destino.
+                                fichadestino=casilladestino.getFicha();
+                                mcf=fichaorigen.movimiento_correspondiente_ficha(partida.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
+                                System.out.println("El/La "+fichaorigen.getTipo_ficha()+" a mover es de su color. Y la casilla" +
+                                        " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
+                                if(mcf) System.out.println("Ha comido un "+casilladestino.getFicha().getTipo_ficha()+" contrario.");
+                                
+                               return(mcf);
+                            }else if(casilladestino.getFicha().getColor()==partida.getTurno()){
+                                        System.out.println("El destino esta ocupado por una ficha de su propio color.");  
+                                  }else return(false);
+        
+        }else {
+               //Origen no valido o destino no valido o origen vacio
+                if(!origen_dentro) System.out.println("El origen no es valido. No pertenece al tablero.");
+                if(!destino_dentro)  System.out.println("El destino no es valido. No pertenece al tablero.");
+                if(!origen_turno) System.out.println("La ficha de la casilla ORIGEN no es de su color.");
+                return(false);//No se da la condicion del if. No estan dentro del tablero
+        }
+        
+    return(false);
     }
 }

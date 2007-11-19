@@ -66,7 +66,7 @@ public class Fide {
         System.out.println("Entra en el estado 2");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
-        if(esMinuscula(c)) coordenadas=state3(partida,   c, tipo_ficha);
+        if(esMinuscula(c)) coordenadas=state3(partida,c,tipo_ficha);
         else    return(null);
         
         return(coordenadas);
@@ -218,7 +218,7 @@ public class Fide {
     }
     
     public int[] state15(Partida partida,int filaOrigen, char c, String tipo_ficha){
-        System.out.println("state15");
+        System.out.println("Entra en el estado 15");
         int[] coordenadas=new int[4];
         int colDestino=this.convertirColumna(c);
         c=this.obtenerCaracter( );
@@ -229,7 +229,7 @@ public class Fide {
     }
     
     public int[] state16(Partida partida,char c, int filaOrigen, int colDestino, String tipo_ficha){
-        System.out.println("state16");
+        System.out.println("Entra en el estado 16");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin( );
@@ -241,7 +241,7 @@ public class Fide {
     }
     
     public int[] state17(Partida partida,int filaOrigen, char c, int colDestino, String tipo_ficha){
-        System.out.println("state17");
+        System.out.println("Entra en el estado 17");
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
         boolean fin=comprobarfin( );
@@ -254,7 +254,7 @@ public class Fide {
     }
     
     public int[] state18(Partida partida ){
-        System.out.println("state18");
+        System.out.println("Entra en el estado 18");
         int[] coordenadas=new int[4];
         char c=obtenerCaracter( );
         if(c=='-') coordenadas=state19(partida );
@@ -264,7 +264,7 @@ public class Fide {
     }
     
     public int[] state19(Partida partida ){
-        System.out.println("state19");
+        System.out.println("Entra en el estado 19");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
         if(c=='O') coordenadas= state20(partida);
@@ -274,7 +274,7 @@ public class Fide {
     }
     
     public int[] state20(Partida partida ){
-        System.out.println("state20");
+        System.out.println("Entra en el estado 20");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
         if(c=='-') coordenadas=state21(partida );
@@ -285,7 +285,7 @@ public class Fide {
     }
     
     public int[] state21(Partida partida ){
-        System.out.println("state21");
+        System.out.println("Entra en el estado 21");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
         boolean fin=comprobarfin( );
@@ -354,7 +354,7 @@ public class Fide {
     }
     
     public int[] state24(Partida partida, int columna ){
-        System.out.println("state24");
+        System.out.println("Entra en el estado 24");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
         if(esMinuscula(c)) coordenadas=state25(partida, columna, c);
@@ -364,7 +364,7 @@ public class Fide {
     }
     
     public int[] state25(Partida partida, int colOrigen, char c ){
-        System.out.println("state25");
+        System.out.println("Entra en el estado 25");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
         c=obtenerCaracter( );
@@ -375,7 +375,7 @@ public class Fide {
     }
     
     public int[] state26(Partida partida, char c, int colOrigen, int colDestino ){
-        System.out.println("state26");
+        System.out.println("Entra en el estado 26 (Comiendo con un peon)");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
@@ -505,11 +505,7 @@ public class Fide {
         coordenadas[1]=fichas_validas[1][0];
         coordenadas[2]=fD;
         coordenadas[3]=cD;
-//        System.out.println("FO= "+coordenadas[0]);
-//        System.out.println("CO= "+coordenadas[1]);
-//        System.out.println("FD= "+coordenadas[2]);
-//        System.out.println("CD= "+coordenadas[3]);
-        
+
         return(coordenadas);
     }
     

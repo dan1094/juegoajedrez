@@ -43,7 +43,7 @@ public class MostrarTableroNegro extends MostrarTablero {
                     String tipoFicha = fichaAux.getTipo_ficha();
                     if(tipoFicha=="rey"){
                         System.out.print(" K");
-                    }else if(tipoFicha=="reina"){
+                    }else if(tipoFicha=="dama"){
                         System.out.print(" Q");
                     }else if(tipoFicha=="alfil"){
                         System.out.print(" A");

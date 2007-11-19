@@ -67,6 +67,8 @@ public class Partida implements ISubject {
         {
             IObserver obs = ( IObserver )misObservers.get(i);
             obs.update(this);
+            LogManager.info("********************OBSERVER ENTERADO************************");
+            
         }
 
         

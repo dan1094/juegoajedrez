@@ -9,6 +9,7 @@
 
 package model.partida;
 
+import model.util.LogManager;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Peon extends Ficha{
            int fo,int co,int fd, int cd){
        
        System.out.println("Entra en el peon.");
+       LogManager.info("Entra en el peon.");
        //Se debe comprobar que el movimiento es hacia delante. Puede ser sencillo, o doble,
        //si se trata del primer movimiento.
        // Hay que mirar el color del peon, para saber si mueve hacia arriba o hacia

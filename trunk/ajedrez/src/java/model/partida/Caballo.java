@@ -9,7 +9,7 @@
 
 package model.partida;
 
-
+import model.util.LogManager;
 
 /**
  *
@@ -27,6 +27,7 @@ public class Caballo extends Ficha{
        //Se debe comprobar que el movimiento es en L. Dos hacia delante y una al lado o viceversa.
        //No importa si hay fichas por el camino, ya que puede saltar.
         System.out.println("Entra en el caballo.");
+        LogManager.info("Entra en el caballo.");
         //Hay 8 movimientos, 2 por cada diagonal.
         if((fd==fo+2)&&(cd==co+1)) //MOV.1
         {
@@ -54,6 +55,7 @@ public class Caballo extends Ficha{
             return(true);
         }else{
             System.out.println("El movimiento no se corresponde con un caballo.");
+            LogManager.info("El movimiento no se corresponde con un caballo.");
             return(false);
         }
     }

@@ -9,15 +9,19 @@
 
 package view;
 
+import model.partida.Partida;
+
+
+
 /**
  *
  * @author Administrador
  */
-public class MostrarTableroWeb {
+public class MostrarTableroWeb extends MostrarTablero{
     
     /** Creates a new instance of MostrarTableroWeb */
     public MostrarTableroWeb() {
     }
-    
+     public void update(Partida partida){}
     
 }

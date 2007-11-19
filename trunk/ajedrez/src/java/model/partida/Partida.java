@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import model.util.LogManager;
+import view.MostrarTablero;
+import view.MostrarTableroNegro;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Partida implements ISubject {
     protected boolean blanco_puede_enrocar;
     protected boolean negro_puede_enrocar;
     private ArrayList misObservers;
+    private MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
 
     
     /**Instancia vacia de Partida*/
@@ -155,6 +158,10 @@ public class Partida implements ISubject {
             int filadestino=coordenadas[2];
             int columnadestino=coordenadas[3];
             
+            
+            
+            
+            
             System.out.println("FILA ORIGEN: "+filaorigen);
             LogManager.info("FILA ORIGEN: "+filaorigen);
             System.out.println("COL ORIGEN: "+columnaorigen);
@@ -165,6 +172,7 @@ public class Partida implements ISubject {
             LogManager.info("COL DESTINO: "+columnadestino);
             
             boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
+            
             if(movida)
             { 
               //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
@@ -188,6 +196,8 @@ public class Partida implements ISubject {
                  else partida.setNegro_puede_enrocar(false);
                  }*/
              } 
+            //Por ahora va aqui ya que esta funcion deberia ir en el controller
+            mostrarTableroNegro.update(this);
         }while(!partida.fin_partida(partida));
         
     }

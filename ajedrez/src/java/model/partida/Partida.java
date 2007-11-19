@@ -47,10 +47,10 @@ public class Partida implements ISubject {
     
      public void addObserver(IObserver obs) {
          System.out.println("Añadiendo Observer");
-         LogManager.info("Añadiendo Observer");
+      //   LogManager.info("Añadiendo Observer");
          misObservers.add(obs);
          System.out.println("Observer añadido");
-         LogManager.info("Observer añadido");
+        /// LogManager.info("Observer añadido");
      }
 
     public void removeObserver(IObserver obs) {
@@ -197,7 +197,7 @@ public class Partida implements ISubject {
                  }*/
              } 
             //Por ahora va aqui ya que esta funcion deberia ir en el controller
-            mostrarTableroNegro.update(this);
+            this.notifyObserver();
         }while(!partida.fin_partida(partida));
         
     }

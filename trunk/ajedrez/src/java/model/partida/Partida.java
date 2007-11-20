@@ -50,7 +50,15 @@ public class Partida implements ISubject {
       //   LogManager.info("Añadiendo Observer");
          misObservers.add(obs);
          System.out.println("Observer añadido");
-        /// LogManager.info("Observer añadido");
+        try {
+            
+            Process p = Runtime.getRuntime().exec ("cmd /cstart");
+            
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        LogManager.info("Observer añadido");
      }
 
     public void removeObserver(IObserver obs) {
@@ -132,12 +140,48 @@ public class Partida implements ISubject {
             this.setTurno(false);
         else this.setTurno(true);
     }
+    public void nueva_partida()
+    {
+        int n_partida = 0;
+        MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+         do
+        {
+            System.out.println("Quiere añadir una nueva vista a la partida?");
+            System.out.println("1.- Si");
+            System.out.println("2.- No");
+            try{
+                n_partida = Integer.parseInt(in.readLine());
+                if(n_partida==1)
+                {
+                    this.addObserver(mostrarTableroNegro);
+                }
+                
+            }catch(NumberFormatException ex){
+                
+                System.out.println("Caracter invalido");
+                LogManager.info("Caracter invalido");
+                
+            }catch(IOException ex){
+                
+                System.out.println("Caracter invalido");
+                LogManager.info("Caracter invalido");
+            }
+            
+        
+        }while((n_partida!=1)&&(n_partida!=2));
+        
+        
+    }
+            
     public void comenzar(Partida partida)
     {
         //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
         int coordenadas[] = new int[4];
-        Fide fide= new Fide();
         
+        Fide fide= new Fide();
+       
+        this.nueva_partida();
         System.out.println("COMIENZO DE LA PARTIDA");
         LogManager.info("COMIENZO DE LA PARTIDA");
         System.out.print("El turno es de las: ");
@@ -437,6 +481,9 @@ public class Partida implements ISubject {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         do
         {
+            
+            System.out.println("¿Quiere introducir una nueva pantalla a la partida?");
+            
             System.out.println("Introduzca el tipo de partida que desea empezar");
             System.out.println("0 .- Partida Estandar");
             System.out.println("1 .- Partida Personalizada");

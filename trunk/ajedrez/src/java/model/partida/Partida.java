@@ -12,6 +12,7 @@ package model.partida;
 import controller.Fide;
 import controller.IObserver;
 import controller.ISubject;
+import controller.TableroFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -292,7 +293,7 @@ public class Partida implements ISubject {
     /**Comprueba el movimiento que ha introducido el usuario*/
     public boolean comprobar_movimiento(int filaorigen, int columnaorigen, 
         int filadestino, int columnadestino, Tablero tablero){
-        
+       try{
         System.out.println("Comprobando el movimiento.");
      //   LogManager.info("Comprobando el movimiento.");
         
@@ -372,6 +373,9 @@ public class Partida implements ISubject {
                 }
                 return(false);//No se da la condicion del if. No estan dentro del tablero
         }
+       }catch (Exception e){
+           return false;
+       }
         
     return(false);
     }
@@ -430,9 +434,12 @@ public class Partida implements ISubject {
         //Le pido al controlador un tipo de partida
         personal = this.tablero_personalizado();
         if(personal){
+            TableroFactory tabFac = new TableroFactory();
+            this.tablero = tabFac.situacionEnroque();
+            this.turno = false;
             //La partida es personalizada.
-            this.tablero=this.tablero.inicializar_tablero_personalizado(this);
-            this.turno=this.obtener_turno_personalizado(this);
+            //this.tablero=this.tablero.inicializar_tablero_personalizado(this);
+            //this.turno=this.obtener_turno_personalizado(this);
         }else{
             //La partida es estandar
             this.tablero=this.tablero.inicializar_tablero_estandar(this);

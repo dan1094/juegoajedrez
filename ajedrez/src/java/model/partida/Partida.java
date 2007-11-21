@@ -47,7 +47,7 @@ public class Partida implements ISubject {
     
      public void addObserver(IObserver obs) {
          System.out.println("Añadiendo Observer");
-      //   LogManager.info("Añadiendo Observer");
+     //    LogManager.getLogManager().info("Añadiendo Observer");
          misObservers.add(obs);
          System.out.println("Observer añadido");
         try {
@@ -58,15 +58,15 @@ public class Partida implements ISubject {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        LogManager.info("Observer añadido");
+     //   LogManager.info("Observer añadido");
      }
 
     public void removeObserver(IObserver obs) {
         System.out.println("Eliminando Observer");
-        LogManager.info("Eliminando Observer");
+        //LogManager.info("Eliminando Observer");
         misObservers.remove(misObservers.indexOf(obs));
         System.out.println("Observer eliminado");
-        LogManager.info("Observer eliminado");
+        //LogManager.info("Observer eliminado");
     }
     public void notifyObserver() 
     {
@@ -75,7 +75,7 @@ public class Partida implements ISubject {
         {
             IObserver obs = ( IObserver )misObservers.get(i);
             obs.update(this);
-            LogManager.info("********************OBSERVER ENTERADO************************");
+            //LogManager.info("********************OBSERVER ENTERADO************************");
             
         }
 
@@ -160,12 +160,12 @@ public class Partida implements ISubject {
             }catch(NumberFormatException ex){
                 
                 System.out.println("Caracter invalido");
-                LogManager.info("Caracter invalido");
+            //    LogManager.info("Caracter invalido");
                 
             }catch(IOException ex){
                 
                 System.out.println("Caracter invalido");
-                LogManager.info("Caracter invalido");
+            //    LogManager.info("Caracter invalido");
             }
             
         
@@ -183,16 +183,16 @@ public class Partida implements ISubject {
        
         this.nueva_partida();
         System.out.println("COMIENZO DE LA PARTIDA");
-        LogManager.info("COMIENZO DE LA PARTIDA");
+      //  LogManager.info("COMIENZO DE LA PARTIDA");
         System.out.print("El turno es de las: ");
-        LogManager.info("El turno es de las: ");
+      //  LogManager.info("El turno es de las: ");
         if(partida.getTurno()){
             System.out.println("NEGRAS");
-            LogManager.info("NEGRAS");
+      //      LogManager.info("NEGRAS");
         }
         else{
             System.out.println("BLANCAS");
-            LogManager.info("BLANCAS");
+      //      LogManager.info("BLANCAS");
         }
         do{
            do{
@@ -209,13 +209,13 @@ public class Partida implements ISubject {
             
             
             System.out.println("FILA ORIGEN: "+filaorigen);
-            LogManager.info("FILA ORIGEN: "+filaorigen);
+        //    LogManager.info("FILA ORIGEN: "+filaorigen);
             System.out.println("COL ORIGEN: "+columnaorigen);
-            LogManager.info("COL ORIGEN: "+columnaorigen);
+        //    LogManager.info("COL ORIGEN: "+columnaorigen);
             System.out.println("FILA DESTINO: "+filadestino);
-            LogManager.info("FILA DESTINO: "+filadestino);
+        //    LogManager.info("FILA DESTINO: "+filadestino);
             System.out.println("COL DESTINO: "+columnadestino);
-            LogManager.info("COL DESTINO: "+columnadestino);
+        //    LogManager.info("COL DESTINO: "+columnadestino);
             
             boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
             
@@ -224,14 +224,14 @@ public class Partida implements ISubject {
               //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
               Ficha ficha=partida.getTablero().getCasilla(filadestino,columnadestino).getFicha();
               System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
-              LogManager.info("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+        //      LogManager.info("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
               if(ficha.getColor()){
                   System.out.println("negro.");
-                  LogManager.info("negro.");
+        //          LogManager.info("negro.");
               }
               else{
                   System.out.println("blanco.");
-                  LogManager.info("blanco.");
+        //          LogManager.info("blanco.");
               }
              /* if(partida.getTablero().tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
                  {
@@ -253,9 +253,9 @@ public class Partida implements ISubject {
      //Esta funcion dependiendo de la ficha que el jugador haya escogido
       //crea la ficha y la mete en su sitio.
      System.out.println("Cambio de ficha. ("+fd+","+cd+").");
-     LogManager.info("Cambio de ficha. ("+fd+","+cd+").");
+   //  LogManager.info("Cambio de ficha. ("+fd+","+cd+").");
      System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
-     LogManager.info("Ha solicitado cambiar el peon por un "+eleccion);
+   //  LogManager.info("Ha solicitado cambiar el peon por un "+eleccion);
       switch(eleccion){
           case 1: tablero.tablero[fd][cd].setFicha(new Dama(this.getTurno()));
                     return(tablero);
@@ -294,7 +294,7 @@ public class Partida implements ISubject {
         int filadestino, int columnadestino, Tablero tablero){
         
         System.out.println("Comprobando el movimiento.");
-        LogManager.info("Comprobando el movimiento.");
+     //   LogManager.info("Comprobando el movimiento.");
         
         //comprueba que el origen y el destino estan dentro del tablero
         boolean origen_dentro=this.tablero.dentro_tablero(filaorigen,columnaorigen); 
@@ -306,9 +306,9 @@ public class Partida implements ISubject {
         if(origen_dentro&&destino_dentro&&(origen_turno)==this.getTurno()){
         
         System.out.println("Origen y Destino dentro del tablero.");
-        LogManager.info("Origen y Destino dentro del tablero.");
+     //   LogManager.info("Origen y Destino dentro del tablero.");
         System.out.println("La ficha de la casilla ORIGEN es de su color.");
-        LogManager.info("La ficha de la casilla ORIGEN es de su color.");
+     //   LogManager.info("La ficha de la casilla ORIGEN es de su color.");
         
         //Para comprobar el movimiento necesitamos saber la ficha que se mueve
         Ficha fichaorigen=this.tablero.tablero[filaorigen][columnaorigen].getFicha();
@@ -319,14 +319,14 @@ public class Partida implements ISubject {
         
                 if(fichaorigen.getColor()!=turno){ 
                     System.out.println("La ficha que se quiere mover no es del color del turno de la partida.");
-                    LogManager.info("La ficha que se quiere mover no es del color del turno de la partida.");
+                //    LogManager.info("La ficha que se quiere mover no es del color del turno de la partida.");
                     return(false);
                 }else if(!casilladestino.getOcupada()){
                                 //origen del mismo color que el turno y casilla destino vacia
                                  System.out.println("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
                                          " destino esta vacia.");
-                                 LogManager.info("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
-                                         " destino esta vacia.");
+                   //              LogManager.info("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
+//                                         " destino esta vacia.");
                                  mcf=fichaorigen.movimiento_correspondiente_ficha(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                 if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
                                      this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
@@ -342,33 +342,33 @@ public class Partida implements ISubject {
                                 mcf=fichaorigen.movimiento_correspondiente_ficha(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                 System.out.println("El/La "+fichaorigen.tipo_ficha+" a mover es de su color. Y la casilla" +
                                         " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
-                                LogManager.info("El/La "+fichaorigen.tipo_ficha+" a mover es de su color. Y la casilla" +
-                                        " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
+//                                LogManager.info("El/La "+fichaorigen.tipo_ficha+" a mover es de su color. Y la casilla" +
+//                                        " destino esta ocupada por un/una "+fichadestino.getTipo_ficha()+" del contrario.");
                                 if(mcf){
                                     System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
-                                    LogManager.info("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
+//                                    LogManager.info("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
                                 }
                                 if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
                                      this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
                                return(mcf);
                             }else if(casilladestino.getFicha().getColor()==this.getTurno()){
                                         System.out.println("El destino esta ocupado por una ficha de su propio color.");  
-                                        LogManager.info("El destino esta ocupado por una ficha de su propio color.");
+//                                        LogManager.info("El destino esta ocupado por una ficha de su propio color.");
                                   }else return(false);
         
         }else {
                //Origen no valido o destino no valido o origen vacio
                 if(!origen_dentro){
                     System.out.println("El origen no es valido. No pertenece al tablero.");
-                    LogManager.info("El origen no es valido. No pertenece al tablero.");
+//                    LogManager.info("El origen no es valido. No pertenece al tablero.");
                 }
                 if(!destino_dentro){
                     System.out.println("El destino no es valido. No pertenece al tablero.");
-                    LogManager.info("El destino no es valido. No pertenece al tablero.");
+//                    LogManager.info("El destino no es valido. No pertenece al tablero.");
                 }
                 if(!origen_turno){
                     System.out.println("La ficha de la casilla ORIGEN no es de su color.");
-                    LogManager.info("La ficha de la casilla ORIGEN no es de su color.");
+//                    LogManager.info("La ficha de la casilla ORIGEN no es de su color.");
                 }
                 return(false);//No se da la condicion del if. No estan dentro del tablero
         }
@@ -379,7 +379,7 @@ public class Partida implements ISubject {
     public boolean mover(int filaorigen, int columnaorigen, int filadestino, 
             int columnadestino, Tablero tablero){
         System.out.println("Entra en mover.");
-        LogManager.info("Entra en mover.");
+//        LogManager.info("Entra en mover.");
         
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
         if(mov_per){
@@ -393,22 +393,22 @@ public class Partida implements ISubject {
                 origen.setFicha(null);
                 this.cambio_turno();
                 System.out.println("Ficha movida.");
-                LogManager.info("Ficha movida.");
+//                LogManager.info("Ficha movida.");
                 this.tablero.amenazas();
                 if(turno){
                     System.out.println("ES EL TURNO DE LAS NEGRAS");
-                    LogManager.info("ES EL TURNO DE LAS NEGRAS");
+//                    LogManager.info("ES EL TURNO DE LAS NEGRAS");
                 }
                 else{
                     System.out.println("ES EL TURNO DE LAS BLANCAS");
-                    LogManager.info("ES EL TURNO DE LAS BLANCAS");
+//                    LogManager.info("ES EL TURNO DE LAS BLANCAS");
                 }
                 
                 return(true);
                 
         }else{
             System.out.println("No puede realizarse el movimiento solicitado.");
-            LogManager.info("No puede realizarse el movimiento solicitado.");
+//            LogManager.info("No puede realizarse el movimiento solicitado.");
             return(false);
         }
         
@@ -493,12 +493,12 @@ public class Partida implements ISubject {
             }catch(NumberFormatException ex){
                 
                 System.out.println("Caracter invalido");
-                LogManager.info("Caracter invalido");
+//                LogManager.info("Caracter invalido");
                 
             }catch(IOException ex){
                 
                 System.out.println("Caracter invalido");
-                LogManager.info("Caracter invalido");
+//                LogManager.info("Caracter invalido");
             }
             
         
@@ -606,7 +606,7 @@ public class Partida implements ISubject {
         } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Entrada incorrecta de la ficha.");
-            LogManager.info("Entrada incorrecta de la ficha.");
+//            LogManager.info("Entrada incorrecta de la ficha.");
         } finally {
             return(0);
         }

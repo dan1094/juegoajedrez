@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import model.util.LogManager;
 import view.MostrarTablero;
+import view.MostrarTableroBlanco;
 import view.MostrarTableroNegro;
 
 /**
@@ -48,24 +49,16 @@ public class Partida implements ISubject {
     
      public void addObserver(IObserver obs) {
          System.out.println("Añadiendo Observer");
-     //    LogManager.getLogManager().info("Añadiendo Observer");
+        // LogManager.info("Añadiendo Observer");
          misObservers.add(obs);
-         System.out.println("Observer añadido");
-        try {
-            
-            Process p = Runtime.getRuntime().exec ("cmd /cstart");
-            
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+         System.out.println("Observer añadido");       
      //   LogManager.info("Observer añadido");
      }
 
     public void removeObserver(IObserver obs) {
         System.out.println("Eliminando Observer");
         //LogManager.info("Eliminando Observer");
-        misObservers.remove(misObservers.indexOf(obs));
+        misObservers.remove(misObservers.size()-1);
         System.out.println("Observer eliminado");
         //LogManager.info("Observer eliminado");
     }
@@ -144,19 +137,36 @@ public class Partida implements ISubject {
     public void nueva_partida()
     {
         int n_partida = 0;
-        MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
+        MostrarTablero mostrarTableroBlanco = new MostrarTableroBlanco();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
          do
         {
-            System.out.println("Quiere añadir una nueva vista a la partida?");
-            System.out.println("1.- Si");
-            System.out.println("2.- No");
+            System.out.println("Que desea hacer?");
+            System.out.println("1.- Añadir una vista");
+            System.out.println("2.- Suprimir una vista");
+            System.out.println("3.- No realizar ninguna accion");
+            
             try{
                 n_partida = Integer.parseInt(in.readLine());
                 if(n_partida==1)
                 {
-                    this.addObserver(mostrarTableroNegro);
+                    this.addObserver(mostrarTableroBlanco);
+                    mostrarTableroBlanco.update(this);
                 }
+                else if(n_partida==2)
+                {
+                    if(misObservers.size()<2)
+                    {
+                        System.out.println("No puede borrar una vista ya que no existe ninguna");
+                    }
+                    else
+                    {
+                        this.removeObserver(mostrarTableroBlanco);
+                        
+                    }
+                   
+                }
+                
                 
             }catch(NumberFormatException ex){
                 
@@ -170,7 +180,7 @@ public class Partida implements ISubject {
             }
             
         
-        }while((n_partida!=1)&&(n_partida!=2));
+        }while((n_partida!=1)&&(n_partida!=2)&&(n_partida!=3));
         
         
     }
@@ -183,6 +193,7 @@ public class Partida implements ISubject {
         Fide fide= new Fide();
        
         this.nueva_partida();
+        
         System.out.println("COMIENZO DE LA PARTIDA");
       //  LogManager.info("COMIENZO DE LA PARTIDA");
         System.out.print("El turno es de las: ");
@@ -203,12 +214,8 @@ public class Partida implements ISubject {
             int filaorigen=coordenadas[0];
             int columnaorigen=coordenadas[1];
             int filadestino=coordenadas[2];
-            int columnadestino=coordenadas[3];
-            
-            
-            
-            
-            
+            int columnadestino=coordenadas[3];       
+         
             System.out.println("FILA ORIGEN: "+filaorigen);
         //    LogManager.info("FILA ORIGEN: "+filaorigen);
             System.out.println("COL ORIGEN: "+columnaorigen);
@@ -245,6 +252,7 @@ public class Partida implements ISubject {
              } 
             //Por ahora va aqui ya que esta funcion deberia ir en el controller
             this.notifyObserver();
+            this.nueva_partida();
         }while(!partida.fin_partida(partida));
         
     }

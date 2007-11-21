@@ -38,7 +38,8 @@ public class Main {
         System.out.println("BIENVENIDO AL AJEDREZ");
         
         MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
-        MostrarTablero mostrarTableroWeb = new MostrarTableroWeb();
+        MostrarTablero mostrarTableroBlanco = new MostrarTableroBlanco();
+        
         
         //CasosDeUsoEnNegro instancia= new CasosDeUsoEnNegro();
         //instancia.casosDeUso();
@@ -50,10 +51,13 @@ public class Main {
         Tablero tablero = new Tablero(0);
         /* Le añado los dos observer en un principio es estatico tendremos que ver de que manera creamos los observers dinamicos*/
         // Por cada peticion de observar una partida hay q lanzar algo
+        
              
         partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
         partida.obtener_tablero();
-        
+        partida.addObserver(mostrarTableroNegro);         
+             
+       // mostrarTableroBlanco.update(partida);     
         partida.comenzar(partida);
        
         

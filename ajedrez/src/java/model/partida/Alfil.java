@@ -31,13 +31,14 @@ public class Alfil extends Ficha{
       //  LogManager.info("Mueve un alfil.");
         int i=fo;
         int j=co;
-        boolean libre=true;
-        
+        boolean libre=true, diagonal=false;;
+        if(esDiagonal(fo,co,fd,cd)){
         //Hay 4 posibles movimientos diagonales
         if((fd>fo)&&(cd>co)){
             //Movimiento hacia abajo y a la derecha. 
             System.out.println("Mueve diagonal abajo-derecha");
         //    LogManager.info("Mueve diagonal abajo-derecha");
+            
             for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++) libre=!tablero.tablero[i][j].getOcupada();
         } else if((fd>fo)&&(cd<co)){
                    //Movimiento hacia abajo y a la izda.
@@ -63,6 +64,7 @@ public class Alfil extends Ficha{
            //     "el paso.");
              return(false);
         }
+        }else return(false);
     }
     
     public Tablero amenazar_casillas(Tablero tablero,int fila, int columna){
@@ -114,4 +116,9 @@ public class Alfil extends Ficha{
         
         return(tablero);
     }    
+    
+    public boolean esDiagonal(int fo, int co, int fd, int cd){
+        if(Math.abs(fo-co)==(Math.abs(fd-cd))) return(true);
+        else return(false);
+    }
 }

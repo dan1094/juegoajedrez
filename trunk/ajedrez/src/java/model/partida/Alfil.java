@@ -28,7 +28,7 @@ public class Alfil extends Ficha{
         //a la vez el mismo numero. Sumar y restar el mismo numero. Restar el mismo numero.
         //Restar y sumar el mismo numero.
         System.out.println("Mueve un alfil.");
-        LogManager.info("Mueve un alfil.");
+      //  LogManager.info("Mueve un alfil.");
         int i=fo;
         int j=co;
         boolean libre=true;
@@ -37,30 +37,30 @@ public class Alfil extends Ficha{
         if((fd>fo)&&(cd>co)){
             //Movimiento hacia abajo y a la derecha. 
             System.out.println("Mueve diagonal abajo-derecha");
-            LogManager.info("Mueve diagonal abajo-derecha");
+        //    LogManager.info("Mueve diagonal abajo-derecha");
             for(i=fo+1,j=co+1;(i<fd)&&(j<cd)&&libre;i++,j++) libre=!tablero.tablero[i][j].getOcupada();
         } else if((fd>fo)&&(cd<co)){
                    //Movimiento hacia abajo y a la izda.
                     System.out.println("Mueve diagonal abajo-izquierda");
-                    LogManager.info("Mueve diagonal abajo-izquierda");
+        //            LogManager.info("Mueve diagonal abajo-izquierda");
                     for(i=fo+1,j=co-1;(i<fd)&&(j>cd)&&libre;i++,j--)  libre=!tablero.tablero[i][j].getOcupada();
                 }else if((fd<fo)&&(cd>co)){
                          //Movimiento hacia arriba y a la derecha
                           System.out.println("Mueve diagonal arriba-derecha");
-                          LogManager.info("Mueve diagonal arriba-derecha");
+          //                LogManager.info("Mueve diagonal arriba-derecha");
                           for(i=fo-1,j=co+1;(i>fd)&&(j<cd)&&libre;i--,j++) libre=!tablero.tablero[i][j].getOcupada();                  
                       }else if((fd<fo)&&(cd<co)){
                                 //Movimiento hacia arriba y a la izquierda
                                 System.out.println("Mueve diagonal arriba-izquierda");
-                                LogManager.info("Mueve diagonal arriba-izquierda");
+            //                    LogManager.info("Mueve diagonal arriba-izquierda");
                                 for(i=fo-1,j=co-1;(i>fd)&&(i>cd)&&libre;i--,j--)  libre=!tablero.tablero[i][j].getOcupada();
                             }else return(false);
         if(libre) return(libre);
         else {
              System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
                 "el paso.");
-             LogManager.info("El movimiento no se puede realizar. Hay una ficha impidiendo " +
-                "el paso.");
+           //  LogManager.info("El movimiento no se puede realizar. Hay una ficha impidiendo " +
+           //     "el paso.");
              return(false);
         }
     }

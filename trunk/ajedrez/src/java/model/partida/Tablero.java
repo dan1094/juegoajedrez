@@ -50,7 +50,7 @@ public class Tablero {
         
         int i=0,j=0;
         System.out.println("Creando las fichas");
-        LogManager.info("Creando las fichas");
+    //    LogManager.getLogManager().info("Creando las fichas");
         //CREAMOS LAS FICHAS BLANCAS. (sus ids iran del 0 al 15)
         Ficha peon_b_1 = new Peon(false);
         Ficha peon_b_2 = new Peon(false);
@@ -88,13 +88,13 @@ public class Tablero {
         Ficha rey_n = new Rey(true);
           
         System.out.println("Creando las casillas del tablero");
-        LogManager.info("Creando las casillas del tablero");
+     //   LogManager.info("Creando las casillas del tablero");
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
        
         this.vacio(partida);
        
         System.out.println("Asociando las fichas a las casillas del tablero");
-        LogManager.info("Asociando las fichas a las casillas del tablero");
+     //   LogManager.info("Asociando las fichas a las casillas del tablero");
         //Asociamos las fichas a sus posiciones en el tablero.
         partida.tablero.tablero[0][2].setFicha(alf_n_1);
         partida.tablero.tablero[0][5].setFicha(alf_n_2);
@@ -156,7 +156,7 @@ public class Tablero {
         boolean rb=false,rn=false,ot=false,dosreyes=false;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("PERSONALIZACION DEL TABLERO");
-        LogManager.info("PERSONALIZACION DEL TABLERO");
+      //  LogManager.info("PERSONALIZACION DEL TABLERO");
         do{
            
             opcion_ficha=partida.ofrecer_ficha();

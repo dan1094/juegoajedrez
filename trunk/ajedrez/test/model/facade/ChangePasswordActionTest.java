@@ -51,7 +51,7 @@ public class ChangePasswordActionTest extends TestCase {
         DataSource dataSource = new SimpleDataSource();
         Connection connection = dataSource.getConnection();
         
-        ChangePasswordAction action = new ChangePasswordAction("invitado","1234","1234567");
+        ChangePasswordAction action = new ChangePasswordAction("nick2","1234","1234567");
         
         Object expResult = null;
         Object result = action.execute(connection);

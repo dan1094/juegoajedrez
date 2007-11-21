@@ -398,15 +398,20 @@
         <copy-ear-war file="${file.reference.mysql-connector-java-5.0.7-bin.jar}" propname="included.lib.file.reference.mysql-connector-java-5.0.7-bin.jar.X"/>
         <basename property="included.lib.file.reference.log4j-1.2.15.jar" file="${file.reference.log4j-1.2.15.jar}"/>
         <copy-ear-war file="${file.reference.log4j-1.2.15.jar}" propname="included.lib.file.reference.log4j-1.2.15.jar.X"/>
+        <basename property="included.lib.file.reference.TableroBlanco.jar" file="${file.reference.TableroBlanco.jar}"/>
+        <copy-ear-war file="${file.reference.TableroBlanco.jar}" propname="included.lib.file.reference.TableroBlanco.jar.X"/>
+        <copy file="${file.reference.TableroBlanco.jar}" todir="${build.web.dir.real}/"/>
         <mkdir dir="${build.web.dir.real}/META-INF"/>
         <manifest file="${build.web.dir.real}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.file.reference.mysql-connector-java-5.0.7-bin.jar} ${included.lib.file.reference.log4j-1.2.15.jar} "/>
+            <attribute name="Class-Path" value="${included.lib.file.reference.mysql-connector-java-5.0.7-bin.jar} ${included.lib.file.reference.log4j-1.2.15.jar} ${included.lib.file.reference.TableroBlanco.jar} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
     <target name="library-inclusion-in-archive" depends="init" unless="dist.ear.dir">
         <copy file="${file.reference.mysql-connector-java-5.0.7-bin.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${file.reference.log4j-1.2.15.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${file.reference.TableroBlanco.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${file.reference.TableroBlanco.jar}" todir="${build.web.dir.real}/"/>
     </target>
     <target name="do-ear-dist" depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest">
         <dirname property="dist.jar.dir" file="${dist.ear.war}"/>

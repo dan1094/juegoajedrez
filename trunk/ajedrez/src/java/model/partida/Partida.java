@@ -189,10 +189,14 @@ public class Partida implements ISubject {
     {
         //Declaro un array, donde meteremos las coordenadas, una vez pasadas de FIDE a enteros
         int coordenadas[] = new int[4];
+        MostrarTableroNegro mostrarTableroNegro = new MostrarTableroNegro();
         
         Fide fide= new Fide();
+        
+        mostrarTableroNegro.update(partida);
        
         this.nueva_partida();
+        
         
         System.out.println("COMIENZO DE LA PARTIDA");
       //  LogManager.info("COMIENZO DE LA PARTIDA");

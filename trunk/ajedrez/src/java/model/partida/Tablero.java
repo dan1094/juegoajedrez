@@ -12,7 +12,9 @@ package model.partida;
 //import com.sun.xml.ws.security.opt.impl.crypto.SSBData;
 
 import controller.Fide;
+import controller.TableroFactory;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import model.util.LogManager;
 
@@ -140,7 +142,6 @@ public class Tablero {
     
     /**Crea un tablero como indique el usuario*/
     public Tablero inicializar_tablero_personalizado(Partida partida){
-        
         int coordenadas[] = new int[2];
         String coor_fide;
                 

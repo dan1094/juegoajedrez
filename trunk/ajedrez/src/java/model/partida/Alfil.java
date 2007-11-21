@@ -31,7 +31,7 @@ public class Alfil extends Ficha{
       //  LogManager.info("Mueve un alfil.");
         int i=fo;
         int j=co;
-        boolean libre=true, diagonal=false;;
+        boolean libre=true;
         if(esDiagonal(fo,co,fd,cd)){
         //Hay 4 posibles movimientos diagonales
         if((fd>fo)&&(cd>co)){
@@ -118,7 +118,11 @@ public class Alfil extends Ficha{
     }    
     
     public boolean esDiagonal(int fo, int co, int fd, int cd){
-        if(Math.abs(fo-co)==(Math.abs(fd-cd))) return(true);
+        System.out.println("FO:"+fo);
+        System.out.println("CO:"+co);
+        System.out.println("FD:"+fd);
+        System.out.println("FD:"+cd);
+        if(Math.abs(fo-fd)==(Math.abs(co-cd))) return(true);
         else return(false);
     }
 }

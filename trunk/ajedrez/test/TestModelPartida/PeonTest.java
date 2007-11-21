@@ -83,7 +83,7 @@ public class PeonTest extends TestCase {
     }
     
     
-     public void testMovimiento_No_Valido_Vertical() {
+     public void testMovimiento_Peon_No_Valido_Vertical() {
         System.out.println("movimiento_doble_peon");
         
         Tablero tablero = new Tablero(1);
@@ -105,7 +105,7 @@ public class PeonTest extends TestCase {
         
     }
      
-     public void testMovimiento_No_Valido_Horizontal() {
+     public void testMovimiento_Peon_No_Valido_Horizontal() {
         System.out.println("movimiento_doble_peon");
         
         Tablero tablero = new Tablero(1);
@@ -127,7 +127,7 @@ public class PeonTest extends TestCase {
         
     }
     
-    public void testMovimiento_No_Comer_Mismo_Color() {
+    public void testMovimiento_Peon_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -153,7 +153,7 @@ public class PeonTest extends TestCase {
         
         
     }
-    public void testMovimiento_Comer() {
+    public void testMovimiento_Peon_Comer() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

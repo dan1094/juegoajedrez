@@ -34,10 +34,9 @@ public class TestModelPartida extends TestCase {
         suite.addTest(AlfilTest.suite());
         suite.addTest(CaballoTest.suite());
         suite.addTest(CasillaTest.suite());
-        suite.addTest(FichaTest.suite());
         suite.addTest(PartidaTest.suite());
         suite.addTest(PeonTest.suite());
-        suite.addTest(ReinaTest.suite());
+        suite.addTest(DamaTest.suite());
         suite.addTest(ReyTest.suite());
         suite.addTest(TableroTest.suite());
         suite.addTest(TorreTest.suite());

@@ -15,7 +15,7 @@ import model.partida.*;
  * @author Eduardo
  */
 
-public class ReinaTest extends TestCase {
+public class DamaTest extends TestCase {
     
    // private Reina reina;
    // private Tablero tablero;
@@ -33,12 +33,12 @@ public class ReinaTest extends TestCase {
 
     
     public static Test suite(){
-        return new TestSuite(ReinaTest.class);
+        return new TestSuite(DamaTest.class);
     }
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Reina.
      */
-    public void testMovimiento_vertical_reina() {
+    public void testMovimiento_Dama_vertical() {
         System.out.println("movimiento_vertical_reina");
         
         Tablero tablero = new Tablero(1);
@@ -57,7 +57,7 @@ public class ReinaTest extends TestCase {
     }
     
     
-     public void testMovimiento_horizontal_reina() {
+     public void testMovimiento_Dama_horizontal() {
         System.out.println("movimiento_horizontal_reina");
         
         Tablero tablero = new Tablero(1);
@@ -76,7 +76,7 @@ public class ReinaTest extends TestCase {
         assertEquals(expResult, result);
     }
 
-     public void testMovimiento_oblicuo_reina() {
+     public void testMovimiento_Dama_oblicuo() {
         System.out.println("movimiento_oblicuo_reina");
         
         Tablero tablero = new Tablero(1);
@@ -94,7 +94,7 @@ public class ReinaTest extends TestCase {
         assertEquals(expResult, result);
     }
      
-     public void testMovimiento_reina_No_Valido() {
+    /* public void testMovimiento_Dama_No_Valido() {
         System.out.println("movimiento_reina_No_Valido");
         
         Tablero tablero = new Tablero(1);
@@ -112,8 +112,8 @@ public class ReinaTest extends TestCase {
         boolean expResult = false;
         boolean result = partida.comprobar_movimiento(fo,co,fd,cd,tablero);
         assertEquals(expResult, result);
-    }
-    public void testMovimiento_No_Comer_Mismo_Color() {
+    }*/
+    public void testMovimiento_Dama_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -139,7 +139,7 @@ public class ReinaTest extends TestCase {
         
         
     }
-    public void testMovimiento_Comer_Vertical() {
+    public void testMovimiento_Dama_Comer_Vertical() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -166,7 +166,7 @@ public class ReinaTest extends TestCase {
         
     }
     
-    public void testMovimiento_Comer_Horizontal() {
+    public void testMovimiento_Dama_Comer_Horizontal() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

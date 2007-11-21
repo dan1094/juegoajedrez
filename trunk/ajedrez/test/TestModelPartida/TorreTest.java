@@ -37,7 +37,7 @@ public class TorreTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Torre.
      */
-    public void testMovimiento_vertical_torre() {
+    public void testMovimiento_Torre_Vertical() {
         System.out.println("movimiento_vertical_torre");
         
         Tablero tablero = new Tablero(1);
@@ -60,7 +60,7 @@ public class TorreTest extends TestCase {
         
     }
     
-    public void testMovimiento_horizontal_torre() {
+    public void testMovimiento_Torre_Horizontal() {
         System.out.println("movimiento_horizontal_torre");
         
         Tablero tablero = new Tablero(1);
@@ -84,7 +84,7 @@ public class TorreTest extends TestCase {
     }
     
     
-     public void testMovimiento_torre_No_Valido() {
+     public void testMovimiento_Torre_No_Valido() {
         System.out.println("movimiento_torre_No_Valido");
         
         Tablero tablero = new Tablero(1);
@@ -107,7 +107,7 @@ public class TorreTest extends TestCase {
         
     }
      
-     public void testMovimiento_No_Comer_Mismo_Color() {
+     public void testMovimiento_Torre_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -132,7 +132,7 @@ public class TorreTest extends TestCase {
         assertEquals(expResult, result);
         
      }
-     public void testMovimiento_Comer_Horizontal() {
+     public void testMovimiento_Torre_Comer_Horizontal() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -157,7 +157,7 @@ public class TorreTest extends TestCase {
         assertEquals(expResult, result);
         
      }
-     public void testMovimiento_Comer_Vertical() {
+     public void testMovimiento_Torre_Comer_Vertical() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

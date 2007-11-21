@@ -126,22 +126,19 @@ public class PartidaTest extends TestCase {
     public void testComprobar_movimiento() {
         System.out.println("comprobar_movimiento");
         
-        int filaorigen = 1;
-        int columnaorigen = 1;
-        int filadestino = 2;
-        int columnadestino = 1;
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
         
-        Tablero instance = new Tablero(1);
-        Partida partida = new Partida(1,true,instance,true,true);
+        int fo = 0;
+        int co = 0;
+        int fd = 1;
+        int cd = 1;
         
-        
-        Tablero resultado = instance.inicializar_tablero_estandar(partida);
-        //Tablero tablero = null;
-        //Partida instance = new Partida();
-        
+        Ficha instance = partida.tablero.crear_ficha(5,true);
+        partida.tablero.tablero[fo][co].setFicha(instance);
         boolean expResult = true;
-
-        boolean result = partida.comprobar_movimiento(filaorigen, columnaorigen, filadestino, columnadestino, resultado);
+        boolean result = partida.comprobar_movimiento(fo,co,fd,cd,tablero);
         assertEquals(expResult, result);
         
         // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
@@ -154,22 +151,19 @@ public class PartidaTest extends TestCase {
     public void testMover() {
         System.out.println("mover");
         
-        int filaorigen = 1;
-        int columnaorigen = 1;
-        int filadestino = 2;
-        int columnadestino = 1;
-        Tablero instance = new Tablero(1);
-        Partida partida = new Partida(1,true,instance,true,true);
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
         
+        int fo = 0;
+        int co = 0;
+        int fd = 1;
+        int cd = 1;
         
-        Tablero resultado = instance.inicializar_tablero_estandar(partida);
-        //Tablero tablero = null;
-        //Partida instance = new Partida();
-        
+        Ficha instance = partida.tablero.crear_ficha(5,true);
+        partida.tablero.tablero[fo][co].setFicha(instance);
         boolean expResult = true;
-        
-       
-        boolean result = partida.mover(filaorigen, columnaorigen, filadestino, columnadestino, resultado);
+        boolean result = partida.mover(fo,co,fd,cd,tablero);
         assertEquals(expResult, result);
         
         // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
@@ -182,17 +176,17 @@ public class PartidaTest extends TestCase {
     public void testOcupada_color() {
         System.out.println("ocupada_color");
         
-        Tablero tablero = null;
-        int fo = 0;
-        int co = 0;
-        Tablero instance = new Tablero(1);
-        Partida partida = new Partida(1,true,instance,true,true);
-        
-        
-        Tablero resultado = instance.inicializar_tablero_estandar(partida);
-        
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        //tablero = tablero.inicializar_tablero_estandar(partida);
+        tablero = tablero.vacio(partida);
+        int fo = 6;
+        int co = 6;
+
+        Ficha instance = partida.tablero.crear_ficha(5,true);
+        partida.tablero.tablero[fo][co].setFicha(instance);
         boolean expResult = true;
-        boolean result = partida.ocupada_color(resultado, fo, co);
+        boolean result = partida.ocupada_color (tablero, fo, co);
         assertEquals(expResult, result);
         
         // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
@@ -226,21 +220,27 @@ public class PartidaTest extends TestCase {
      */
     //Lo Compruebo en falso porque en true todavia no se puede ya que no hemos
     //legado a partida con tablas o mate
-    public void testFin_partida() {
-        System.out.println("fin_partida");
+   /* public void testSonTablas() {
+        System.out.println("SonTablas");
+        Tablero tablero = new Tablero(1);
+        Partida partida = new Partida(1,true,tablero,true,true);
+        tablero = tablero.vacio(partida);
         
-      
+        int fo = 2;
+        int co = 2;
+        int fd = 5;
+        int cd = 4;
         
-        Partida partida = null;
-        Partida instance = new Partida();
-        
-        
+        Ficha instance = partida.tablero.crear_ficha(1,true);
+        Ficha instance2 = partida.tablero.crear_ficha(1,false);
+        partida.tablero.tablero[fo][co].setFicha(instance);
+        partida.tablero.tablero[fd][cd].setFicha(instance);
         boolean expResult = false;
-        boolean result = instance.fin_partida();
+        boolean result = partida.son_tablas();
         assertEquals(expResult, result);
         
         // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
         //fail("El caso de prueba es un prototipo.");
-    }
+    }*/
 
 }

@@ -31,7 +31,9 @@ public class ReyTest extends TestCase {
 
   
 
-   
+   public static Test suite(){
+        return new TestSuite(ReyTest.class);
+    }
 
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Rey.

@@ -26,7 +26,9 @@ public class AlfilTest extends TestCase {
         this.tablero = null;
     }
 
-     
+    public static Test suite(){
+        return new TestSuite(AlfilTest.class);
+    }
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Alfil.
      */

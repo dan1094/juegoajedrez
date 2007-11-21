@@ -32,6 +32,9 @@ public class PeonTest extends TestCase {
         this.tablero = null;
     }
 
+    public static Test suite(){
+        return new TestSuite(PeonTest.class);
+    }
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Peon.
      */

@@ -26,6 +26,9 @@ public class FichaTest extends TestCase {
     protected void tearDown() throws Exception {
     }  
 
+    public static Test suite(){
+        return new TestSuite(Ficha.class);
+    }
     public void testDentro() {
         System.out.println("dentro");
         

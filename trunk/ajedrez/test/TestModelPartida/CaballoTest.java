@@ -26,6 +26,9 @@ public class CaballoTest extends TestCase {
         this.tablero = null;
     }
 
+    public static Test suite(){
+        return new TestSuite(CaballoTest.class);
+    }
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Caballo.
      */

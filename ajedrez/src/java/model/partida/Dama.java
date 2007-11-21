@@ -29,6 +29,7 @@ public class Dama extends Ficha{
         int columnaorigen, int filadestino, int columnadestino){
         //La reina es una mezcla entre el alfil y la torre.
         System.out.println("Entra en la reina.");
+        System.out.println("Coordenadas ORIGEN: ("+filaorigen+","+columnaorigen+"), DESTINO: ("+filadestino+","+columnadestino+")");
      //   LogManager.info("Entra en la reina.");
         int f=0, c=0;
         boolean libre=true;
@@ -43,14 +44,15 @@ public class Dama extends Ficha{
                         //HORIZONTAL DERECHA
                         System.out.println("Movimiento derecha");
          //               LogManager.info("Movimiento derecha");
-                        libre=!tablero.tablero[c][filadestino].getOcupada();
+                        libre=!tablero.tablero[filadestino][c].getOcupada();
                     }return(libre);
                 }else if(columnadestino<columnaorigen){
                         for(c=columnaorigen-1;((c>columnadestino)&&(libre));c--){
                             //HORIZONTAL IZQUIERDA
                             System.out.println("Movimiento izquierda.");
            //                 LogManager.info("Movimiento izquierda.");
-                            libre=!tablero.tablero[c][filadestino].getOcupada();
+                            libre=!tablero.tablero[filadestino][c].getOcupada();
+                            System.out.print(libre);
                         }return(libre);
                 }else return(false);
             }else if(columnaorigen==columnadestino){

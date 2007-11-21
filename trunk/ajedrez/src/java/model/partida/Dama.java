@@ -75,6 +75,7 @@ public class Dama extends Ficha{
                 
             }else return(false);
         }else{
+            if(esDiagonal(filaorigen,columnaorigen,filadestino,columnadestino)){
             System.out.println("Movimiento reina diagonal");
          //   LogManager.info("Movimiento reina diagonal");
          //movimiento diagonal. no recto
@@ -116,10 +117,9 @@ public class Dama extends Ficha{
      //   LogManager.info("El movimiento no se puede realizar. Hay una ficha impidiendo " +
      //           "el paso.");
         return(false);
-        }
-        
+        }else return(false);
     }
-    
+    }
     public boolean es_recto(int fo, int co, int fd, int cd){
         if((fo==fd)||(co==cd)) return(true);
         else return(false);
@@ -211,5 +211,9 @@ public class Dama extends Ficha{
         
         return(tablero);
     }   
+     public boolean esDiagonal(int fo, int co, int fd, int cd){
+        if(Math.abs(fo-co)==(Math.abs(fd-cd))) return(true);
+        else return(false);
+    }
    
 }

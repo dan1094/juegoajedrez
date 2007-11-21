@@ -442,9 +442,33 @@ public class Partida implements ISubject {
         //Le pido al controlador un tipo de partida
         personal = this.tablero_personalizado();
         if(personal){
-            TableroFactory tabFac = new TableroFactory();
-            this.tablero = tabFac.situacionEnroque();
-            this.turno = false;
+            int opcion=0;
+            System.out.println("¿Que Escenario desea?");
+            try{
+
+              do{
+                    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.println("1.- Enroque");
+                    System.out.println("2.- Coronar");
+                    System.out.println("3.- Comer con 2 posibles peones");
+                    System.out.println("4.- Comer con 2 posibles caballos");
+                    opcion = Integer.parseInt(in.readLine());
+              }while((opcion<1)||(opcion>4));
+              TableroFactory tabFac = new TableroFactory();
+              switch (opcion){
+                  case 1: this.tablero = tabFac.situacionEnroque();
+                          break;  
+                  case 2: this.tablero = tabFac.situacionCoronar();
+                          break; 
+                  case 3: this.tablero = tabFac.situacionComerDobleOpcion();
+                          break; 
+                  default: this.tablero = tabFac.situacionComerDobleCaballo();
+                          break; 
+              }
+                this.turno = false;
+            }catch(Exception e){
+                this.tablero=this.tablero.inicializar_tablero_estandar(this);
+            }
             //La partida es personalizada.
             //this.tablero=this.tablero.inicializar_tablero_personalizado(this);
             //this.turno=this.obtener_turno_personalizado(this);

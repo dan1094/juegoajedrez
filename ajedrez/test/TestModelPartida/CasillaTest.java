@@ -41,7 +41,7 @@ public class CasillaTest extends TestCase {
     /**
      * Test of getOcupada method, of class clases.Casilla.
      */
-    public void testGetOcupada() {
+    public void test_Casilla_Ocupada() {
         System.out.println("getOcupada");
         
         Casilla instance = new Casilla();

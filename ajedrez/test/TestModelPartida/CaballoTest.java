@@ -32,7 +32,7 @@ public class CaballoTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Caballo.
      */
-    public void testMovimiento_correspondiente_ficha_Hacia_Delante() {
+    public void testMovimiento_Caballo_Hacia_Delante() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -56,7 +56,7 @@ public class CaballoTest extends TestCase {
     }
     
     
-    public void testMovimiento_correspondiente_ficha_Hacia_Atras() {
+    public void testMovimiento_Caballo_Hacia_Atras() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -80,7 +80,7 @@ public class CaballoTest extends TestCase {
     }
     
     
-     public void testMovimiento_correspondiente_ficha_No_Valido() {
+     public void testMovimiento_Caballo_No_Valido() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -102,7 +102,7 @@ public class CaballoTest extends TestCase {
         
         
     }
-     public void testMovimiento_correspondiente_Comer() {
+     public void testMovimiento_Caballo_Comer() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -128,7 +128,7 @@ public class CaballoTest extends TestCase {
         
         
     }
-     public void testMovimiento_No_Comer_Mismo_Color() {
+     public void testMovimiento_Caballo_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

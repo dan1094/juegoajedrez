@@ -32,7 +32,7 @@ public class AlfilTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Alfil.
      */
-    public void testMovimiento_correspondiente_ficha_No_Valido() {
+    public void testMovimiento_Alfil_No_Valido() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -52,7 +52,7 @@ public class AlfilTest extends TestCase {
         
         
     }
-    public void testMovimiento_correspondiente_ficha_Hacia_Delante() {
+    public void testMovimiento_Alfil_Hacia_Delante() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -74,7 +74,7 @@ public class AlfilTest extends TestCase {
         
     }
     
-    public void testMovimiento_correspondiente_ficha_Hacia_Atras() {
+    public void testMovimiento_Alfil_Hacia_Atras() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -95,7 +95,7 @@ public class AlfilTest extends TestCase {
             
     }
  
-    public void testMovimiento_correspondiente_Comer() {
+    public void testMovimiento_Alfil_Comer() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -121,7 +121,7 @@ public class AlfilTest extends TestCase {
         
         
     }
-    public void testMovimiento_No_Comer_Mismo_Color() {
+    public void testMovimiento_Alfil_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

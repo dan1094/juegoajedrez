@@ -38,7 +38,7 @@ public class ReyTest extends TestCase {
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Rey.
      */
-    public void testMovimiento_vertical_rey() {
+    public void testMovimiento_Rey_Vertical() {
         System.out.println("movimiento_vertical_rey");
         
         Tablero tablero = new Tablero(1);
@@ -57,7 +57,7 @@ public class ReyTest extends TestCase {
         assertEquals(expResult, result);
     }
     
-    public void testMovimiento_horizontal_rey() {
+    public void testMovimiento_Rey_Horizontal() {
         System.out.println("movimiento_horizontal_rey");
         
         Tablero tablero = new Tablero(1);
@@ -75,7 +75,7 @@ public class ReyTest extends TestCase {
         boolean result = partida.comprobar_movimiento(fo,co,fd,cd,tablero);
         assertEquals(expResult, result);
     }
-     public void testMovimiento_oblicuo_rey() {
+     public void testMovimiento_Rey_Oblicuo() {
         System.out.println("movimiento_horizontal_rey");
         
         Tablero tablero = new Tablero(1);
@@ -94,7 +94,7 @@ public class ReyTest extends TestCase {
         assertEquals(expResult, result);
     }
 
-    public void testMovimiento_rey_no_valido() {
+    public void testMovimiento_Rey_No_Valido() {
         System.out.println("movimiento_rey_no_valido");
         
         Tablero tablero = new Tablero(1);
@@ -113,7 +113,7 @@ public class ReyTest extends TestCase {
         assertEquals(expResult, result);
     }
 
-    public void testMovimiento_No_Comer_Mismo_Color() {
+    public void testMovimiento_Rey_No_Comer_Mismo_Color() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -139,7 +139,7 @@ public class ReyTest extends TestCase {
         
         
     }
-     public void testMovimiento_Comer_Horizontal() {
+     public void testMovimiento_Rey_Comer_Horizontal() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -165,7 +165,7 @@ public class ReyTest extends TestCase {
         
         
     }
-    public void testMovimiento_Comer_Vertical() {
+    public void testMovimiento_Rey_Comer_Vertical() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);
@@ -191,7 +191,7 @@ public class ReyTest extends TestCase {
         
         
     }
-    public void testMovimiento_Comer_Oblicuo() {
+    public void testMovimiento_Rey_Comer_Oblicuo() {
         System.out.println("movimiento_correspondiente_ficha");
         
         Tablero tablero = new Tablero(1);

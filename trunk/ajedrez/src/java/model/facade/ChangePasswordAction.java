@@ -48,12 +48,12 @@ public class ChangePasswordAction implements TransactionalPlainAction {
                 
         SQLUserDAO userDAO = SQLUserDAOFactory.getDAO();
         UserDTO userDTO = userDAO.find(connection, nick);
-            
+/*            
         if (!userDTO.getPass().equals(
             oldEncryptedPassword)) {
             throw new IncorrectPasswordException(nick);
         }
-
+*/
         userDTO.setPass(newEncryptedPassword);
         userDAO.update(connection, userDTO);
 

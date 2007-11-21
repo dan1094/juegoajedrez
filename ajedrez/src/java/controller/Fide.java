@@ -267,7 +267,7 @@ public class Fide {
         System.out.println("Entra en el estado 19");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
-        if(c=='O') coordenadas= state20(partida);
+        if(c=='0') coordenadas= state20(partida);
         else return(null);
         
         return(coordenadas);

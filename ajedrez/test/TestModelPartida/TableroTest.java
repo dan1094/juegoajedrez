@@ -29,6 +29,9 @@ public class TableroTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
+    public static Test suite(){
+        return new TestSuite(TableroTest.class);
+    }
     /**
      * Prueba del metodo inicializar_tablero_estandar , de la clase clases.Tablero.
      */

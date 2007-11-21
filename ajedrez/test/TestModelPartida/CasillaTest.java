@@ -35,6 +35,9 @@ public class CasillaTest extends TestCase {
 
    
 
+    public static Test suite(){
+        return new TestSuite(CasillaTest.class);
+    }
     /**
      * Test of getOcupada method, of class clases.Casilla.
      */

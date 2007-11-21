@@ -34,7 +34,9 @@ public class PartidaTest extends TestCase {
 
    
    
-
+    public static Test suite(){
+        return new TestSuite(PartidaTest.class);
+    }
     /**
      * Prueba del metodo getTurno , de la clase clases.Partida.
      */
@@ -211,7 +213,7 @@ public class PartidaTest extends TestCase {
         Tablero resultado = instance.inicializar_tablero_estandar(partida);
         
         Partida expResult = partida;
-        Partida result = partida.obtener_tablero(partida);
+        Partida result = partida.obtener_tablero();
         assertEquals(expResult, result);
         
         // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.

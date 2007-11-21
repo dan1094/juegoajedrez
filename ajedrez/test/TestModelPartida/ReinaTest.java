@@ -31,6 +31,10 @@ public class ReinaTest extends TestCase {
      //   this.tablero = null;
     }
 
+    
+    public static Test suite(){
+        return new TestSuite(ReinaTest.class);
+    }
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Reina.
      */

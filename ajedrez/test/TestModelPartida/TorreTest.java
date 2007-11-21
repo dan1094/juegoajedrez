@@ -29,6 +29,11 @@ public class TorreTest extends TestCase {
         this.tablero = null;
     }
 
+    
+    public static Test suite(){
+        return new TestSuite(TorreTest.class);
+    }
+    
     /**
      * Test of movimiento_correspondiente_ficha method, of class clases.Torre.
      */

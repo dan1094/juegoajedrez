@@ -7,13 +7,16 @@
 
 package model.facade;
 
+import javax.sql.DataSource;
 import junit.framework.*;
 import java.sql.Connection;
 import model.user.SQLUserDAO;
 import model.user.SQLUserDAOFactory;
+import model.user.UserDTO;
 import model.util.InstanceNotFoundException;
 import model.util.InternalErrorException;
 import model.util.NonTransactionalPlainAction;
+import model.util.SimpleDataSource;
 
 /**
  *
@@ -43,15 +46,20 @@ public class GetUserActionTest extends TestCase {
     public void testExecute() throws Exception {
         System.out.println("execute");
         
-        Connection connection = null;
-        GetUserAction instance = null;
+        DataSource dataSource = new SimpleDataSource();
+        Connection connection = dataSource.getConnection();
         
-        Object expResult = null;
-        Object result = instance.execute(connection);
-        assertEquals(expResult, result);
+        String nick = "hato";
+        String apellido = "topo";
+        String nombre = "hans";
         
-        // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
-        fail("El caso de prueba es un prototipo.");
+        GetUserAction action = new GetUserAction(nick);
+       
+        UserDTO result = (UserDTO) action.execute(connection);
+        
+        assertEquals(nick, result.getNick());
+        assertEquals(nombre, result.getNombre());
+        assertEquals(apellido, result.getApellido());
     }
     
 }

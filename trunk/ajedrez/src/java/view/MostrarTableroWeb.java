@@ -23,5 +23,6 @@ public class MostrarTableroWeb extends MostrarTablero{
     public MostrarTableroWeb() {
     }
      public void update(Partida partida){}
+     public void borrar(Partida partida){}
     
 }

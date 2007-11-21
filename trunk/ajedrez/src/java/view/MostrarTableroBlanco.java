@@ -36,6 +36,13 @@ public class MostrarTableroBlanco extends MostrarTablero{
         vistaTableroPieza.init(vistaTableroPieza);
              
     }
+    public void borrar(Partida partida)
+    {
+        VistaTableroPieza vistaTableroPieza = new VistaTableroPieza();
+             
+        vistaTableroPieza.hideBoard();
+        
+    }
    
     
 }

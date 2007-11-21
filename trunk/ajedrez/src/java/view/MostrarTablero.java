@@ -22,5 +22,12 @@ public abstract class MostrarTablero implements IObserver  {
     public MostrarTablero() {
     }
     public abstract void update(Partida partida);
+
+    public abstract void borrar(Partida partida); 
+
+   
+
+        
+    
     
 }

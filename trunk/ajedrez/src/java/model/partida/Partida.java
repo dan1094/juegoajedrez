@@ -142,7 +142,7 @@ public class Partida implements ISubject {
         {
             System.out.println("Que desea hacer?");
             System.out.println("1.- Añadir una vista");
-            System.out.println("2.- Suprimir una vista");
+            //System.out.println("2.- Suprimir una vista");
             System.out.println("3.- No realizar ninguna accion");
             
             try{
@@ -152,7 +152,7 @@ public class Partida implements ISubject {
                     this.addObserver(mostrarTableroBlanco);
                     mostrarTableroBlanco.update(this);
                 }
-                else if(n_partida==2)
+                /*else if(n_partida==2)
                 {
                     if(misObservers.size()<2)
                     {
@@ -161,10 +161,13 @@ public class Partida implements ISubject {
                     else
                     {
                         this.removeObserver(mostrarTableroBlanco);
+                       
+                        //mostrarTableroBlanco.borrar(this);
+                        
                         
                     }
                    
-                }
+                }*/
                 
                 
             }catch(NumberFormatException ex){
@@ -179,7 +182,7 @@ public class Partida implements ISubject {
             }
             
         
-        }while((n_partida!=1)&&(n_partida!=2)&&(n_partida!=3));
+        }while((n_partida!=1)&&(n_partida!=3));
         
         
     }

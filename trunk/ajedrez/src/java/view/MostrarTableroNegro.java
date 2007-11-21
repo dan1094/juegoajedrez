@@ -70,5 +70,9 @@ public class MostrarTableroNegro extends MostrarTablero {
         System.out.println("  -----------------------------------------");
         
      }
+     public void borrar(Partida partida)
+     {
+         
+     }
     
 }

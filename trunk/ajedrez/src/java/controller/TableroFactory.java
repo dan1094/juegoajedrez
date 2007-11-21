@@ -18,6 +18,7 @@ import model.partida.Peon;
 import model.partida.Rey;
 import model.partida.Tablero;
 import model.partida.Torre;
+import view.MostrarTableroNegro;
 
 /**
  *
@@ -63,6 +64,7 @@ public class TableroFactory {
         tablero.tablero[0][1].setFicha(cab_n_1);
         tablero.tablero[0][3].setFicha(reina_n);
         tablero.tablero[0][4].setFicha(rey_n);
+       
 
        
         return tablero;

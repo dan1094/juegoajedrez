@@ -316,6 +316,8 @@ public class Fide {
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=this.comprobarfin( );
+        try{
+        
         if(!fin) return(null);
         if(partida.getTurno()){
                 if(partida.tablero.tablero[filaDestino-1][colOrigen].getOcupada()&&
@@ -348,7 +350,9 @@ public class Fide {
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
                 }else return(null);
-        
+         }catch(Exception e){
+             return null;
+         }
         return(coordenadas);
       
     }

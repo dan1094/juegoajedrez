@@ -17,7 +17,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import model.util.LogManager;
 import view.MostrarTablero;
 import view.MostrarTableroBlanco;
 import view.MostrarTableroNegro;
@@ -269,6 +268,7 @@ public class Partida implements ISubject {
    //  LogManager.info("Cambio de ficha. ("+fd+","+cd+").");
      System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
    //  LogManager.info("Ha solicitado cambiar el peon por un "+eleccion);
+     
       switch(eleccion){
           case 1: tablero.tablero[fd][cd].setFicha(new Dama(this.getTurno()));
                     return(tablero);
@@ -283,23 +283,31 @@ public class Partida implements ISubject {
   }
     
     /**Comprueba si el movimiento es una CORONACION y ofrece el cambio*/
-    public void ofrecer_cambio(Partida partida, int fo, int co, int fd, int cd){
-      if((fd==0)&&(fo==1)&&(this.getTurno()==tablero.tablero[fo][co].getFicha().color)){
+    public Tablero ofrecer_cambio(Partida partida, int fo, int co, int fd, int cd){
+        System.out.println("FO="+fo+" CO="+co+" FD="+fd+" CD="+cd+" TURNO="+partida.getTurno());
+        Tablero tablero = new Tablero();
+      if((fd==0)&&(fo==1)){
           //FD=ultima fila. FO=penultima. turno=color ficha a mover
           //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
           // ofrece el cambio y llama a cambio_ficha.
           
           int eleccion = this.ofrecer_cambio_ficha();
-          this.tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
+          tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
+          System.out.println("Coronacion de blancas");
           
-      }else if((fd==7)&&(fo==6)&&(this.getTurno()==tablero.tablero[fo][co].getFicha().color)){
+      }else if((fd==7)&&(fo==6)){
           //FD=ultima fila. FO=penultima. turno=color ficha a mover
           //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
           // ofrece el cambio y llama a cambio_ficha.
+            
+          System.out.println("FO="+fo+" CO="+co+" FD="+fd+" CD="+cd);
           
           int eleccion = this.ofrecer_cambio_ficha();
-          this.tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
-       }
+          tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
+          System.out.println("Coronacion de negras");
+       }else return(tablero);
+      
+      return(partida.tablero);
   }
     
     /**Comprueba el movimiento que ha introducido el usuario*/
@@ -312,11 +320,11 @@ public class Partida implements ISubject {
         //comprueba que el origen y el destino estan dentro del tablero
         boolean origen_dentro=this.tablero.dentro_tablero(filaorigen,columnaorigen); 
         boolean destino_dentro=this.tablero.dentro_tablero(filadestino,columnadestino);
-        boolean origen_turno=this.tablero.tablero[filaorigen][columnaorigen].getFicha().getColor();
+        
         
         
         //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
-        if(origen_dentro&&destino_dentro&&(origen_turno)==this.getTurno()){
+        if(origen_dentro&&destino_dentro){
         
         System.out.println("Origen y Destino dentro del tablero.");
      //   LogManager.info("Origen y Destino dentro del tablero.");
@@ -326,7 +334,7 @@ public class Partida implements ISubject {
         //Para comprobar el movimiento necesitamos saber la ficha que se mueve
         Ficha fichaorigen=this.tablero.tablero[filaorigen][columnaorigen].getFicha();
         Ficha fichadestino;
-        boolean mcf;
+        boolean mcf, coro;
         
         Casilla casilladestino = this.tablero.tablero[filadestino][columnadestino];
         
@@ -342,8 +350,11 @@ public class Partida implements ISubject {
 //                                         " destino esta vacia.");
                                  mcf=fichaorigen.movimiento_correspondiente_ficha(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                 if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
-                                     this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                    this.setTablero(this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino));
                                  if(fichaorigen.getTipo_ficha().equals("rey")){
+                                     if(esEnroque(filaorigen,columnaorigen,filadestino,columnadestino,this)){
+                                         this.setTablero(this.enrocar(this,filaorigen,columnadestino,this.getTurno()));
+                                     }
                                      if(this.getTurno()) this.setNegro_puede_enrocar(false);
                                      else this.setBlanco_puede_enrocar(false);
                                  }
@@ -362,7 +373,8 @@ public class Partida implements ISubject {
 //                                    LogManager.info("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
                                 }
                                 if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
-                                     this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                    this.setTablero(this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino));
+                                
                                return(mcf);
                             }else if(casilladestino.getFicha().getColor()==this.getTurno()){
                                         System.out.println("El destino esta ocupado por una ficha de su propio color.");  
@@ -379,16 +391,12 @@ public class Partida implements ISubject {
                     System.out.println("El destino no es valido. No pertenece al tablero.");
 //                    LogManager.info("El destino no es valido. No pertenece al tablero.");
                 }
-                if(!origen_turno){
-                    System.out.println("La ficha de la casilla ORIGEN no es de su color.");
-//                    LogManager.info("La ficha de la casilla ORIGEN no es de su color.");
-                }
+               
                 return(false);//No se da la condicion del if. No estan dentro del tablero
         }
-       }catch (Exception e){
-           return false;
-       }
-        
+        }catch(Exception e){
+            return(false);
+        }
     return(false);
     }
     
@@ -397,6 +405,7 @@ public class Partida implements ISubject {
         System.out.println("Entra en mover.");
 //        LogManager.info("Entra en mover.");
         
+       
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
         if(mov_per){
                 //Obtenemos las casillas
@@ -410,7 +419,8 @@ public class Partida implements ISubject {
                 this.cambio_turno();
                 System.out.println("Ficha movida.");
 //                LogManager.info("Ficha movida.");
-                this.tablero.amenazas();
+                
+                this.setTablero(this.tablero.amenazas(this));
                 if(turno){
                     System.out.println("ES EL TURNO DE LAS NEGRAS");
 //                    LogManager.info("ES EL TURNO DE LAS NEGRAS");
@@ -627,7 +637,15 @@ public class Partida implements ISubject {
     }
     
     public boolean reyPuedeMover(Partida partida, int[] rey){
-        boolean puede=true;
+        boolean puede=false;
+        int fil=rey[0],col=rey[1];
+        
+    /*    for(int i=fila-1;i<fila+2;i++){
+            for(int j=col-1;j<col+2;j++){
+                if(
+            }
+        }*/
+       
         
         return(puede);
     }
@@ -750,5 +768,59 @@ public class Partida implements ISubject {
                     
              return(rey);
      
+     }
+     
+     public boolean esEnroque(int fo, int co, int fd, int cd, Partida partida){
+         if(partida.tablero.tablero[fo][co].getOcupada()&&
+            partida.tablero.tablero[fo][co].getFicha().equals("rey")&&
+            (fo==0)&&(co==4)&&(fd==0)&&(cd==6)){
+            return(true);
+             
+         }else  if(partida.tablero.tablero[fo][co].getOcupada()&&
+                   partida.tablero.tablero[fo][co].getFicha().equals("rey")&&
+                   (fo==7)&&(co==4)&&(fd==7)&&(cd==6)){
+                   return(true);
+                }else   if(partida.tablero.tablero[fo][co].getOcupada()&&
+                           partida.tablero.tablero[fo][co].getFicha().equals("rey")&&
+                           (fo==0)&&(co==4)&&(fd==0)&&(cd==2)){
+                           return(true);
+                        }else   if(partida.tablero.tablero[fo][co].getOcupada()&&
+                                   partida.tablero.tablero[fo][co].getFicha().equals("rey")&&
+                                   (fo==7)&&(co==4)&&(fd==7)&&(cd==2)){
+                                    return(true);
+          }else return(false);
+     }
+      
+     public Tablero enrocar(Partida partida, int fila, int colDestino, boolean turno){
+         Tablero tablero = new Tablero();
+         tablero=partida.getTablero();
+         if(colDestino==2){//ENROQUE LARGO
+                 if(turno){ //NEGRAS
+                     tablero.tablero[0][2].setFicha(tablero.tablero[0][4].getFicha());
+                     tablero.tablero[0][4].setFicha(null);
+                     tablero.tablero[0][3].setFicha(tablero.tablero[0][0].getFicha());
+                     tablero.tablero[0][0].setFicha(null);
+                 }else{     //BLANCAS
+                     tablero.tablero[7][2].setFicha(tablero.tablero[7][4].getFicha());
+                     tablero.tablero[7][4].setFicha(null);
+                     tablero.tablero[7][3].setFicha(tablero.tablero[7][0].getFicha());
+                     tablero.tablero[7][0].setFicha(null);
+                 }
+         }else if(colDestino==6){ //ENROQUE CORTO
+                 if(turno){ //NEGRAS
+                         tablero.tablero[0][6].setFicha(tablero.tablero[0][4].getFicha());
+                         tablero.tablero[0][4].setFicha(null);
+                         tablero.tablero[0][5].setFicha(tablero.tablero[0][7].getFicha());
+                         tablero.tablero[0][7].setFicha(null);
+                     }else{     //BLANCAS
+                         tablero.tablero[7][6].setFicha(tablero.tablero[7][4].getFicha());
+                         tablero.tablero[7][4].setFicha(null);
+                         tablero.tablero[7][5].setFicha(tablero.tablero[7][7].getFicha());
+                         tablero.tablero[7][7].setFicha(null);
+                     }
+         }
+         
+         return(tablero);
+         
      }
 }

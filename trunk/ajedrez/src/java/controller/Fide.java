@@ -412,6 +412,10 @@ public class Fide {
         boolean hFicha=true;
         
         fichas=buscarFichas(partida,tipo_ficha);
+        for(int m=0;m<2;m++)
+            for(int n=0;n<8;n++){
+            System.out.println(fichas[m][n]);
+            }
         
         for(int j=0;(j<8)&&hFicha;j++){
             filaOrigen=fichas[0][j];
@@ -421,7 +425,12 @@ public class Fide {
             if(this.comprobar_movimiento(filaOrigen,colOrigen,filaDestino,colDestino,partida))
                 fichas_validas=aniadir(filaOrigen,colOrigen,fichas_validas);
         }
-    
+        for(int m=0;m<2;m++)
+            for(int n=0;n<8;n++){
+            System.out.println(fichas_validas[m][n]);
+            }
+        
+        
         coordenadas=transformar(fichas_validas,filaDestino,colDestino);
        
         return(coordenadas);

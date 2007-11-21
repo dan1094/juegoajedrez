@@ -7,6 +7,7 @@
 
 package model.facade;
 
+import javax.sql.DataSource;
 import junit.framework.*;
 import java.sql.Connection;
 import model.user.SQLUserDAO;
@@ -16,6 +17,7 @@ import model.util.DuplicateInstanceException;
 import model.util.InstanceNotFoundException;
 import model.util.InternalErrorException;
 import model.util.PasswordEncrypter;
+import model.util.SimpleDataSource;
 import model.util.TransactionalPlainAction;
 
 /**
@@ -46,15 +48,21 @@ public class RegisterUserActionTest extends TestCase {
     public void testExecute() throws Exception {
         System.out.println("execute");
         
-        Connection connection = null;
-        RegisterUserAction instance = null;
+        DataSource dataSource = new SimpleDataSource();
+        Connection connection = dataSource.getConnection();
         
-        Object expResult = null;
-        Object result = instance.execute(connection);
-        assertEquals(expResult, result);
+        UserDTO userDTO = new UserDTO();
         
-        // TODO revisar el cadigo de prueba generado y eliminar la llamada predeterminada que falta.
-        fail("El caso de prueba es un prototipo.");
+        userDTO.setApellido("Alonso");
+        userDTO.setEmail("FernandoAlonso@gmail.com");
+        userDTO.setNick("Alons");
+        userDTO.setNombre("Fernando");
+        userDTO.setPass("1234");
+       
+
+        RegisterUserAction action = new RegisterUserAction(userDTO);
+       
+        action.execute(connection);
     }
     
 }

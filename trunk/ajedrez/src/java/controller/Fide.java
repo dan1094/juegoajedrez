@@ -91,7 +91,23 @@ public class Fide {
         if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada())
             return(null);
         else    if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
-                else    return(null);
+                else {
+                    c=this.obtenerCaracter();
+                    if(c=='+'){
+                        System.out.println("Estas en JAQUE.");
+                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);        
+                    }else    if(c=='?'){ 
+                                System.out.println("Jugada Tonta");
+                                coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                             }else    if(c=='!'){ 
+                                        System.out.println("Gran Jugada");
+                                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                      }else    if(c=='#'){ 
+                                                    System.out.println("Jaque Mate");
+                                                    coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                                }else return(null);
+                        
+            }
         
         return(coordenadas);
         
@@ -114,11 +130,27 @@ public class Fide {
         System.out.println("Entra en el estado 6");
         int[] coordenadas=new int[4];
         int filaDestino=this.convertirFila(c);
-        boolean fin=comprobarfin( );
+        boolean fin=comprobarfin();
         if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
         else{
             if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
-            else return(null);
+            else {
+                    c=this.obtenerCaracter();
+                    if(c=='+'){
+                        System.out.println("Estas en JAQUE.");
+                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);        
+                    }else    if(c=='?'){ 
+                                System.out.println("Jugada Tonta");
+                                coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                             }else    if(c=='!'){ 
+                                        System.out.println("Gran Jugada");
+                                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                      }else    if(c=='#'){ 
+                                                    System.out.println("Jaque Mate");
+                                                    coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                                }else return(null);
+                        
+            }
         }
                
         return(coordenadas);
@@ -165,7 +197,15 @@ public class Fide {
         boolean fin=comprobarfin( );
         if(fin&&partida.tablero.tablero[filaDestino][colDestino].getOcupada()) 
             coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino, tipo_ficha);
-        else return(null);
+        else {
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+            }
         
         return(coordenadas);
     }
@@ -177,7 +217,15 @@ public class Fide {
         boolean fin=comprobarfin( );
         
         if(fin) coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino,tipo_ficha);
-        else return(null);
+        else{
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+            }
         
         return(coordenadas);
     }
@@ -235,7 +283,15 @@ public class Fide {
         boolean fin=comprobarfin( );
         
         if(fin) coordenadas=buscarMovimiento16(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
-        else return(null);
+        else {
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+            }
         
         return(coordenadas);
     }
@@ -248,7 +304,15 @@ public class Fide {
         if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
         else{
                 if(fin) coordenadas = buscarMovimiento17(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
-                else return(null);
+                else {
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+            }
         }
         return(coordenadas);
     }
@@ -291,8 +355,19 @@ public class Fide {
         System.out.println("Entra en el estado 21");
         int[] coordenadas = new int[4];
         char c= obtenerCaracter();
-        if((c=='O')&&comprobarfin()) coordenadas=enroqueLargo(partida);
-        else return(null);
+        boolean fin = this.comprobarfin();
+        if(fin){
+            if(c=='O') coordenadas=enroqueLargo(partida);
+            else return(null);
+        }else {
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+            }
         
         return(coordenadas);
     }
@@ -318,8 +393,16 @@ public class Fide {
         boolean fin=this.comprobarfin( );
         try{
         
-        if(!fin) return(null);
-        if(partida.getTurno()){
+        if(!fin){
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
+        }else{
+            if(partida.getTurno()){
                 if(partida.tablero.tablero[filaDestino-1][colOrigen].getOcupada()&&
                         partida.tablero.tablero[filaDestino-1][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
                         partida.tablero.tablero[filaDestino-1][colOrigen].getFicha().getColor()==partida.getTurno()){
@@ -350,11 +433,12 @@ public class Fide {
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
                 }else return(null);
+            }
          }catch(Exception e){
              return null;
          }
         return(coordenadas);
-      
+        
     }
     
     public int[] state24(Partida partida, int columna ){
@@ -381,22 +465,32 @@ public class Fide {
     public int[] state26(Partida partida, char c, int colOrigen, int colDestino ){
         System.out.println("Entra en el estado 26 (Comiendo con un peon)");
         int[] coordenadas = new int[4];
+        boolean fin=this.comprobarfin();
         int filaDestino=this.convertirFila(c);
-        if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
-            if(partida.getTurno()){
-                coordenadas[0]=filaDestino-1;
-                coordenadas[1]=colOrigen;
-                coordenadas[2]=filaDestino;
-                coordenadas[3]=colDestino;
-            }else{
-                coordenadas[0]=filaDestino+1;
-                coordenadas[1]=colOrigen;
-                coordenadas[2]=filaDestino;
-                coordenadas[3]=colDestino;
-                
+        if(fin){
+                if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
+                    if(partida.getTurno()){
+                        coordenadas[0]=filaDestino-1;
+                        coordenadas[1]=colOrigen;
+                        coordenadas[2]=filaDestino;
+                        coordenadas[3]=colDestino;
+                    }else{
+                        coordenadas[0]=filaDestino+1;
+                        coordenadas[1]=colOrigen;
+                        coordenadas[2]=filaDestino;
+                        coordenadas[3]=colDestino;
+
+                    }
+                }else return(null);
+    }else {
+                    c=this.obtenerCaracter();
+                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    else    if(c=='?') System.out.println("Jugada Tonta");
+                            else    if(c=='!') System.out.println("Gran Jugada");
+                                    else    if(c=='#') System.out.println("Jaque Mate");
+                                    else return(null);
+                        
             }
-        }else return(null);
-        
         return(coordenadas);
     }
     
@@ -630,6 +724,7 @@ public class Fide {
     }
     
     public boolean comprobarfin(){
+       
         if(this.traduciendo.length()==0) return(true);
         else return(false);
     }   

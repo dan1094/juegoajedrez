@@ -14,6 +14,8 @@ import controller.IObserver;
 import controller.ISubject;
 import controller.TableroFactory;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -467,11 +469,11 @@ public class Partida implements ISubject {
     /*Esta funcion se invoca desde MAIN. Recibe la partida creada anteriormente y devuelve un tablero
      personalizado o estandar, dependiendo de lo que pida el usuario*/
     public Partida obtener_tablero(){
-        boolean personal=true;
+        int personal;
         Tablero tablero=null;
         //Le pido al controlador un tipo de partida
         personal = this.tablero_personalizado();
-        if(personal){
+        if(personal==1){
             int opcion=0;
             System.out.println("¿Que Escenario desea?");
             try{
@@ -502,9 +504,21 @@ public class Partida implements ISubject {
             //La partida es personalizada.
             //this.tablero=this.tablero.inicializar_tablero_personalizado(this);
             //this.turno=this.obtener_turno_personalizado(this);
-        }else{
+        }else if(personal==0){
             //La partida es estandar
             this.tablero=this.tablero.inicializar_tablero_estandar(this);
+        }else if(personal==2){
+            String ruta=this.obtenerRuta();
+            this.tablero.inicializar_tablero_estandar(this);
+            this.setTablero(tablero);
+            
+                    try {
+                        this.jugarPartidaFichero(this,ruta);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+            
+            
         }
         
         return(this);
@@ -544,7 +558,7 @@ public class Partida implements ISubject {
     }
     
     /**Ofrece la personalizacion del tablero de la partida*/
-     public boolean tablero_personalizado(){
+     public int tablero_personalizado(){
         int tipo_partida=0;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         do
@@ -555,6 +569,7 @@ public class Partida implements ISubject {
             System.out.println("Introduzca el tipo de partida que desea empezar");
             System.out.println("0 .- Partida Estandar");
             System.out.println("1 .- Partida Personalizada");
+            System.out.println("2 .- Leer partida desde un archivo");
             
             try{
                 tipo_partida = Integer.parseInt(in.readLine());
@@ -570,10 +585,9 @@ public class Partida implements ISubject {
             }
             
         
-        }while((tipo_partida!=0)&&(tipo_partida!=1));
+        }while((tipo_partida!=0)&&(tipo_partida!=1)&&(tipo_partida!=2));
         
-        if(tipo_partida==0) return(false);
-        else return(true);
+        return(tipo_partida);
     }
     
     /**Mira si se ha llegado a tablas en la partida*/
@@ -835,4 +849,56 @@ public class Partida implements ISubject {
          return(tablero);
          
      }
+
+    private String obtenerRuta() {
+        System.out.println("Introduzca la ruta del archivo a leer, seguido del nombre del archivo:");
+        System.out.println("(Por ejemplo: [c:\\partida.txt]");
+        String ruta=null;
+         try {
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            ruta=in.readLine();
+                        
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+     
+        
+       return(ruta);
+    }
+
+    private String obtenerCoordenadasFichero(String ruta) throws IOException {
+        String coorFicheroFide=null;
+        BufferedReader lector=null;
+        try {
+            FileReader archivo = new FileReader(ruta);
+            lector = new BufferedReader(archivo);
+            
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+            coorFicheroFide=lector.readLine();
+            System.out.println(coorFicheroFide);
+            
+        
+         
+                
+        return(coorFicheroFide);
+    }
+
+    private Partida jugarPartidaFichero(Partida partida, String ruta) throws IOException{
+        
+        Fide fide = new Fide();
+        String coorFide = this.obtenerCoordenadasFichero(ruta);
+        int[] coorModelo = new int[4];
+        
+        while(coorFide!=null){
+            coorFide=this.obtenerCoordenadasFichero(ruta);
+            coorModelo = fide.de_fide_a_modelo(this,coorFide);
+            this.mover(coorModelo[0],coorModelo[1],coorModelo[2],coorModelo[3],this.tablero);
+        }
+        
+        return null;
+    }
 }

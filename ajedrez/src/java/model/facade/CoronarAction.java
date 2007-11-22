@@ -20,6 +20,8 @@ public class CoronarAction {
     
     private int filaOrigen;
     private int columnaOrigen;
+    private int filaDestino;
+    private int columnaDestino;
     private Partida partida;
     private int eleccion;
     
@@ -37,7 +39,7 @@ public class CoronarAction {
     public Object execute() 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        partida.cambio_ficha(partida.getTablero(),eleccion,filaOrigen,columnaOrigen);               
+        partida.cambio_ficha(partida,eleccion,filaOrigen,columnaOrigen,filaDestino,columnaDestino);               
 
         return partida;
     }

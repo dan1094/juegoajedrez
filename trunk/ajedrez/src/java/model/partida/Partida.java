@@ -268,19 +268,21 @@ public class Partida implements ISubject {
    //  LogManager.info("Cambio de ficha. ("+fd+","+cd+").");
      System.out.println("Ha solicitado cambiar el peon por un "+eleccion);
    //  LogManager.info("Ha solicitado cambiar el peon por un "+eleccion);
-     
+      
       switch(eleccion){
-          case 1:   tablero.tablero[fd][cd].setFicha(new Dama(this.getTurno()));
-                    tablero.tablero[fo][co].setFicha(null);
+         
+          case 1:   tablero.tablero[fo][co].setFicha(new Dama(this.getTurno()));
+                    //tablero.tablero[fo][co].setFicha(null);
+                    System.out.println("Dama:"+eleccion);
                     return(tablero);
-          case 2:   tablero.tablero[fd][cd].setFicha(new Torre(this.getTurno()));
-                    tablero.tablero[fo][co].setFicha(null);
+          case 2:   tablero.tablero[fo][co].setFicha(new Torre(this.getTurno()));
+                    //tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
-          case 3:   tablero.tablero[fd][cd].setFicha(new Alfil(this.getTurno()));
-                    tablero.tablero[fo][co].setFicha(null);
+          case 3:   tablero.tablero[fo][co].setFicha(new Alfil(this.getTurno()));
+                    //tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
-          case 4:   tablero.tablero[fd][cd].setFicha(new Caballo(this.getTurno()));
-                    tablero.tablero[fo][co].setFicha(null);
+          case 4:   tablero.tablero[fo][co].setFicha(new Caballo(this.getTurno()));
+                    //tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
           default: return(tablero);
       }

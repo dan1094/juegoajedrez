@@ -769,6 +769,7 @@ public class Partida implements ISubject {
         
         String coordenadas="";
         System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
+        System.out.println("Para salir de la aplicacion, introduzca: [salir]");
          
         try {
             //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE

@@ -46,7 +46,8 @@ public class Fide {
         char c= obtenerCaracter();
         if(esMayuscula(c)) coordenadas=state1(partida,c );
         else    if(esMinuscula(c)) coordenadas=state22(partida,c);    
-                else if(c=='O') coordenadas=state18(partida );
+                else    if(c=='O') coordenadas=state18(partida );
+                        else    if(c=='s') coordenadas=state27(partida);
      return(coordenadas);   
     }
     
@@ -492,6 +493,24 @@ public class Fide {
                         
             }
         return(coordenadas);
+    }
+    
+    public int[] state27(Partida partida){
+        char c=obtenerCaracter();
+        int[] coor= new int[4];
+        if(c=='a'){
+            if(obtenerCaracter()=='l'){
+                if(obtenerCaracter()=='i'){
+                    if(obtenerCaracter()=='r'){
+                        coor[0]=9;
+                        coor[1]=9;
+                        coor[2]=9;
+                        coor[3]=9;
+                    }else return(null);
+                }else return(null);
+            }else return(null);
+        }else return(null); 
+        return(coor);
     }
     
     public int[] buscarMovimiento4_6(Partida partida, String tipo_ficha, int filaDestino, int colDestino){

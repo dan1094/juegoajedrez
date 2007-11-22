@@ -214,11 +214,13 @@ public class Partida implements ISubject {
             System.out.println("BLANCAS");
       //      LogManager.info("BLANCAS");
         }
+        boolean exit=false;
         do{
            do{
             coordenadas = fide.de_fide_a_modelo(partida,pedir_coordenadas_movimiento());
+            exit=this.exit(coordenadas);
             }while(coordenadas==null);
-           
+            if(exit) break;
             int filaorigen=coordenadas[0];
             int columnaorigen=coordenadas[1];
             int filadestino=coordenadas[2];
@@ -256,7 +258,9 @@ public class Partida implements ISubject {
             //Por ahora va aqui ya que esta funcion deberia ir en el controller
             this.notifyObserver();
             this.nueva_partida();
-        }while(!partida.fin_partida(partida));
+        }while(!partida.fin_partida(partida)&&!exit(coordenadas));
+        
+        System.out.println("Ha finalizado la partida.");
         
     }
     
@@ -900,5 +904,14 @@ public class Partida implements ISubject {
         }
         
         return null;
+    }
+
+    private boolean exit(int[] coordenadas) {
+        if((coordenadas[0]==9)&&
+            (coordenadas[1]==9)&&
+            (coordenadas[2]==9)&&
+            (coordenadas[3]==9)) return(true);
+        else return(false);
+        
     }
 }

@@ -57,6 +57,7 @@ public class Rey extends Ficha{
                 destino_jaque=esta_amenazada(tablero,fd,cd);
                 return(!destino_jaque);
              }else if(((fo==7)&&(co==4)&&(fd==7)&&(cd==6))||((fo==0)&&(co==4)&&(fd==0)&&(cd==6))){
+                    System.out.println("Enroque corto");
                     //Enroque Corto de BLANCAS Y NEGRAS. Comprueba que el origen no esta en jaque, comprueba
                     //que el destino tampoco esta en jaque. Comprueba que no hay fichas impidiendo el paso.
                     //Y comprueba que el rey puede hacer enroque(no ha movido anteriormente)
@@ -66,29 +67,31 @@ public class Rey extends Ficha{
                     camino_libre=camino_libre(tablero,fo,co,fd,cd,false); //false=enroque_corto
                     if((!origen_jaque)&&(!destino_jaque)&&(no_ha_movido)&&(camino_libre)) {
                         //condiciones necesarias para hacer ENROQUE CORTO
-                        enroque(tablero,fo,co,fd,cd,false);
-                        return(true);
+                        if(enroque(tablero,fo,co,fd,cd,false)) return(true);
+                        else return(false);
                     }else return(false); //no se dan las condiciones, no puede mover asi.
              }else if(((fo==7)&&(co==4)&&(fd==7)&&(cd==2))||((fo==0)&&(co==4)&&(fd==0)&&(cd==2))){
                     //Enroque largo de BLANCAS Y NEGRAS
-                    
-                    enroque(tablero,fo,co,fd,cd,true);
-                    return(true);
+                    System.out.println("Enroque corto");
+                    if(enroque(tablero,fo,co,fd,cd,true)) return(true);
+                    else return(false);
              }else return(false);
     }
     
     /**Esta funcion lo que hace es: una vez llamada (situacion correcta de enroque) mueve la torre
      *al sitio correspondiete. Por el contrario, el rey, se mueve posteriormente, como si hubiese sido
      *un movimiento normal. Si el enroque es largo(true), si es corto(false)*/
-    public void enroque(Tablero tablero, int fo, int co, int fd, int cd, boolean tipo_enroque){
+    public boolean enroque(Tablero tablero, int fo, int co, int fd, int cd, boolean tipo_enroque){
            if(tipo_enroque) {
                     tablero.tablero[fo][3].setFicha(tablero.tablero[fo][0].getFicha());
                     tablero.tablero[fo][0].setFicha(null);
+                    return(true);
                
            }else {
                     //Colocamos la torre correspondiente al lado del rey.
                     tablero.tablero[fo][5].setFicha(tablero.tablero[fo][7].getFicha());
                     tablero.tablero[fo][7].setFicha(null);
+                    return(true);
            }
     }
     

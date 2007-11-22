@@ -238,17 +238,19 @@ public class Tablero {
     }
     
     /**Esta funcion recorre el tablero, marcando las casillas amenazadas*/
-    public void amenazas(){
+    public Tablero amenazas(Partida partida){
+        Tablero tablero = new Tablero();
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
             {
                 //Si no esta vacia, se coge la ficha y se llama a amenazar_casillas
-                if(this.tablero[i][j].getOcupada()){
-                Ficha ficha =this.tablero[i][j].getFicha();
-                ficha.amenazar_casillas(this,i,j);
+                if(partida.tablero.tablero[i][j].getOcupada()){
+                Ficha ficha =partida.tablero.tablero[i][j].getFicha();
+                tablero=ficha.amenazar_casillas(this,i,j);
                 }
                 
             }
+        return(tablero);
     }
   
 }

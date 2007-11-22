@@ -80,15 +80,14 @@ public class Dama extends Ficha{
             if(esDiagonal(filaorigen,columnaorigen,filadestino,columnadestino)){
             System.out.println("Movimiento reina diagonal");
          //   LogManager.info("Movimiento reina diagonal");
-         //movimiento diagonal. no recto
-         //Hay 4 posibles movimientos diagonales
-         int i=0, j=0;
+            int i=0, j=0;
             if((filadestino>filaorigen)&&(columnadestino>columnaorigen)){
                 //Movimiento hacia abajo y a la derecha. 
                 System.out.println("Mueve diagonal abajo-derecha");
            //     LogManager.info("Mueve diagonal abajo-derecha");
                 for(i=filaorigen+1,j=columnaorigen+1;(i<filadestino)&&(j<columnadestino)&&libre;i++,j++){
                         libre=!tablero.tablero[i][j].getOcupada();
+                        System.out.print(libre);
                         
                 }return(libre);
         } else if((filadestino>filaorigen)&&(columnadestino<columnaorigen)){
@@ -97,7 +96,7 @@ public class Dama extends Ficha{
          //   LogManager.info("Mueve diagonal abajo-izquierda");
             for(i=filaorigen+1,j=columnaorigen-1;(i<filadestino)&&(j>columnadestino)&&libre;i++,j--){
                     libre=!tablero.tablero[i][j].getOcupada();
-                        
+                    System.out.print(libre);    
                 }return(libre);
         }else if((filadestino<filaorigen)&&(columnadestino>columnaorigen)){
             //Movimiento hacia arriba y a la derecha
@@ -105,6 +104,7 @@ public class Dama extends Ficha{
          //   LogManager.info("Mueve diagonal arriba-derecha");
             for(i=filaorigen-1,j=columnaorigen+1;(i>filadestino)&&(i<columnadestino)&&libre;i--,j++){
                 libre=!tablero.tablero[i][j].getOcupada();
+                System.out.print(libre);
                  }  return(libre);
         }else if((filadestino<filaorigen)&&(columnadestino<columnaorigen)){
             //Movimiento hacia arriba y a la izquierda
@@ -112,16 +112,19 @@ public class Dama extends Ficha{
          //   LogManager.info("Mueve diagonal arriba-izquierda");
             for(i=filaorigen-1,j=columnaorigen-1;(i>filadestino)&&(i>columnadestino)&&libre;i--,j--){
                 libre=!tablero.tablero[i][j].getOcupada();
+                System.out.print(libre);
             }  return(libre);
         }   
         System.out.println("El movimiento no se puede realizar. Hay una ficha impidiendo " +
                 "el paso.");
      //   LogManager.info("El movimiento no se puede realizar. Hay una ficha impidiendo " +
      //           "el paso.");
-        return(false);
-        }else return(false);
+                return(false);
+            }else return(false);
+        }
+        
     }
-    }
+    
     public boolean es_recto(int fo, int co, int fd, int cd){
         if((fo==fd)||(co==cd)) return(true);
         else return(false);
@@ -214,7 +217,7 @@ public class Dama extends Ficha{
         return(tablero);
     }   
      public boolean esDiagonal(int fo, int co, int fd, int cd){
-        if(Math.abs(fo-co)==(Math.abs(fd-cd))) return(true);
+        if(Math.abs(fo-fd)==(Math.abs(co-cd))) return(true);
         else return(false);
     }
    

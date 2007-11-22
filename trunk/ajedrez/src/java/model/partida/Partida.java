@@ -236,8 +236,10 @@ public class Partida implements ISubject {
             if(movida)
             { 
               //Para comprobar que ha movido, miramos lo que hay ahora en la casilla destino.
-              Ficha ficha=partida.getTablero().getCasilla(filadestino,columnadestino).getFicha();
-              System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
+              
+              if(partida.tablero.tablero[filadestino][columnadestino].getOcupada()){
+                  Ficha ficha=partida.tablero.tablero[filadestino][columnadestino].getFicha();
+                  System.out.print("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
         //      LogManager.info("Ha movido el/la: "+ficha.getTipo_ficha()+", de color ");
               if(ficha.getColor()){
                   System.out.println("negro.");
@@ -247,15 +249,8 @@ public class Partida implements ISubject {
                   System.out.println("blanco.");
         //          LogManager.info("blanco.");
               }
-             /* if(partida.getTablero().tablero[filadestino][columnadestino].getFicha().getTipo_ficha().equalsIgnoreCase("rey"))
-                 {
-                 //Si lo movido es un rey, ya no puede enrocar.
-                 //de que color es?
-                 if(ficha.getColor()==false) 
-                   partida.setBlanco_puede_enrocar(false);
-                 else partida.setNegro_puede_enrocar(false);
-                 }*/
-             } 
+              }
+            } 
             //Por ahora va aqui ya que esta funcion deberia ir en el controller
             this.notifyObserver();
             this.nueva_partida();
@@ -264,7 +259,9 @@ public class Partida implements ISubject {
     }
     
     /**Recibe la eleccion del cambio y realiza el cambio de ficha*/
-    public Tablero cambio_ficha(Tablero tablero, int eleccion, int fd, int cd){
+    public Tablero cambio_ficha(Partida partida, int eleccion, int fo, int co, int fd, int cd){
+        Tablero tablero = new Tablero();
+        tablero=partida.getTablero();
      //Esta funcion dependiendo de la ficha que el jugador haya escogido
       //crea la ficha y la mete en su sitio.
      System.out.println("Cambio de ficha. ("+fd+","+cd+").");
@@ -273,13 +270,17 @@ public class Partida implements ISubject {
    //  LogManager.info("Ha solicitado cambiar el peon por un "+eleccion);
      
       switch(eleccion){
-          case 1: tablero.tablero[fd][cd].setFicha(new Dama(this.getTurno()));
+          case 1:   tablero.tablero[fd][cd].setFicha(new Dama(this.getTurno()));
+                    tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
-          case 2: tablero.tablero[fd][cd].setFicha(new Torre(this.getTurno()));
+          case 2:   tablero.tablero[fd][cd].setFicha(new Torre(this.getTurno()));
+                    tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
-          case 3: tablero.tablero[fd][cd].setFicha(new Alfil(this.getTurno()));
+          case 3:   tablero.tablero[fd][cd].setFicha(new Alfil(this.getTurno()));
+                    tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
-          case 4: tablero.tablero[fd][cd].setFicha(new Caballo(this.getTurno()));
+          case 4:   tablero.tablero[fd][cd].setFicha(new Caballo(this.getTurno()));
+                    tablero.tablero[fo][co].setFicha(null);
                     return(tablero);
           default: return(tablero);
       }
@@ -289,28 +290,31 @@ public class Partida implements ISubject {
     public Tablero ofrecer_cambio(Partida partida, int fo, int co, int fd, int cd){
         System.out.println("FO="+fo+" CO="+co+" FD="+fd+" CD="+cd+" TURNO="+partida.getTurno());
         Tablero tablero = new Tablero();
+        tablero=partida.getTablero();
       if((fd==0)&&(fo==1)){
           //FD=ultima fila. FO=penultima. turno=color ficha a mover
           //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
           // ofrece el cambio y llama a cambio_ficha.
-          
-          int eleccion = this.ofrecer_cambio_ficha();
-          tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
           System.out.println("Coronacion de blancas");
+          int eleccion = this.ofrecer_cambio_ficha();
+          System.out.println("ELECCION: "+eleccion);
+          tablero=this.cambio_ficha(partida,eleccion,fo,co,fd,cd);
+          
           
       }else if((fd==7)&&(fo==6)){
           //FD=ultima fila. FO=penultima. turno=color ficha a mover
           //Esta funcion comprueba que estamos en la ultima fila dependiendo del color.
           // ofrece el cambio y llama a cambio_ficha.
-            
+          System.out.println("Coronacion de negras");  
           System.out.println("FO="+fo+" CO="+co+" FD="+fd+" CD="+cd);
           
           int eleccion = this.ofrecer_cambio_ficha();
-          tablero=this.cambio_ficha(partida.tablero,eleccion,fd,cd);
-          System.out.println("Coronacion de negras");
+          System.out.println("ELECCION: "+eleccion);
+          tablero=this.cambio_ficha(partida,eleccion,fo,co,fd,cd);
+          
        }else return(tablero);
       
-      return(partida.tablero);
+      return(tablero);
   }
     
     /**Comprueba el movimiento que ha introducido el usuario*/
@@ -352,9 +356,13 @@ public class Partida implements ISubject {
                    //              LogManager.info("Va a mover un/una: "+fichaorigen.getTipo_ficha()+". La casilla" +
 //                                         " destino esta vacia.");
                                  mcf=fichaorigen.movimiento_correspondiente_ficha(tablero,filaorigen,columnaorigen,filadestino,columnadestino);
-                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
-                                    this.setTablero(this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino));
-                                 if(fichaorigen.getTipo_ficha().equals("rey")){
+                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf)){
+                                     Tablero tablero2 = new Tablero();
+                                     tablero2=this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                     this.setTablero(tablero2);
+                                    
+                                }
+                                if(fichaorigen.getTipo_ficha().equals("rey")){
                                      if(esEnroque(filaorigen,columnaorigen,filadestino,columnadestino,this)){
                                          this.setTablero(this.enrocar(this,filaorigen,columnadestino,this.getTurno()));
                                      }
@@ -375,10 +383,12 @@ public class Partida implements ISubject {
                                     System.out.println("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
 //                                    LogManager.info("Ha comido un "+casilladestino.ficha.tipo_ficha+" contrario.");
                                 }
-                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf))
-                                    this.setTablero(this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino));
+                                if(fichaorigen.getTipo_ficha().equals("peon")&&(mcf)){
+                                    Tablero tablero2 = new Tablero();
+                                    tablero2=this.ofrecer_cambio(this,filaorigen,columnaorigen,filadestino,columnadestino);
+                                    this.setTablero(tablero2);
                                 
-                               return(mcf);
+                               }return(mcf);
                             }else if(casilladestino.getFicha().getColor()==this.getTurno()){
                                         System.out.println("El destino esta ocupado por una ficha de su propio color.");  
 //                                        LogManager.info("El destino esta ocupado por una ficha de su propio color.");
@@ -410,6 +420,7 @@ public class Partida implements ISubject {
         
        
         boolean mov_per=comprobar_movimiento(filaorigen,columnaorigen,filadestino,columnadestino,tablero);
+               
         if(mov_per){
                 //Obtenemos las casillas
                 Casilla origen=tablero.getCasilla(filaorigen,columnaorigen);
@@ -519,7 +530,6 @@ public class Partida implements ISubject {
          return(turno);
      }
     
-  
     public boolean fin_partida(Partida partida){
         //Una partida termina cuando hay jaque-mate o cuando hay tablas.
         boolean tablas=false;
@@ -563,7 +573,6 @@ public class Partida implements ISubject {
         if(tipo_partida==0) return(false);
         else return(true);
     }
-     
     
     /**Mira si se ha llegado a tablas en la partida*/
     public boolean son_tablas(Partida partida){
@@ -655,7 +664,7 @@ public class Partida implements ISubject {
     
     /**Ofrece al usuario el cambio de ficha al coronar un peon*/
      public int ofrecer_cambio_ficha(){
-         int eleccion;
+         int eleccion=0;
          BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
          
           try {
@@ -666,14 +675,12 @@ public class Partida implements ISubject {
             System.out.println("4.- Caballo");
             //Leemos el numero
             eleccion = Integer.parseInt(in.readLine());
-            return(eleccion);
+            
         } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Entrada incorrecta de la ficha.");
 //            LogManager.info("Entrada incorrecta de la ficha.");
-        } finally {
-            return(0);
-        }
+        } return(eleccion);
      }
 
      public int ofrecer_ficha(){

@@ -12,6 +12,7 @@ package model.partida;
 import controller.Fide;
 import controller.IObserver;
 import controller.ISubject;
+import controller.Main;
 import controller.TableroFactory;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -36,7 +37,7 @@ public class Partida implements ISubject {
     protected boolean negro_puede_enrocar;
     private ArrayList misObservers;
     private MostrarTablero mostrarTableroNegro = new MostrarTableroNegro();
-
+   
     
     /**Instancia vacia de Partida*/
     public Partida(){
@@ -46,6 +47,7 @@ public class Partida implements ISubject {
         negro_puede_enrocar = true;
         //tablero.inicializar_tablero_estandar(this);
         misObservers = new ArrayList();
+        
     }
     
      public void addObserver(IObserver obs) {
@@ -196,11 +198,11 @@ public class Partida implements ISubject {
         MostrarTableroNegro mostrarTableroNegro = new MostrarTableroNegro();
         
         Fide fide= new Fide();
-        
+        int exit=0;
         mostrarTableroNegro.update(partida);
        
         this.nueva_partida();
-        
+        do{
         
         System.out.println("COMIENZO DE LA PARTIDA");
       //  LogManager.info("COMIENZO DE LA PARTIDA");
@@ -214,26 +216,19 @@ public class Partida implements ISubject {
             System.out.println("BLANCAS");
       //      LogManager.info("BLANCAS");
         }
-        boolean exit=false;
-        do{
+        
+        
            do{
             coordenadas = fide.de_fide_a_modelo(partida,pedir_coordenadas_movimiento());
-            exit=this.exit(coordenadas);
+            exit=this.lectura(coordenadas);
             }while(coordenadas==null);
-            if(exit) break;
+            if(exit==1) break;
+            
             int filaorigen=coordenadas[0];
             int columnaorigen=coordenadas[1];
             int filadestino=coordenadas[2];
             int columnadestino=coordenadas[3];       
          
-            System.out.println("FILA ORIGEN: "+filaorigen);
-        //    LogManager.info("FILA ORIGEN: "+filaorigen);
-            System.out.println("COL ORIGEN: "+columnaorigen);
-        //    LogManager.info("COL ORIGEN: "+columnaorigen);
-            System.out.println("FILA DESTINO: "+filadestino);
-        //    LogManager.info("FILA DESTINO: "+filadestino);
-            System.out.println("COL DESTINO: "+columnadestino);
-        //    LogManager.info("COL DESTINO: "+columnadestino);
             
             boolean movida=partida.mover(filaorigen,columnaorigen,filadestino,columnadestino,partida.getTablero());
             
@@ -258,11 +253,17 @@ public class Partida implements ISubject {
             //Por ahora va aqui ya que esta funcion deberia ir en el controller
             this.notifyObserver();
             this.nueva_partida();
-        }while(!partida.fin_partida(partida)&&!exit(coordenadas));
+        }while(lectura(coordenadas)==0);
+        
+        if(lectura(coordenadas)==2){
+            Main main = new Main();
+            main.main(null);
+        }
         
         System.out.println("Ha finalizado la partida.");
         
-    }
+        
+       }
     
     /**Recibe la eleccion del cambio y realiza el cambio de ficha*/
     public Tablero cambio_ficha(Partida partida, int eleccion, int fo, int co, int fd, int cd){
@@ -473,6 +474,7 @@ public class Partida implements ISubject {
     /*Esta funcion se invoca desde MAIN. Recibe la partida creada anteriormente y devuelve un tablero
      personalizado o estandar, dependiendo de lo que pida el usuario*/
     public Partida obtener_tablero(){
+        Partida partida = new Partida();
         int personal;
         Tablero tablero=null;
         //Le pido al controlador un tipo de partida
@@ -512,12 +514,13 @@ public class Partida implements ISubject {
             //La partida es estandar
             this.tablero=this.tablero.inicializar_tablero_estandar(this);
         }else if(personal==2){
-            String ruta=this.obtenerRuta();
+            PartidaFichero pf = new PartidaFichero(this);
+            String ruta=pf.obtenerRuta();
             this.tablero.inicializar_tablero_estandar(this);
             this.setTablero(tablero);
             
                     try {
-                        this.jugarPartidaFichero(this,ruta);
+                        partida=pf.jugarPartidaFichero(this,ruta);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -770,6 +773,7 @@ public class Partida implements ISubject {
         String coordenadas="";
         System.out.println("Introduzca las coordenadas del movimiento (formato FIDE):");
         System.out.println("Para salir de la aplicacion, introduzca: [salir]");
+        System.out.println("Para volver al menu inicial, introduzca: [menu]");
          
         try {
             //Creamos un array de chars, donde el usuario metera las coordenadas en formato FIDE
@@ -855,64 +859,15 @@ public class Partida implements ISubject {
          
      }
 
-    private String obtenerRuta() {
-        System.out.println("Introduzca la ruta del archivo a leer, seguido del nombre del archivo:");
-        System.out.println("(Por ejemplo: [c:\\partida.txt]");
-        String ruta=null;
-         try {
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            ruta=in.readLine();
-                        
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-     
-        
-       return(ruta);
-    }
+    
 
-    private String obtenerCoordenadasFichero(String ruta) throws IOException {
-        String coorFicheroFide=null;
-        BufferedReader lector=null;
-        try {
-            FileReader archivo = new FileReader(ruta);
-            lector = new BufferedReader(archivo);
-            
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        
-            coorFicheroFide=lector.readLine();
-            System.out.println(coorFicheroFide);
-            
-        
-         
-                
-        return(coorFicheroFide);
-    }
-
-    private Partida jugarPartidaFichero(Partida partida, String ruta) throws IOException{
-        
-        Fide fide = new Fide();
-        String coorFide = this.obtenerCoordenadasFichero(ruta);
-        int[] coorModelo = new int[4];
-        
-        while(coorFide!=null){
-            coorFide=this.obtenerCoordenadasFichero(ruta);
-            coorModelo = fide.de_fide_a_modelo(this,coorFide);
-            this.mover(coorModelo[0],coorModelo[1],coorModelo[2],coorModelo[3],this.tablero);
-        }
-        
-        return null;
-    }
-
-    private boolean exit(int[] coordenadas) {
-        if((coordenadas[0]==9)&&
-            (coordenadas[1]==9)&&
-            (coordenadas[2]==9)&&
-            (coordenadas[3]==9)) return(true);
-        else return(false);
-        
+    private int lectura(int[] coordenadas) {
+        if((coordenadas[0]==9)&&(coordenadas[1]==9)&&
+            (coordenadas[2]==9)&&(coordenadas[3]==9)) 
+                return(1);
+        else if((coordenadas[0]==9)&&(coordenadas[1]==9)&&
+            (coordenadas[2]==9)&&(coordenadas[3]==8)) 
+                return(2);
+        else return(0);
     }
 }

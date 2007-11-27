@@ -24,6 +24,7 @@ public class PartidaFichero {
     
     /** Creates a new instance of PartidaFichero */
     public PartidaFichero(Partida partida) {
+        
     }
     
     public String obtenerRuta() {
@@ -59,27 +60,21 @@ public class PartidaFichero {
             lista[i]=lector.readLine();
             if(lista[i]==null) finfichero=true;
         }
-            
-        
-         
-                
+             
         return(lista);
     }
 
     public Partida jugarPartidaFichero(Partida partida, String ruta) throws IOException{
         
         int linea=0;
+        String[] coorFide = new String[100];
         Fide fide = new Fide();
-        String[] coorFide = this.obtenerCoordenadasFichero(ruta);
-        int[] coorModelo = new int[4];
-        int tamano=coorFide.length;
+        coorFide= this.obtenerCoordenadasFichero(ruta);
+        
         boolean fin=false;
-        for(int i=0;i<tamano-1;i++){
-            coorFide=this.obtenerCoordenadasFichero(ruta);
-            System.out.println(coorFide);
-            coorModelo = fide.de_fide_a_modelo(partida ,coorFide[i]);
-            System.out.println(coorModelo);
-        //    partida.mover(coorModelo[0],coorModelo[1],coorModelo[2],coorModelo[3],partida.tablero);
+        for(int i=0;((i<100)&&(coorFide[i]!=null));i++){
+            
+            System.out.println(coorFide[i]);
         }
         
         return partida;

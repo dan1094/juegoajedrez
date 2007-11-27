@@ -137,6 +137,7 @@ public class Partida implements ISubject {
             this.setTurno(false);
         else this.setTurno(true);
     }
+    
     public void nueva_partida()
     {
         int n_partida = 0;
@@ -525,7 +526,7 @@ public class Partida implements ISubject {
                         ex.printStackTrace();
                     }
             
-            
+            return null;
         }
         
         return(this);
@@ -571,7 +572,7 @@ public class Partida implements ISubject {
         do
         {
             
-            System.out.println("¿Quiere introducir una nueva pantalla a la partida?");
+            //System.out.println("¿Quiere introducir una nueva pantalla a la partida?");
             
             System.out.println("Introduzca el tipo de partida que desea empezar");
             System.out.println("0 .- Partida Estandar");

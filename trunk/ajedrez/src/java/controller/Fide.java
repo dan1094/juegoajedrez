@@ -34,6 +34,7 @@ public class Fide {
     public int[] de_fide_a_modelo(Partida partida, String coordenadas_fide){
         int coordenadas[] = new int[4];
         this.traduciendo=coordenadas_fide;
+        
             
         coordenadas=iniciar_parser(partida);
         
@@ -48,6 +49,7 @@ public class Fide {
         else    if(esMinuscula(c)) coordenadas=state22(partida,c);    
                 else    if(c=='O') coordenadas=state18(partida );
                         else    if(c=='s') coordenadas=state27(partida);
+                                else    if(c=='m') coordenadas=state28(partida);
      return(coordenadas);   
     }
     
@@ -510,6 +512,22 @@ public class Fide {
                 }else return(null);
             }else return(null);
         }else return(null); 
+        return(coor);
+    }
+    
+    public int[] state28(Partida partida){
+        char c=obtenerCaracter();
+        int[] coor= new int[4];
+        if(c=='e'){
+            if(obtenerCaracter()=='n'){
+                if(obtenerCaracter()=='u'){
+                    coor[0]=9;
+                    coor[1]=9;
+                    coor[2]=9;
+                    coor[3]=8;
+                }else return(null);
+            }else return(null);
+         }else return(null);
         return(coor);
     }
     

@@ -8,7 +8,7 @@
  */
 
 package controller;
-import model.partida.Partida;
+import model.partida.Game;
 
 
 /**
@@ -17,6 +17,6 @@ import model.partida.Partida;
  */
 public interface IObserver {
     
-    public void update(Partida partida);
+    public void update(Game game);
  
 }

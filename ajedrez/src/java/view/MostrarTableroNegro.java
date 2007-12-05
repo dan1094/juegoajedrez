@@ -23,7 +23,7 @@ public class MostrarTableroNegro extends MostrarTablero {
     /** Creates a new instance of MostrarTableroNegro */
     public MostrarTableroNegro() {
     }
-     public void update(Partida partida)
+     public void update(Game game)
     {
         Casilla casillaAux;
         Ficha fichaAux;
@@ -34,7 +34,7 @@ public class MostrarTableroNegro extends MostrarTablero {
             System.out.print((8-i)+" |"); 
             for(int j=0;j<8;j++){
                 //Guardo la ficha con la que estoy trabajando
-                casillaAux = partida.getTablero().getCasilla(i,j);
+                casillaAux = game.getTablero().getCasilla(i,j);
                 //Hay ficha por lo tanto imprimimos su contenido
                 if(casillaAux.getOcupada()){
                     //Guardo la ficha en un auxiliar
@@ -70,7 +70,7 @@ public class MostrarTableroNegro extends MostrarTablero {
         System.out.println("  -----------------------------------------");
         
      }
-     public void borrar(Partida partida)
+     public void borrar(Game game)
      {
          
      }

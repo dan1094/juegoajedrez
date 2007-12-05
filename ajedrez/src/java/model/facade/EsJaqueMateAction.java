@@ -19,17 +19,17 @@ import model.util.*;
  */
 public class EsJaqueMateAction {
     
-   private Partida partida;
+   private Game game;
    
-   public EsJaqueMateAction(Partida partida)
+   public EsJaqueMateAction(Game game)
    {
-       this.partida=partida;
+       this.game=game;
    
    }
-    public boolean execute(Partida partida) 
+    public boolean execute(Game game) 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        return  partida.es_mate(partida);               
+        return  game.es_mate(game);               
 
        
     }

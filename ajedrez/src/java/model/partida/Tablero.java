@@ -29,7 +29,8 @@ public class Tablero {
     protected Fide fide;
     
     /** Creates a new instance of Tablero */
-    public Tablero() {        
+    public Tablero() {
+        tablero = new Casilla[8][8];
     }
     
     /**Crea una tablero con los atributos especificados*/
@@ -47,7 +48,7 @@ public class Tablero {
     }
     
     /**Coloca las fichas en sus posiciones iniciales*/
-    public Tablero inicializar_tablero_estandar(Partida partida){
+    public Tablero inicializar_tablero_estandar(Game game){
         
         
         int i=0,j=0;
@@ -93,55 +94,55 @@ public class Tablero {
      //   LogManager.info("Creando las casillas del tablero");
         //CREA LAS INSTANCIAS CASILLAS DEL TABLERO
        
-        this.vacio(partida);
+        game.setTablero(this.vacio());
        
         System.out.println("Asociando las fichas a las casillas del tablero");
      //   LogManager.info("Asociando las fichas a las casillas del tablero");
         //Asociamos las fichas a sus posiciones en el tablero.
-        partida.tablero.tablero[0][2].setFicha(alf_n_1);
-        partida.tablero.tablero[0][5].setFicha(alf_n_2);
-        partida.tablero.tablero[7][2].setFicha(alf_b_1);
-        partida.tablero.tablero[7][5].setFicha(alf_b_2);
+        game.tablero.tablero[0][2].setFicha(alf_n_1);
+        game.tablero.tablero[0][5].setFicha(alf_n_2);
+        game.tablero.tablero[7][2].setFicha(alf_b_1);
+        game.tablero.tablero[7][5].setFicha(alf_b_2);
       
-        partida.tablero.tablero[0][0].setFicha(tor_n_1);
-        partida.tablero.tablero[0][7].setFicha(tor_n_2);
-        partida.tablero.tablero[7][0].setFicha(tor_b_1);
-        partida.tablero.tablero[7][7].setFicha(tor_b_2);
+        game.tablero.tablero[0][0].setFicha(tor_n_1);
+        game.tablero.tablero[0][7].setFicha(tor_n_2);
+        game.tablero.tablero[7][0].setFicha(tor_b_1);
+        game.tablero.tablero[7][7].setFicha(tor_b_2);
         
-        partida.tablero.tablero[0][3].setFicha(reina_n);
-        partida.tablero.tablero[7][3].setFicha(reina_b);
+        game.tablero.tablero[0][3].setFicha(reina_n);
+        game.tablero.tablero[7][3].setFicha(reina_b);
         
-        partida.tablero.tablero[0][1].setFicha(cab_n_1);
-        partida.tablero.tablero[0][6].setFicha(cab_n_2);
-        partida.tablero.tablero[7][1].setFicha(cab_b_1);
-        partida.tablero.tablero[7][6].setFicha(cab_b_1);
+        game.tablero.tablero[0][1].setFicha(cab_n_1);
+        game.tablero.tablero[0][6].setFicha(cab_n_2);
+        game.tablero.tablero[7][1].setFicha(cab_b_1);
+        game.tablero.tablero[7][6].setFicha(cab_b_1);
         
-        partida.tablero.tablero[6][0].setFicha(peon_b_1);
-        partida.tablero.tablero[6][1].setFicha(peon_b_1);
-        partida.tablero.tablero[6][2].setFicha(peon_b_1);
-        partida.tablero.tablero[6][3].setFicha(peon_b_1);
-        partida.tablero.tablero[6][4].setFicha(peon_b_1);
-        partida.tablero.tablero[6][5].setFicha(peon_b_1);
-        partida.tablero.tablero[6][6].setFicha(peon_b_1);
-        partida.tablero.tablero[6][7].setFicha(peon_b_1);
-        partida.tablero.tablero[1][0].setFicha(peon_n_1);
-        partida.tablero.tablero[1][1].setFicha(peon_n_1);
-        partida.tablero.tablero[1][2].setFicha(peon_n_1);
-        partida.tablero.tablero[1][3].setFicha(peon_n_1);
-        partida.tablero.tablero[1][4].setFicha(peon_n_1);
-        partida.tablero.tablero[1][5].setFicha(peon_n_1);
-        partida.tablero.tablero[1][6].setFicha(peon_n_1);
-        partida.tablero.tablero[1][7].setFicha(peon_n_1);
+        game.tablero.tablero[6][0].setFicha(peon_b_1);
+        game.tablero.tablero[6][1].setFicha(peon_b_1);
+        game.tablero.tablero[6][2].setFicha(peon_b_1);
+        game.tablero.tablero[6][3].setFicha(peon_b_1);
+        game.tablero.tablero[6][4].setFicha(peon_b_1);
+        game.tablero.tablero[6][5].setFicha(peon_b_1);
+        game.tablero.tablero[6][6].setFicha(peon_b_1);
+        game.tablero.tablero[6][7].setFicha(peon_b_1);
+        game.tablero.tablero[1][0].setFicha(peon_n_1);
+        game.tablero.tablero[1][1].setFicha(peon_n_1);
+        game.tablero.tablero[1][2].setFicha(peon_n_1);
+        game.tablero.tablero[1][3].setFicha(peon_n_1);
+        game.tablero.tablero[1][4].setFicha(peon_n_1);
+        game.tablero.tablero[1][5].setFicha(peon_n_1);
+        game.tablero.tablero[1][6].setFicha(peon_n_1);
+        game.tablero.tablero[1][7].setFicha(peon_n_1);
         
-        partida.tablero.tablero[0][4].setFicha(rey_n);
-        partida.tablero.tablero[7][4].setFicha(rey_b);
-        partida.setTurno(false);
+        game.tablero.tablero[0][4].setFicha(rey_n);
+        game.tablero.tablero[7][4].setFicha(rey_b);
+        game.setTurno(false);
        
-        return(partida.tablero);  
+        return(game.tablero);  
     }
     
     /**Crea un tablero como indique el usuario*/
-    public Tablero inicializar_tablero_personalizado(Partida partida){
+    public Tablero inicializar_tablero_personalizado(Game game){
         int coordenadas[] = new int[2];
         String coor_fide;
                 
@@ -152,7 +153,7 @@ public class Tablero {
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
+                game.tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
             }
         boolean rb=false,rn=false,ot=false,dosreyes=false;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -160,15 +161,15 @@ public class Tablero {
       //  LogManager.info("PERSONALIZACION DEL TABLERO");
         do{
            
-            opcion_ficha=partida.ofrecer_ficha();
+            opcion_ficha=game.ofrecer_ficha();
             if(opcion_ficha!=0){
-                color=partida.pedir_color();
-                coor_fide=partida.pedir_coordenadas_ficha();
-                coordenadas=partida.tablero.fide.de_fide_a_modelo(partida,coor_fide);
+                color=game.pedir_color();
+                coor_fide=game.pedir_coordenadas_ficha();
+                coordenadas=game.tablero.fide.de_fide_a_modelo(game,coor_fide);
                 fila=coordenadas[1];
                 columna=coordenadas[0];
-                Ficha ficha = partida.tablero.crear_ficha(opcion_ficha,color);
-                partida.tablero.tablero[fila][columna].setFicha(ficha);
+                Ficha ficha = game.tablero.crear_ficha(opcion_ficha,color);
+                game.tablero.tablero[fila][columna].setFicha(ficha);
                 if(ficha.tipo_ficha.equals("rey")&&(ficha.getColor()==false)){
                     //rey blanco
                     if(rb==true){
@@ -181,20 +182,22 @@ public class Tablero {
                        }else ot=true;
                 
             }
-        }while((opcion_ficha!=0)||(!partida.tablero.cumple_reglas(rn,rb,ot,dosreyes)));
+        }while((opcion_ficha!=0)||(!game.tablero.cumple_reglas(rn,rb,ot,dosreyes)));
         
-        return(partida.tablero);
+        return(game.tablero);
     }
     
-    public Tablero vacio(Partida partida)
+    public Tablero vacio()
     {
+        Tablero tablero = new Tablero();
+        
         int m, n;
         for(m=0;m<8;m++)
             for(n=0;n<8;n++)
             {
-                partida.tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
+                tablero.tablero[m][n] = new Casilla(null,m,n,false,false);
             }
-        return (partida.tablero);
+        return (tablero);
     }
     /**Busca la casilla solicitada en el tablero, si no la encuentra devuelve null*/
     public Casilla getCasilla(int fila, int columna){
@@ -238,14 +241,14 @@ public class Tablero {
     }
     
     /**Esta funcion recorre el tablero, marcando las casillas amenazadas*/
-    public Tablero amenazas(Partida partida){
+    public Tablero amenazas(Game game){
         Tablero tablero = new Tablero();
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
             {
                 //Si no esta vacia, se coge la ficha y se llama a amenazar_casillas
-                if(partida.tablero.tablero[i][j].getOcupada()){
-                Ficha ficha =partida.tablero.tablero[i][j].getFicha();
+                if(game.tablero.tablero[i][j].getOcupada()){
+                Ficha ficha =game.tablero.tablero[i][j].getFicha();
                 tablero=ficha.amenazar_casillas(this,i,j);
                 }
                 

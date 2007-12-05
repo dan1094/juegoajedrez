@@ -9,7 +9,7 @@
 
 package model.facade;
 
-import model.partida.Partida;
+import model.partida.Game;
 import model.util.InstanceNotFoundException;
 import model.util.InternalErrorException;
 
@@ -23,8 +23,8 @@ public class NuevaPartidaAction {
     }
     public Object execute() 
         throws InstanceNotFoundException, InternalErrorException {
-        Partida partida =  new Partida();           
-        return partida;
+        Game game =  new Game();           
+        return game;
     }
     
 }

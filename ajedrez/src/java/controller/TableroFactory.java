@@ -69,6 +69,7 @@ public class TableroFactory {
        
         return tablero;
     }
+    
     public Tablero situacionComerDobleOpcion(){
         Tablero tablero = new Tablero(1);
         int i=0,j=0;
@@ -100,6 +101,7 @@ public class TableroFactory {
        
         return tablero;
     }
+    
     public Tablero situacionCoronar(){
         Tablero tablero = new Tablero(1);
         int i=0,j=0;
@@ -163,5 +165,6 @@ public class TableroFactory {
        
         return tablero;
     }
+    
     
 }

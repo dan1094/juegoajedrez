@@ -11,7 +11,7 @@ package controller;
 
 import model.partida.Casilla;
 import model.partida.Ficha;
-import model.partida.Partida;
+import model.partida.Game;
 import model.partida.Tablero;
 
 
@@ -31,84 +31,87 @@ public class Fide {
     
     /**Metodo que recibe una cadena de caracteres y convierte esta en las
      *coordenadas correspondientes comprensibles por el modelo*/
-    public int[] de_fide_a_modelo(Partida partida, String coordenadas_fide){
+    public int[] de_fide_a_modelo(Game game, String coordenadas_fide){
         int coordenadas[] = new int[4];
         this.traduciendo=coordenadas_fide;
         
             
-        coordenadas=iniciar_parser(partida);
+        coordenadas=iniciar_parser(game);
         
      return(coordenadas);   
     }
     
-    public int[] iniciar_parser(Partida partida){
+    public int[] iniciar_parser(Game game){
         int coordenadas[] = new int[4];
         
         char c= obtenerCaracter();
-        if(esMayuscula(c)) coordenadas=state1(partida,c );
-        else    if(esMinuscula(c)) coordenadas=state22(partida,c);    
-                else    if(c=='O') coordenadas=state18(partida );
-                        else    if(c=='s') coordenadas=state27(partida);
-                                else    if(c=='m') coordenadas=state28(partida);
+        if(esMayuscula(c)) coordenadas=state1(game,c );
+        else    if(esMinuscula(c)) coordenadas=state22(game,c);    
+                else    if(c=='O') coordenadas=state18(game );
+                        else    if(c=='s') coordenadas=state27(game);
+                                else    if(c=='m') coordenadas=state28(game);
+                                        else    if(c=='t') coordenadas=state29(game);
+                                                else    if(c=='r') coordenadas=state30(game);
+
      return(coordenadas);   
     }
     
-    public int[] state1(Partida partida, char c ){
+    public int[] state1(Game game, char c ){
         System.out.println("Entra en el estado 1");
         int coordenadas[] = new int[4];
         String tipo_ficha=this.asociarTipoficha(c);
         c=obtenerCaracter();
-        if(esMinuscula(c)) coordenadas=state5(partida, c,tipo_ficha);
-        else    if(esNumero(c)) coordenadas=state12(partida, c,tipo_ficha);
-                else    if(c=='x') coordenadas=state2(partida, tipo_ficha);
-                        else return(null);
+        if(esMinuscula(c)) coordenadas=state5(game, c,tipo_ficha);
+        else    if(esNumero(c)) coordenadas=state12(game, c,tipo_ficha);
+                else    if(c=='x') coordenadas=state2(game, tipo_ficha);
+                        else return(this.errorState(1));
            return(coordenadas);
     }
     
-    public int[] state2(Partida partida,String tipo_ficha){
+    public int[] state2(Game game,String tipo_ficha){
         System.out.println("Entra en el estado 2");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
-        if(esMinuscula(c)) coordenadas=state3(partida,c,tipo_ficha);
-        else    return(null);
+        if(esMinuscula(c)) coordenadas=state3(game,c,tipo_ficha);
+        else    return(this.errorState(2));
         
         return(coordenadas);
     } 
     
-    public int[] state3(Partida partida, char c, String tipo_ficha){
+    public int[] state3(Game game, char c, String tipo_ficha){
         System.out.println("Entra en el estado 3");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
         c=obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state4(partida, colDestino,c,tipo_ficha);
-        else    return(null);
+        if(esNumero(c)) coordenadas=state4(game, colDestino,c,tipo_ficha);
+        else    return(this.errorState(3));
         
         return(coordenadas);
     }
     
-    public int[] state4(Partida partida,int colDestino, char c, String tipo_ficha){
+    public int[] state4(Game game,int colDestino, char c, String tipo_ficha){
         System.out.println("Entra en el estado 4");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin();
-        if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada())
+        if(!game.tablero.tablero[filaDestino][colDestino].getOcupada())
             return(null);
-        else    if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+        else    if(fin) coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
                 else {
                     c=this.obtenerCaracter();
                     if(c=='+'){
-                        System.out.println("Estas en JAQUE.");
-                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);        
+                        System.out.println("JAQUE!");
+                        coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);        
                     }else    if(c=='?'){ 
                                 System.out.println("Jugada Tonta");
-                                coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
                              }else    if(c=='!'){ 
                                         System.out.println("Gran Jugada");
-                                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                        coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
                                       }else    if(c=='#'){ 
-                                                    System.out.println("Jaque Mate");
-                                                    coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
-                                                }else return(null);
+                                                    System.out.println("JAQUE MATE!");
+                                                    coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
+                                                }else return(this.errorState(4));
                         
             }
         
@@ -116,42 +119,42 @@ public class Fide {
         
     }
     
-    public int[] state5(Partida partida,char c, String tipo_ficha){
+    public int[] state5(Game game,char c, String tipo_ficha){
         System.out.println("Entra en el estado 5");
         int[] coordenadas = new int[4];
         int columna=this.convertirColumna(c);
         c=this.obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state6(partida, columna,c,tipo_ficha);
-        else    if(esMinuscula(c)) coordenadas=state8(partida, columna,c,tipo_ficha);
-                else    if(c=='x') coordenadas=state7(partida, columna,tipo_ficha);
-                else return(null);
+        if(esNumero(c)) coordenadas=state6(game, columna,c,tipo_ficha);
+        else    if(esMinuscula(c)) coordenadas=state8(game, columna,c,tipo_ficha);
+                else    if(c=='x') coordenadas=state7(game, columna,tipo_ficha);
+                else return(this.errorState(5));
         
         return(coordenadas);
     }
     
-    public int[] state6(Partida partida, int colDestino, char c, String tipo_ficha){
+    public int[] state6(Game game, int colDestino, char c, String tipo_ficha){
         System.out.println("Entra en el estado 6");
         int[] coordenadas=new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin();
-        if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
+        if(game.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
         else{
-            if(fin) coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+            if(fin) coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
             else {
                     c=this.obtenerCaracter();
                     if(c=='+'){
-                        System.out.println("Estas en JAQUE.");
-                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);        
+                        System.out.println("JAQUE!");
+                        coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);        
                     }else    if(c=='?'){ 
                                 System.out.println("Jugada Tonta");
-                                coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
                              }else    if(c=='!'){ 
                                         System.out.println("Gran Jugada");
-                                        coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
+                                        coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
                                       }else    if(c=='#'){ 
-                                                    System.out.println("Jaque Mate");
-                                                    coordenadas=buscarMovimiento4_6(partida,tipo_ficha,filaDestino,colDestino);
-                                                }else return(null);
+                                                    System.out.println("JAQUE MATE!");
+                                                    coordenadas=buscarMovimiento4_6(game,tipo_ficha,filaDestino,colDestino);
+                                                }else return(this.errorState(6));
                         
             }
         }
@@ -159,235 +162,276 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] state7(Partida partida,int colOrigen, String tipo_ficha){
+    public int[] state7(Game game,int colOrigen, String tipo_ficha){
         System.out.println("Entra en el estado 7");
         int[] coordenadas=new int[4];
         char c=this.obtenerCaracter( );
-        if(esMinuscula(c)) coordenadas=state9(partida, c,colOrigen,tipo_ficha);
-        else return(null);
+        if(esMinuscula(c)) coordenadas=state9(game, c,colOrigen,tipo_ficha);
+        else return(this.errorState(7));
         
         return(coordenadas);
         
     }
     
-    public int[] state8(Partida partida, int colOrigen, char c_sig, String tipo_ficha){
+    public int[] state8(Game game, int colOrigen, char c_sig, String tipo_ficha){
         System.out.println("Entra en el estado 8");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c_sig);
         char c=this.obtenerCaracter( );
                
-        if(esNumero(c)) coordenadas=state11(partida,   colOrigen, c, colDestino,tipo_ficha);
-        else return(null);
+        if(esNumero(c)) coordenadas=state11(game,   colOrigen, c, colDestino,tipo_ficha);
+        else return(this.errorState(8));
         
         return(coordenadas);
     }
     
-    public int[] state9(Partida partida,char c, int colOrigen, String tipo_ficha){
+    public int[] state9(Game game,char c, int colOrigen, String tipo_ficha){
         System.out.println("Entra en el estado 9");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
         c=this.obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state10(partida, c,colOrigen, colDestino,tipo_ficha);
-        else return(null);
+        if(esNumero(c)) coordenadas=state10(game, c,colOrigen, colDestino,tipo_ficha);
+        else return(this.errorState(9));
         
         return(coordenadas);
     }
     
-    public int[] state10(Partida partida,char c, int colOrigen, int colDestino, String tipo_ficha){
+    public int[] state10(Game game,char c, int colOrigen, int colDestino, String tipo_ficha){
         System.out.println("Entra en el estado 10");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin( );
-        if(fin&&partida.tablero.tablero[filaDestino][colDestino].getOcupada()) 
-            coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino, tipo_ficha);
+        if(fin&&game.tablero.tablero[filaDestino][colDestino].getOcupada()) 
+            coordenadas=buscarMovimiento10_11(game,colOrigen,filaDestino,colDestino, tipo_ficha);
         else {
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(10));
                         
             }
         
         return(coordenadas);
     }
     
-    public int[] state11(Partida partida,int colOrigen, char c, int colDestino, String tipo_ficha){
+    public int[] state11(Game game,int colOrigen, char c, int colDestino, String tipo_ficha){
         System.out.println("Entra en el estado 11");
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
         boolean fin=comprobarfin( );
         
-        if(fin) coordenadas=buscarMovimiento10_11(partida,colOrigen,filaDestino,colDestino,tipo_ficha);
+        if(fin) coordenadas=buscarMovimiento10_11(game,colOrigen,filaDestino,colDestino,tipo_ficha);
         else{
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(11));
                         
             }
         
         return(coordenadas);
     }
     
-    public int[] state12(Partida partida,char c, String tipo_ficha){
+    public int[] state12(Game game,char c, String tipo_ficha){
         System.out.println("Entra en el estado 12");
         int[] coordenadas = new int[4];
         int filaOrigen=this.convertirFila(c);
         c=obtenerCaracter( );
-        if(c=='x') coordenadas=state13(partida,   filaOrigen, tipo_ficha);
-        else    if(esMinuscula(c)) coordenadas=state14(partida,   c, filaOrigen, tipo_ficha);
-                else    return(null);
+        if(c=='x') coordenadas=state13(game,   filaOrigen, tipo_ficha);
+        else    if(esMinuscula(c)) coordenadas=state14(game,   c, filaOrigen, tipo_ficha);
+                else    return(this.errorState(12));
         
         return(coordenadas);
         
     }
     
-    public int[] state13(Partida partida,int filaOrigen, String tipo_ficha){
+    public int[] state13(Game game,int filaOrigen, String tipo_ficha){
         System.out.println("Entra en el estado 13");
         int[] coordenadas=new int[4];
         
         char c=this.obtenerCaracter( );
-        if(esMinuscula(c)) coordenadas=state15(partida,   filaOrigen, c, tipo_ficha);
-        else    return(null);
+        if(esMinuscula(c)) coordenadas=state15(game,   filaOrigen, c, tipo_ficha);
+        else    return(this.errorState(13));
         
         return(coordenadas);
     }
     
-    public int[] state14(Partida partida,char c, int filaOrigen, String tipo_ficha){
+    public int[] state14(Game game,char c, int filaOrigen, String tipo_ficha){
         System.out.println("Entra en el estado 14");
         int[] coordenadas=new int[4];
         int colDestino=this.convertirColumna(c);
         c=this.obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state16(partida,   c, filaOrigen, colDestino, tipo_ficha);
-        else return(null);
+        if(esNumero(c)) coordenadas=state16(game,   c, filaOrigen, colDestino, tipo_ficha);
+        else return(this.errorState(14));
                
         return(coordenadas);
     }
     
-    public int[] state15(Partida partida,int filaOrigen, char c, String tipo_ficha){
+    public int[] state15(Game game,int filaOrigen, char c, String tipo_ficha){
         System.out.println("Entra en el estado 15");
         int[] coordenadas=new int[4];
         int colDestino=this.convertirColumna(c);
         c=this.obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state17(partida,   filaOrigen, c, colDestino, tipo_ficha);
-        else    return(null);
+        if(esNumero(c)) coordenadas=state17(game,   filaOrigen, c, colDestino, tipo_ficha);
+        else    return(this.errorState(15));
         
         return(coordenadas);
     }
     
-    public int[] state16(Partida partida,char c, int filaOrigen, int colDestino, String tipo_ficha){
+    public int[] state16(Game game,char c, int filaOrigen, int colDestino, String tipo_ficha){
         System.out.println("Entra en el estado 16");
         int[] coordenadas = new int[4];
         int filaDestino=this.convertirFila(c);
         boolean fin=comprobarfin( );
         
-        if(fin) coordenadas=buscarMovimiento16(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
+        if(fin) coordenadas=buscarMovimiento16(game, filaOrigen, filaDestino, colDestino, tipo_ficha);
         else {
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(16));
                         
             }
         
         return(coordenadas);
     }
     
-    public int[] state17(Partida partida,int filaOrigen, char c, int colDestino, String tipo_ficha){
+    public int[] state17(Game game,int filaOrigen, char c, int colDestino, String tipo_ficha){
         System.out.println("Entra en el estado 17");
         int[] coordenadas = new int[4];
         int filaDestino = this.convertirFila(c);
         boolean fin=comprobarfin( );
-        if(!partida.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
+        if(!game.tablero.tablero[filaDestino][colDestino].getOcupada()) return(null);
         else{
-                if(fin) coordenadas = buscarMovimiento17(partida, filaOrigen, filaDestino, colDestino, tipo_ficha);
+                if(fin) coordenadas = buscarMovimiento17(game, filaOrigen, filaDestino, colDestino, tipo_ficha);
                 else {
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(17));
                         
             }
         }
         return(coordenadas);
     }
     
-    public int[] state18(Partida partida ){
+    public int[] state18(Game game ){
         System.out.println("Entra en el estado 18");
         int[] coordenadas=new int[4];
         char c=obtenerCaracter();
-        if(c=='-') coordenadas=state19(partida );
-        else return(null);
+        if(c=='-') coordenadas=state19(game );
+        else return(this.errorState(18));
         
         return(coordenadas);
     }
     
-    public int[] state19(Partida partida ){
+    public int[] state19(Game game ){
         System.out.println("Entra en el estado 19");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
-        if(c=='O') coordenadas= state20(partida);
-        else return(null);
+        if(c=='O') coordenadas= state20(game);
+        else return(this.errorState(19));
         
         return(coordenadas);
     }
     
-    public int[] state20(Partida partida ){
+    public int[] state20(Game game ){
         System.out.println("Entra en el estado 20");
         int[] coordenadas = new int[4];
-        if(comprobarfin()) coordenadas=enroqueCorto(partida);
+        if(comprobarfin()) coordenadas=enroqueCorto(game);
         else {
             char c=obtenerCaracter();
-            if(c=='-') coordenadas=state21(partida);
-            else return(null);
+            if(c=='-') coordenadas=state21(game);
+            else return(this.errorState(20));
         }
         
         
         return(coordenadas);
     }
     
-    public int[] state21(Partida partida ){
+    public int[] state21(Game game ){
         System.out.println("Entra en el estado 21");
         int[] coordenadas = new int[4];
         char c= obtenerCaracter();
         boolean fin = this.comprobarfin();
         if(fin){
-            if(c=='O') coordenadas=enroqueLargo(partida);
-            else return(null);
+            if(c=='O') coordenadas=enroqueLargo(game);
+            else return(this.errorState(21));
         }else {
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(21));
                         
             }
         
         return(coordenadas);
     }
     
-    public int[] state22(Partida partida, char c ){
+    public int[] state22(Game game, char c ){
         System.out.println("Entra en el estado 22");
         int[] coordenadas = new int[4];
         int columna=this.convertirColumna(c);
-        c=obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state23(partida,columna,c );
-        else    if(c=='x') coordenadas=state24(partida,columna );
-                else return(null);
+        c=obtenerCaracter();
+        if(esNumero(c)) coordenadas=state23(game,columna,c );
+        else    if(c=='x') coordenadas=state24(game,columna );
+                else    if(c=='u'){
+                            if(obtenerCaracter()=='a'){
+                                if(obtenerCaracter()=='r'){
+                                    if(obtenerCaracter()=='d'){
+                                        if(obtenerCaracter()=='a'){
+                                            if(obtenerCaracter()=='r'){
+                                                coordenadas[0]=9;
+                                                coordenadas[1]=9;
+                                                coordenadas[2]=9;
+                                                coordenadas[3]=4;
+                                            }else return(this.errorState(22));
+                                        }else return(this.errorState(22));
+                                    }else return(this.errorState(22));
+                                }else return(this.errorState(22));
+                            }else return(this.errorState(22));
+                        }else   if(c=='a'){
+                                    if(obtenerCaracter()=='r'){
+                                        if(obtenerCaracter()=='g'){
+                                            if(obtenerCaracter()=='a'){
+                                                if(obtenerCaracter()=='r'){
+                                                    coordenadas[0]=9;
+                                                    coordenadas[1]=9;
+                                                    coordenadas[2]=9;
+                                                    coordenadas[3]=3;
+                                        }else return(this.errorState(22));
+                                    }else return(this.errorState(22));
+                                }else return(this.errorState(22));
+                            }
+                         }else  if(c=='y'){
+                                    if(obtenerCaracter()=='u'){
+                                        if(obtenerCaracter()=='d'){
+                                            if(obtenerCaracter()=='a'){
+                                                coordenadas[0]=9;
+                                                coordenadas[1]=9;
+                                                coordenadas[2]=9;
+                                                coordenadas[3]=2;
+                                            }
+                                        }else return(this.errorState(22));
+                                    }else return(this.errorState(22));
+                                }else return(this.errorState(22));
+            
+                        
         
         return(coordenadas);
     }
     
-    public int[] state23(Partida partida, int colDestino,char c ){
+    public int[] state23(Game game, int colDestino,char c ){
         System.out.println("Entra en el estado 23");
         int colOrigen=colDestino;
         int[] ficha=new int[2];
@@ -398,81 +442,81 @@ public class Fide {
         
         if(!fin){
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(23));
                         
         }else{
-            if(partida.getTurno()){
-                if(partida.tablero.tablero[filaDestino-1][colOrigen].getOcupada()&&
-                        partida.tablero.tablero[filaDestino-1][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
-                        partida.tablero.tablero[filaDestino-1][colOrigen].getFicha().getColor()==partida.getTurno()){
+            if(game.getTurno()){
+                if(game.tablero.tablero[filaDestino-1][colOrigen].getOcupada()&&
+                        game.tablero.tablero[filaDestino-1][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
+                        game.tablero.tablero[filaDestino-1][colOrigen].getFicha().getColor()==game.getTurno()){
                 coordenadas[0]=filaDestino-1;
                 coordenadas[1]=colOrigen;
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
-                }else   if(partida.tablero.tablero[filaDestino-2][colOrigen].getOcupada()&&
-                        partida.tablero.tablero[filaDestino-2][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
-                        partida.tablero.tablero[filaDestino-2][colOrigen].getFicha().getColor()==partida.getTurno()){
+                }else   if(game.tablero.tablero[filaDestino-2][colOrigen].getOcupada()&&
+                        game.tablero.tablero[filaDestino-2][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
+                        game.tablero.tablero[filaDestino-2][colOrigen].getFicha().getColor()==game.getTurno()){
                 coordenadas[0]=filaDestino-2;
                 coordenadas[1]=colOrigen;
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
-                }else return(null);
-           }else if(partida.tablero.tablero[filaDestino+1][colOrigen].getOcupada()&&
-                        partida.tablero.tablero[filaDestino+1][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
-                        partida.tablero.tablero[filaDestino+1][colOrigen].getFicha().getColor()==partida.getTurno()){
+                }else return(this.errorState(23));
+           }else if(game.tablero.tablero[filaDestino+1][colOrigen].getOcupada()&&
+                        game.tablero.tablero[filaDestino+1][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
+                        game.tablero.tablero[filaDestino+1][colOrigen].getFicha().getColor()==game.getTurno()){
                 coordenadas[0]=filaDestino+1;
                 coordenadas[1]=colOrigen;
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
-                }else   if(partida.tablero.tablero[filaDestino+2][colOrigen].getOcupada()&&
-                        partida.tablero.tablero[filaDestino+2][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
-                        partida.tablero.tablero[filaDestino+2][colOrigen].getFicha().getColor()==partida.getTurno()){
+                }else   if(game.tablero.tablero[filaDestino+2][colOrigen].getOcupada()&&
+                        game.tablero.tablero[filaDestino+2][colOrigen].getFicha().getTipo_ficha().equals("peon")&&
+                        game.tablero.tablero[filaDestino+2][colOrigen].getFicha().getColor()==game.getTurno()){
                 coordenadas[0]=filaDestino+2;
                 coordenadas[1]=colOrigen;
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
-                }else return(null);
+                }else return(this.errorState(23));
             }
          }catch(Exception e){
-             return null;
+             return this.errorState(23);
          }
         return(coordenadas);
         
     }
     
-    public int[] state24(Partida partida, int columna ){
+    public int[] state24(Game game, int columna ){
         System.out.println("Entra en el estado 24");
         int[] coordenadas = new int[4];
         char c=obtenerCaracter( );
-        if(esMinuscula(c)) coordenadas=state25(partida, columna, c);
-        else return(null);
+        if(esMinuscula(c)) coordenadas=state25(game, columna, c);
+        else return(this.errorState(24));
         
         return(coordenadas);
     }
     
-    public int[] state25(Partida partida, int colOrigen, char c ){
+    public int[] state25(Game game, int colOrigen, char c ){
         System.out.println("Entra en el estado 25");
         int[] coordenadas = new int[4];
         int colDestino=this.convertirColumna(c);
         c=obtenerCaracter( );
-        if(esNumero(c)) coordenadas=state26(partida,c,colOrigen,colDestino );
-        else return(null);
+        if(esNumero(c)) coordenadas=state26(game,c,colOrigen,colDestino );
+        else return(this.errorState(25));
         
         return(coordenadas);
     }
     
-    public int[] state26(Partida partida, char c, int colOrigen, int colDestino ){
+    public int[] state26(Game game, char c, int colOrigen, int colDestino ){
         System.out.println("Entra en el estado 26 (Comiendo con un peon)");
         int[] coordenadas = new int[4];
         boolean fin=this.comprobarfin();
         int filaDestino=this.convertirFila(c);
         if(fin){
-                if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
-                    if(partida.getTurno()){
+                if(game.tablero.tablero[filaDestino][colDestino].getOcupada()){
+                    if(game.getTurno()){
                         coordenadas[0]=filaDestino-1;
                         coordenadas[1]=colOrigen;
                         coordenadas[2]=filaDestino;
@@ -484,20 +528,20 @@ public class Fide {
                         coordenadas[3]=colDestino;
 
                     }
-                }else return(null);
+                }else return(this.errorState(26));
     }else {
                     c=this.obtenerCaracter();
-                    if(c=='+') System.out.println("Estas en JAQUE.");
+                    if(c=='+') System.out.println("JAQUE!");
                     else    if(c=='?') System.out.println("Jugada Tonta");
                             else    if(c=='!') System.out.println("Gran Jugada");
-                                    else    if(c=='#') System.out.println("Jaque Mate");
-                                    else return(null);
+                                    else    if(c=='#') System.out.println("JAQUE MATE!");
+                                    else return(this.errorState(26));
                         
             }
         return(coordenadas);
     }
     
-    public int[] state27(Partida partida){
+    public int[] state27(Game game){
         char c=obtenerCaracter();
         int[] coor= new int[4];
         if(c=='a'){
@@ -508,14 +552,14 @@ public class Fide {
                         coor[1]=9;
                         coor[2]=9;
                         coor[3]=9;
-                    }else return(null);
-                }else return(null);
-            }else return(null);
-        }else return(null); 
+                    }else return(this.errorState(27));
+                }else return(this.errorState(27));
+            }else return(this.errorState(27));
+        }else return(this.errorState(27)); 
         return(coor);
     }
     
-    public int[] state28(Partida partida){
+    public int[] state28(Game game){
         char c=obtenerCaracter();
         int[] coor= new int[4];
         if(c=='e'){
@@ -525,13 +569,59 @@ public class Fide {
                     coor[1]=9;
                     coor[2]=9;
                     coor[3]=8;
-                }else return(null);
-            }else return(null);
-         }else return(null);
+                }else return(this.errorState(28));
+            }else return(this.errorState(28));
+         }else return(this.errorState(28));
         return(coor);
     }
     
-    public int[] buscarMovimiento4_6(Partida partida, String tipo_ficha, int filaDestino, int colDestino){
+    public int[] state29(Game game){
+        System.out.println("Entra en state 29");
+        int[] coor = new int[4];
+        char c=obtenerCaracter();
+        if(c=='a'){
+            if(obtenerCaracter()=='b'){
+                if(obtenerCaracter()=='l'){
+                    if(obtenerCaracter()=='a'){
+                        if(obtenerCaracter()=='s'){
+                            coor[0]=9;
+                            coor[1]=9;
+                            coor[2]=9;
+                            coor[3]=7;
+                        }
+                    }else return(this.errorState(29));
+                }else return(this.errorState(29));
+            }else return(this.errorState(29));
+        }else return(this.errorState(29));
+        return(coor);
+    }
+    
+    public int[] state30(Game game){
+        int[] coor = new int[4];
+        char c= obtenerCaracter();
+        if(c=='e'){
+            if(obtenerCaracter()=='n'){
+                if(obtenerCaracter()=='d'){
+                    if(obtenerCaracter()=='i'){
+                        if(obtenerCaracter()=='r'){
+                            if(obtenerCaracter()=='s'){
+                                if(obtenerCaracter()=='e'){
+                                    coor[0]=9;
+                                    coor[1]=9;
+                                    coor[2]=9;
+                                    coor[3]=5;
+                                }else return(this.errorState(30));
+                            }else return(this.errorState(30));
+                        }else return(this.errorState(30));
+                    }else return(this.errorState(30));
+                }else return(this.errorState(30));
+            }else return(this.errorState(30));
+        }else return(this.errorState(30));
+        
+        return(coor);
+    }
+    
+    public int[] buscarMovimiento4_6(Game game, String tipo_ficha, int filaDestino, int colDestino){
         System.out.println("Entra buscarMovimiento 4,6");
         int[] coordenadas=new int[4];
         int[][] fichas=new int[2][8];
@@ -542,7 +632,7 @@ public class Fide {
         boolean bien=false;
         boolean hFicha=true;
         
-        fichas=buscarFichas(partida,tipo_ficha);
+        fichas=buscarFichas(game,tipo_ficha);
         
         System.out.println("Fichas encontradas de tipo."+tipo_ficha);
         for(int m=0;m<2;m++)
@@ -557,7 +647,7 @@ public class Fide {
             colOrigen=fichas[1][j];
             hFicha=hayFicha(fichas,i+1);
             i++;
-            if(this.comprobar_movimiento(filaOrigen,colOrigen,filaDestino,colDestino,partida))
+            if(this.comprobar_movimiento(filaOrigen,colOrigen,filaDestino,colDestino,game))
                 fichas_validas=aniadir(filaOrigen,colOrigen,fichas_validas);
         }
         System.out.println("Fichas añadidas:"); 
@@ -579,51 +669,51 @@ public class Fide {
         else return(true);
     }
     
-    public int[] buscarMovimiento10_11(Partida partida, int cO, int fD, int cD, String tipo_ficha){
+    public int[] buscarMovimiento10_11(Game game, int cO, int fD, int cD, String tipo_ficha){
         int[] coordenadas = new int[4];
         int[] ficha = new int[2];
        
-        ficha=buscarFichaMismaFila(partida,tipo_ficha,cO);
-        if(this.comprobar_movimiento(ficha[0],ficha[1],fD,cD,partida)){
+        ficha=buscarFichaMismaFila(game,tipo_ficha,cO);
+        if(this.comprobar_movimiento(ficha[0],ficha[1],fD,cD,game)){
         coordenadas[0]=ficha[0];
         coordenadas[1]=ficha[1];
         coordenadas[2]=fD;
         coordenadas[3]=cD;
         return(coordenadas);
-        }else return(null);
+        }else return(this.errorState(30));
         
     }
     
-    public int[] buscarMovimiento17(Partida partida, int filaOrigen, int filaDestino, int colDestino, String tipo_ficha){
+    public int[] buscarMovimiento17(Game game, int filaOrigen, int filaDestino, int colDestino, String tipo_ficha){
         int[] coordenadas = new int[4];
         int[] ficha = new int[2];
         
-        ficha=buscarFichaMismaColumna(partida,tipo_ficha,filaOrigen);
-        if(partida.tablero.tablero[filaDestino][colDestino].getOcupada()){
-            if(comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida)){
+        ficha=buscarFichaMismaColumna(game,tipo_ficha,filaOrigen);
+        if(game.tablero.tablero[filaDestino][colDestino].getOcupada()){
+            if(comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,game)){
                 coordenadas[0]=ficha[0];
                 coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
                 return(coordenadas);
-            }else return(null);
-        }else return(null);
+            }else return(this.errorState(31));
+        }else return(this.errorState(31));
         
     }
     
-    public int[] buscarMovimiento16(Partida partida, int filaOrigen, int filaDestino, int colDestino, String tipo_ficha){
+    public int[] buscarMovimiento16(Game game, int filaOrigen, int filaDestino, int colDestino, String tipo_ficha){
          int[] coordenadas = new int[4];
          int[] ficha = new int[2];
          
-         ficha=buscarFichaMismaColumna(partida,tipo_ficha,filaOrigen);
+         ficha=buscarFichaMismaColumna(game,tipo_ficha,filaOrigen);
          
-         if(this.comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,partida)){
+         if(this.comprobar_movimiento(ficha[0],ficha[1],filaDestino,colDestino,game)){
                 coordenadas[0]=ficha[0];
                 coordenadas[1]=ficha[1];
                 coordenadas[2]=filaDestino;
                 coordenadas[3]=colDestino;
                 return(coordenadas);
-            }else return(null);
+            }else return(this.errorState(32));
     }
     
     public int[][] aniadir(int filaO, int colO,int[][] fichas_validas){
@@ -698,14 +788,14 @@ public class Fide {
         else return(false);
     }
    
-    public int[] buscarFichaMismaFila(Partida partida, String tipo_ficha, int col){
+    public int[] buscarFichaMismaFila(Game game, String tipo_ficha, int col){
         int[] coor=new int[2];
         boolean encontrada=false;
         System.out.println("Entra en buscar ficha misma fila.");
         for(int i=0;(i<8)&&!encontrada;i++){
-            if(partida.tablero.tablero[i][col].getOcupada()&&
-                partida.tablero.tablero[i][col].getFicha().getColor()==partida.getTurno()&&
-                partida.tablero.tablero[i][col].getFicha().getTipo_ficha().equals(tipo_ficha)){
+            if(game.tablero.tablero[i][col].getOcupada()&&
+                game.tablero.tablero[i][col].getFicha().getColor()==game.getTurno()&&
+                game.tablero.tablero[i][col].getFicha().getTipo_ficha().equals(tipo_ficha)){
                     System.out.println("Ha encontrado la ficha.[Fila("+i+"),Col("+col+")].");
                     coor[0]=i;
                     coor[1]=col;
@@ -716,12 +806,12 @@ public class Fide {
         
     }
     
-    public int[] buscarFichaMismaColumna(Partida partida, String tipo_ficha, int fila){
+    public int[] buscarFichaMismaColumna(Game game, String tipo_ficha, int fila){
         int[] coor=new int[2];
         for(int j=0;j<8;j++)
-            if(partida.tablero.tablero[fila][j].getOcupada()&&
-                partida.tablero.tablero[fila][j].getFicha().getColor()==partida.getTurno()&&
-                partida.tablero.tablero[fila][j].getFicha().getTipo_ficha().equals(tipo_ficha)){
+            if(game.tablero.tablero[fila][j].getOcupada()&&
+                game.tablero.tablero[fila][j].getFicha().getColor()==game.getTurno()&&
+                game.tablero.tablero[fila][j].getFicha().getTipo_ficha().equals(tipo_ficha)){
                     coor[0]=fila;
                     coor[1]=j;
              }else return(null);
@@ -729,20 +819,20 @@ public class Fide {
         return(coor);
     }
     
-    public int[] buscarPeon(Partida partida, int colOrigen, int filaDestino, int colDestino){
+    public int[] buscarPeon(Game game, int colOrigen, int filaDestino, int colDestino){
         int[] coordenadas = new int[4];
         for(int i=0;i<8;i++){
-            if(partida.getTurno()){//TURNO NEGRAS
-                if(partida.tablero.tablero[i][colDestino].getOcupada()&&
-                   partida.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
+            if(game.getTurno()){//TURNO NEGRAS
+                if(game.tablero.tablero[i][colDestino].getOcupada()&&
+                   game.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
                     
                     
                     
                 }
                     
             }else{ //TURNO BLANCAS
-                if(partida.tablero.tablero[i][colDestino].getOcupada()&&
-                   partida.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
+                if(game.tablero.tablero[i][colDestino].getOcupada()&&
+                   game.tablero.tablero[i][colDestino].getFicha().getTipo_ficha().equals("peon")){
                     
                 }
                    
@@ -795,7 +885,7 @@ public class Fide {
         }
     }
 
-    private int[][] buscarFichas(Partida partida, String tipo_ficha) {
+    public int[][] buscarFichas(Game game, String tipo_ficha) {
         int[][] fichas=new int[2][8];
         int m=0;
         
@@ -804,9 +894,9 @@ public class Fide {
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
             {
-                if(partida.tablero.tablero[i][j].getOcupada()&&
-                        partida.tablero.tablero[i][j].getFicha().getColor()==partida.getTurno()&&
-                        partida.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha)){
+                if(game.tablero.tablero[i][j].getOcupada()&&
+                        game.tablero.tablero[i][j].getFicha().getColor()==game.getTurno()&&
+                        game.tablero.tablero[i][j].getFicha().getTipo_ficha().equals(tipo_ficha)){
                             System.out.println("I="+i+" ,J="+j);
                             fichas[0][m]=i;
                             fichas[1][m]=j;
@@ -817,10 +907,10 @@ public class Fide {
         return(fichas);
     }
     
-    public int[] enroqueCorto(Partida partida){
+    public int[] enroqueCorto(Game game){
         int[] coordenadas = new int[4];
        
-        if(partida.getTurno()){//Negras
+        if(game.getTurno()){//Negras
             coordenadas[0]=0;
             coordenadas[1]=4;
             coordenadas[2]=0;
@@ -834,9 +924,9 @@ public class Fide {
         return(coordenadas);
     }
     
-    public int[] enroqueLargo(Partida partida){
+    public int[] enroqueLargo(Game game){
         int[] coordenadas = new int[4];
-        boolean turno=partida.getTurno();
+        boolean turno=game.getTurno();
         if(turno){//Negras
             coordenadas[0]=0;
             coordenadas[1]=4;
@@ -851,40 +941,47 @@ public class Fide {
         return(coordenadas);
     }
     
-    public boolean comprobar_movimiento(int filaorigen, int columnaorigen, int filadestino, int columnadestino, Partida partida){
+    public boolean comprobar_movimiento(int filaorigen, int columnaorigen, int filadestino, int columnadestino, Game game){
        
         //comprueba que el origen y el destino estan dentro del tablero
-        boolean origen_dentro=partida.tablero.dentro_tablero(filaorigen,columnaorigen); 
-        boolean destino_dentro=partida.tablero.dentro_tablero(filadestino,columnadestino);
+        boolean origen_dentro=game.tablero.dentro_tablero(filaorigen,columnaorigen); 
+        boolean destino_dentro=game.tablero.dentro_tablero(filadestino,columnadestino);
        
         //ORIGEN Y DESTINO DENTRO. Y ORIGEN OCUPADO POR FICHA DEL COLOR ADECUADO.
         if(origen_dentro&&destino_dentro){
                
         //Para comprobar el movimiento necesitamos saber la ficha que se mueve
-        Ficha fichaorigen=partida.tablero.tablero[filaorigen][columnaorigen].getFicha();
+        Ficha fichaorigen=game.tablero.tablero[filaorigen][columnaorigen].getFicha();
         Ficha fichadestino;
         boolean mcf;
         
-        Casilla casilladestino = partida.tablero.tablero[filadestino][columnadestino];
+        Casilla casilladestino = game.tablero.tablero[filadestino][columnadestino];
         
-                if(fichaorigen.getColor()!=partida.getTurno()){
+                if(fichaorigen.getColor()!=game.getTurno()){
                    
                     return(false);
                 }else if(!casilladestino.getOcupada()){
                                 //origen del mismo color que el turno y casilla destino vacia
                                  
-                                 mcf=fichaorigen.movimiento_correspondiente_ficha(partida.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
+                                 mcf=fichaorigen.movimiento_correspondiente_ficha(game.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                  return(mcf);
-                      }else if(casilladestino.getFicha().getColor()!=partida.getTurno()){
+                      }else if(casilladestino.getFicha().getColor()!=game.getTurno()){
                                 //origen=turno, y destino del color diferente. Se puede comer la ficha del destino.
-                                mcf=fichaorigen.movimiento_correspondiente_ficha(partida.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
+                                mcf=fichaorigen.movimiento_correspondiente_ficha(game.tablero,filaorigen,columnaorigen,filadestino,columnadestino);
                                 return(mcf);
-                            }else if(casilladestino.getFicha().getColor()==partida.getTurno()){
+                            }else if(casilladestino.getFicha().getColor()==game.getTurno()){
                                     
                                   }else return(false);
         
         }else return(false);
         
     return(false);
+    }
+    
+    /**Esta funcion genera un int[] dependiendo del error que haya dado*/
+    public int[] errorState(int tipo){
+        int[] error = new int[4];
+        
+        return(error);
     }
 }

@@ -21,9 +21,9 @@ public abstract class MostrarTablero implements IObserver  {
     /** Creates a new instance of MostrarTablero */
     public MostrarTablero() {
     }
-    public abstract void update(Partida partida);
+    public abstract void update(Game game);
 
-    public abstract void borrar(Partida partida); 
+    public abstract void borrar(Game game); 
 
    
 

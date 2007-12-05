@@ -17,18 +17,17 @@ import model.util.*;
  */
 public class EsTablasAction {
     
-   private Partida partida;
+   private Game game;
    
-   public EsTablasAction(Partida partida)
+   public EsTablasAction(Game game)
    {
-       this.partida=partida;
+       this.game=game;
    
    }
-    public boolean execute(Partida partida) 
+    public boolean execute(Game game) 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        return  partida.son_tablas(partida);               
-
+        return  game.son_tablas(game);
        
     }
     

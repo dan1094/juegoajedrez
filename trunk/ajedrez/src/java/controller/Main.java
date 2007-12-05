@@ -9,9 +9,11 @@
 
 package controller;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.*;
 import model.facade.*;
-import model.partida.Partida;
+import model.partida.Game;
 import model.partida.Tablero;
 import model.user.*;
 import model.util.*;
@@ -47,22 +49,20 @@ public class Main {
         /*Creamos una partida, y llamamos a OBTENER TABLERO, que nos devuelve un 
          tablero, el que asociamos a setTablero de la partida. */
         
-        Partida partida =  new Partida();
-        Tablero tablero = new Tablero(0);
+        Game game = new Game();
+        Tablero tablero = new Tablero();
         /* Le añado los dos observer en un principio es estatico tendremos que ver de que manera creamos los observers dinamicos*/
         // Por cada peticion de observar una partida hay q lanzar algo
         
              
-        partida.setTablero(tablero);  //Debemos asociar un tablero vacio antes
-        partida.obtener_tablero();
-        partida.addObserver(mostrarTableroNegro);         
+        game.setTablero(tablero);  //Debemos asociar un tablero vacio antes
+        game=game.obtener_tablero(game);
+        game.addObserver(mostrarTableroNegro);         
              
-       // mostrarTableroBlanco.update(partida);     
-        partida.comenzar(partida);
        
-        
-        
-        
+       // mostrarTableroBlanco.update(partida);     
+        game.comenzarPartida(game);
+       
       
  }
 }

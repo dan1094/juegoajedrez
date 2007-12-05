@@ -22,25 +22,25 @@ public class MoverAction {
    private int filaDestino;
    private int columnaOrigen;
    private int columnaDestino;
-   private Partida partida;
+   private Game game;
     
     
     public MoverAction(int filaOrigen, int columnaOrigen, int filaDestino
-            , int columnaDestino, Partida partida) {
+            , int columnaDestino, Game game) {
         
         this.filaOrigen = filaOrigen;
         this.filaDestino = filaDestino;
         this.columnaOrigen = columnaOrigen;
         this.columnaDestino = columnaDestino;
-        this.partida = partida;
+        this.game = game;
        
     }
     
     public Object execute() 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        partida.mover(filaOrigen,columnaOrigen,filaDestino,columnaDestino,partida.getTablero());               
+        game.mover(filaOrigen,columnaOrigen,filaDestino,columnaDestino,game.getTablero());               
 
-        return partida;
+        return game;
     }
 }

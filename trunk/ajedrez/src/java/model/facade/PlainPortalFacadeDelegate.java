@@ -10,7 +10,7 @@
 package model.facade;
 
 import javax.sql.DataSource;
-import model.partida.Partida;
+import model.partida.Game;
 import model.user.UserDTO;
 import model.util.DataSourceLocator;
 import model.util.DuplicateInstanceException;
@@ -143,14 +143,14 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
     
     }
     
-    public Partida mover(int filaOrigen, int columnaOrigen,int filaDestino,int columnaDestino,Partida partida) 
+    public Game mover(int filaOrigen, int columnaOrigen,int filaDestino,int columnaDestino,Game game) 
         throws InternalErrorException
     {
         try
         {
-            MoverAction moverAction = new MoverAction(filaOrigen,columnaOrigen,filaDestino,columnaDestino,partida);
+            MoverAction moverAction = new MoverAction(filaOrigen,columnaOrigen,filaDestino,columnaDestino,game);
         
-            return (Partida) moverAction.execute();
+            return (Game) moverAction.execute();
             
         } catch (InternalErrorException e) {
             throw e;
@@ -158,13 +158,13 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
             throw new InternalErrorException(e);
         }
     }
-    public boolean esTablas(Partida partida) throws InternalErrorException 
+    public boolean esTablas(Game game) throws InternalErrorException 
     {
          try
         {
-            EsTablasAction esTablasAction = new EsTablasAction(partida);
+            EsTablasAction esTablasAction = new EsTablasAction(game);
         
-            return esTablasAction.execute(partida);
+            return esTablasAction.execute(game);
             
         } catch (InternalErrorException e) {
             throw e;
@@ -173,13 +173,13 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         }
     }
 
-    public boolean esJaqueMate(Partida partida) throws InternalErrorException 
+    public boolean esJaqueMate(Game game) throws InternalErrorException 
     {
          try
         {
-            EsJaqueMateAction esJaqueMateAction = new EsJaqueMateAction(partida);
+            EsJaqueMateAction esJaqueMateAction = new EsJaqueMateAction(game);
         
-            return esJaqueMateAction.execute(partida);
+            return esJaqueMateAction.execute(game);
             
         } catch (InternalErrorException e) {
             throw e;
@@ -187,11 +187,11 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
             throw new InternalErrorException(e);
         }
     }
-    public Partida nuevaPartida() throws InternalErrorException
+    public Game nuevaPartida() throws InternalErrorException
     {
         try{
             NuevaPartidaAction nuevaPartidaAction = new NuevaPartidaAction();
-            return (Partida) nuevaPartidaAction.execute();
+            return (Game) nuevaPartidaAction.execute();
             
         }catch (InternalErrorException e) {
             throw e;
@@ -201,12 +201,12 @@ public final class PlainPortalFacadeDelegate implements PortalFacadeDelegate {
         }
     }
     
-    public Partida coronar(int filaOrigen, int columnaOrigen,
-            Partida partida, int eleccion) throws InternalErrorException
+    public Game coronar(int filaOrigen, int columnaOrigen,
+            Game game, int eleccion) throws InternalErrorException
     {
         try{
-            CoronarAction coronarAction = new CoronarAction(filaOrigen,columnaOrigen,partida,eleccion);
-            return (Partida) coronarAction.execute();
+            CoronarAction coronarAction = new CoronarAction(filaOrigen,columnaOrigen,game,eleccion);
+            return (Game) coronarAction.execute();
             
         }catch (InternalErrorException e) {
             throw e;

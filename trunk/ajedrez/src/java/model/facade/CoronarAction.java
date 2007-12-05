@@ -22,16 +22,16 @@ public class CoronarAction {
     private int columnaOrigen;
     private int filaDestino;
     private int columnaDestino;
-    private Partida partida;
+    private Game game;
     private int eleccion;
     
     
     public CoronarAction(int filaOrigen, int columnaOrigen,
-            Partida partida, int eleccion) {
+            Game game, int eleccion) {
         
         this.filaOrigen = filaOrigen;
         this.columnaOrigen = columnaOrigen;       
-        this.partida = partida;
+        this.game = game;
         this.eleccion = eleccion;
        
     }
@@ -39,9 +39,9 @@ public class CoronarAction {
     public Object execute() 
         throws InstanceNotFoundException, InternalErrorException {
                 
-        partida.cambio_ficha(partida,eleccion,filaOrigen,columnaOrigen,filaDestino,columnaDestino);               
+        game.cambio_ficha(game,eleccion,filaOrigen,columnaOrigen,filaDestino,columnaDestino);               
 
-        return partida;
+        return game;
     }
     
 }

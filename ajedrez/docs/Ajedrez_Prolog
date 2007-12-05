@@ -7,6 +7,15 @@
 
 % El par "(Figura, Color)" se representará como "ficha(Figura, Color)"
 
+:-load_library('jipxsets.jar').
+
+
+%%%%%%%%%%%%%%%%%%%%
+%  Ahogado/1       %
+%%%%%%%%%%%%%%%%%%%%
+ahogado(estado(Tablero,Turno)):-
+        not(posibleMovimiento(estado(Tablero,Turno),F,I0,J0,I1,J1)),
+        not(esJaque(estado(Tablero,Turno))).
 
 %%%%%%%%%%%%%%%%%%%%
 % cambiarTurno/2   %
@@ -25,16 +34,8 @@ cambiarTurno(estado(Tablero, negro)) :-  retract(estado(Tablero, negro)),
                                   
 casillaAmenazada(estado(Tablero, Turno0), I, J) :-
         turnoContrario(Turno0, Turno1),
-        condicionMovimientoSalvoAmenazas(estado(Tablero, Turno1), _F, _I0, _J0, I, J).
+        posibleMovimiento(estado(t0,Turno1),ficha(Figura,Turno1),I0,J0,I,J).
         
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% casillaAmenazada/3       %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-igualColor(estado(Tablero,Turno0),I0,J0,I1,J1):-
-        contenido(Tablero,I0,J0,ficha(X,C1)),contenido(Tablero,I0,J0,ficha(Y,C2)),
-        C1=C2.
-
 
 %%%%%%%%%%%%%%%%%%
 % columna/1      %
@@ -65,25 +66,30 @@ columnaNumero(8, h).
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %       comer            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
+comerFicha(estado(Tablero0, Turno0), ficha(Figura,Turno0),I0,J0,I1,J1):-
+        estado(Tablero0,Turno0),
+        turnoContrario(Turno0,TurnoCont),
+        posibleComida(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1),
+        retract(contenido(Tablero0, I1, J1, ficha(FiguraComida, TurnoCont))),
+        assert(contenido(Tablero0, I1, J1, ficha(Figura, Turno0))),
+        retract(contenido(Tablero0, I0, J0, ficha(Figura, Turno0))), %quita la ficha de su posicion
+        cambiarTurno(estado(Tablero0, Turno0)).
 
-comer(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
-        not (hayFichaCamino(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
-        contenido(Tablero0,I1,J1,ficha(FiguraComida,negro)),
-        retract(contenido(Tablero0, I1, J1, ficha(FiguraComida, negro))),
-        assert(contenido(Tablero0, I1, J1, ficha(Figura, blanco))),
-        retract(contenido(Tablero0, I0, J0, ficha(Figura, blanco))), %quita la ficha de su posicion
-        cambiarTurno(estado(Tablero0, blanco)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% comidaPeon/5                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+buenComidaPeon(I0,J0,I1,J1,blanco):- columnaNumero(NI0,I0), columnaNumero(NI1,I1),
+        Di is NI0 + 1, Dj is J0 + 1, Di = NI1, Dj = J1. 
 
-
-comer(estado(Tablero0, negro), ficha(Figura,negro),I0,J0,I1,J1):-
-        not (hayFichaCamino(estado(Tablero0,negro),ficha(Figura,negro),I0,J0,I1,J1)),
-        contenido(Tablero0,I1,J1,ficha(FiguraComida,blanco)),
-        retract(contenido(Tablero0, I1, J1, ficha(FiguraComida, blanco))),
-        assert(contenido(Tablero0, I1, J1, ficha(Figura, negro))),
-        retract(contenido(Tablero0, I0, J0, ficha(Figura, negro))), %quita la ficha de su posicion
-        cambiarTurno(estado(Tablero0, negro)).
-
-
+buenComidaPeon(I0,J0,I1,J1,blanco):- columnaNumero(NI0,I0), columnaNumero(NI1,I1),
+        Di is NI0 - 1, Dj is J0 + 1, Di = NI1, Dj = J1.         
+        
+buenComidaPeon(I0,J0,I1,J1,negro):- columnaNumero(NI0,I0), columnaNumero(NI1,I1),
+        Di is NI0 + 1, Dj is J0 - 1, Di = NI1, Dj = J1.         
+        
+buenComidaPeon(I0,J0,I1,J1,negro):- columnaNumero(NI0,I0), columnaNumero(NI1,I1),
+        Di is NI0 - 1, Dj is J0 - 1, Di = NI1, Dj = J1. 
+        
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % condicionGeneralMovimiento/6    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,8 +108,7 @@ condicionGeneralMovimiento(
 % condicionMovimiento/6    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Movimiento del rey                
-                
+% Movimiento del rey                             
 condicionMovimiento(
     estado(Tablero0, Turno0),
     ficha(rey, Turno0),
@@ -115,8 +120,7 @@ condicionMovimiento(
                 Di is NI1 - NI0, Dj is J1 - J0, abs(Di) =< 1, abs(Dj) =< 1,
                 not(casillaAmenazada(estado(Tablero0, Turno0), I1, J1)).
 
-% Movimiento del Alfil                
-                
+% Movimiento del Alfil                       
 condicionMovimiento(
     estado(Tablero0, Turno0),
     ficha(alfil, Turno0),
@@ -127,8 +131,7 @@ condicionMovimiento(
                 mismaDiagonal(I0,J0,I1,J1),
                 not(hayFichaCamino(estado(Tablero0,Turno0),ficha(alfil,Turno0),I0,J0,I1,J1)).
  
-% Movimiento Torre
-               
+% Movimiento Torre               
 condicionMovimiento(
     estado(Tablero0, Turno0),
     ficha(torre, Turno0),
@@ -140,7 +143,6 @@ condicionMovimiento(
                 not(hayFichaCamino(estado(Tablero0,Turno0),ficha(torre,Turno0),I0,J0,I1,J1)).
 
 % Movimiento Reina
-
 condicionMovimiento(
     estado(Tablero0, Turno0),
     ficha(reina, Turno0),
@@ -151,6 +153,26 @@ condicionMovimiento(
                 mismaFilaColumnaDiagonal(I0, J0, I1, J1),
                 not(hayFichaCamino(estado(Tablero0,Turno0),ficha(reina,Turno0),I0,J0,I1,J1)).
 
+% Movimiento Caballo
+condicionMovimiento(
+    estado(Tablero0, Turno0),
+    ficha(caballo, Turno0),
+    I0, J0, I1, J1) :-
+                condicionGeneralMovimiento(estado(Tablero0, Turno0),
+                                    ficha(caballo, Turno0),
+                                    I0, J0, I1, J1),
+                movCaballo(I0,J0,I1,J1).                
+
+% Movimiento Peon               
+condicionMovimiento(
+    estado(Tablero0, Turno0),
+    ficha(peon, Turno0),
+    I0, J0, I1, J1) :-
+                condicionGeneralMovimiento(estado(Tablero0, Turno0),
+                                    ficha(peon, Turno0),
+                                    I0, J0, I1, J1),
+                movPeon(I0, J0, I1, J1, Turno0),
+                not(hayFichaCamino(estado(Tablero0,Turno0),ficha(peon,Turno0),I0,J0,I1,J1)).
                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % condicionMovimientoSalvoAmenazas/6    %
@@ -168,8 +190,33 @@ condicionMovimientoSalvoAmenazas(
                                     I0, J0, I1, J1),
                 numeroColumna(I0, NI0), numeroColumna(I1, NI1),
                 Di is NI1 - NI0, Dj is J1 - J0, abs(Di) =< 1, abs(Dj) =< 1.
-    
+                
+%%%%%%%%%%%%%%%%%%%
+%  Copiar Tablero %
+%%%%%%%%%%%%%%%%%%%
 
+copiarSituacion(Tablero0,Tablero1):-
+        estado(Tablero0,Turno0),
+        assert(estado(Tablero1,Turno0)),
+        copiarTablero(Tablero0,Tablero1).
+
+copiarTablero(Tablero0,Tablero1):-
+        findall((F,I,J),(contenido(Tablero0,F,I,J),
+        assert(contenido(Tablero1,F,I,J))),_L). 
+
+limpiarTablero(Tablero0):-
+        retractall(contenido(Tablero0,F,I,J)). 
+    
+%%%%%%%%%%%%%%%%%%
+% figura/1       %
+%%%%%%%%%%%%%%%%%%
+
+figura(peon).
+figura(torre).
+figura(caballo).
+figura(alfil).
+figura(reina).
+figura(rey).
 
 %%%%%%%%%%%%%%%%%%
 % fila/1         %
@@ -191,14 +238,14 @@ fila(8).
 %ARRIBA ABAJO
 hayFichaCamino(estado(Tablero0, Turno0),
         ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J1):- J1>J0, JF is J1-1, 
-        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,JF).
+        ,I0, J0, I0, J1):- J1>J0, JF is J1-1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,JF).
 
 %ABAJO ARRIBA        
 hayFichaCamino(estado(Tablero0, Turno0),
         ficha(Ficha0, Turno0)
-        ,I0, J0, I1, J1):- J1<J0, JF is J1+1, 
-        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,JF).
+        ,I0, J0, I0, J1):- J1<J0, JF is J1+1, 
+        hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I0,JF).
         
 %IZQUIERDA DERECHA        
 hayFichaCamino(estado(Tablero0, Turno0),
@@ -243,6 +290,7 @@ hayFichaCamino(estado(Tablero0, Turno0),
         J0<J1, JF is J1-1, numeroColumna(I0, NI0), numeroColumna(I1,NI1),
         NI0>NI1, NIF is NI1 + 1, columnaNumero(NIF, IF), 
         hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,IF,JF).                      
+
 
 %%%%%%%%%%%%%%%%%%%
 % hayficha        %
@@ -324,7 +372,25 @@ hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),I0,J0,I1,J1) :-
         columnaNumero(NI01,R0),J0 < J1, J01 is J0 + 1,
         hayFicha(estado(Tablero0, Turno0),ficha(Ficha0, Turno0),R0,J01,I1,J1).
 
+%%%%%%%%%%%%%%%%%%%
+%       JAQUE     %
+%%%%%%%%%%%%%%%%%%%
+interceptarJaque(estado(Tablero0,Turno0)):- 
+        posibleMovimiento(estado(Tablero0,Turno0),ficha(Ficha,Turno0),I,J,I1,J1),
+        copiarSituacion(Tablero0,Tablero1), 
+        moverFicha(estado(Tablero1, Turno0),ficha(Figura, Turno0),I, J, I1, J1),
+        not(esJaque(estado(Tablero1,Turno0))).
 
+esJaque(estado(Tablero0,Turno0)):-turnoContrario(Turno0, X),
+        contenido(Tablero0,I,J,ficha(rey,Turno0))
+        ,posibleComida(estado(Tablero0,X),ficha(F,X),I0,J0,I,J).
+
+
+esJaqueMate(estado(Tablero0,Turno0)):- turnoContrario(Turno0, X),
+        contenido(Tablero0,I,J,ficha(rey,Turno0))
+        ,posibleComida(estado(Tablero0,X),ficha(F,X),I0,J0,I,J),
+        not(posibleMovimiento(estado(Tablero0,Turno0),ficha(rey,Turno0),I,J,I1,J1)),
+        not(posibleComida(estado(Tablero0,Turno0),ficha(rey,Turno0),I,J,I1,J1)).
 
                         
 %%%%%%%%%%%%%%%%%%%                
@@ -353,6 +419,51 @@ mismaDiagonal(I0,J0,I1,J1):- numeroColumna(I0, NI0), numeroColumna(I1, NI1),
                 Di is NI1 - NI0, Dj is J1 - J0, abs(Di) =:= abs(Dj).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% movCaballo/4               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Arriba - Derecha
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0+1, F is J0+2, NI1 = C, J1 = F.       
+% Derecha - Arriba
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0+2, F is J0+1, NI1 = C, J1 = F.        
+% Derecha - Abajo
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0+2, F is J0-1, NI1 = C, J1 = F.        
+% Abajo - Derecha
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0+1, F is J0-2, NI1 = C, J1 = F.
+% Abajo - Izquierda
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0-1, F is J0-2, NI1 = C, J1 = F.          
+% Izquierda - Abajo
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0-2, F is J0-1, NI1 = C, J1 = F.        
+% Izquierda - Arriba
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0-2, F is J0+1, NI1 = C, J1 = F.           
+% Arriba - Izquierda
+movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
+        C is NI0-1, F is J0+2, NI1 = C, J1 = F.                
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% movPeon/5               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Movimiento doble peon blanco
+movPeon(I0, J0, I0, J1, blanco):- J0 = 2, J1 = 4.
+
+% Movimiento doble peon negro
+movPeon(I0, J0, I0, J1, negro):- J0 = 7, J1 = 5.
+
+% Movimiento sencillo peon blanco
+movPeon(I0, J0, I0, J1, blanco):- Dis is J1 - J0, Dis = 1.
+
+% Movimiento sencillo peon negro
+movPeon(I0, J0, I0, J1, negro):- Dis is J0 - J1, Dis = 1.
+              
 %%%%%%%%%%%%%%%%%%%%
 % moverFicha/6     %
 %%%%%%%%%%%%%%%%%%%%
@@ -361,10 +472,8 @@ moverFicha(
     estado(Tablero0, Turno0),
     ficha(Figura, Turno0),
     I0, J0, I1, J1) :-
-                condicionMovimiento(estado(Tablero0, Turno0),
-                                    ficha(Figura, Turno0),
-                                    I0, J0, I1, J1),
-                not(hayFicha(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1)),
+                estado(Tablero0,Turno0),
+                posibleMovimiento(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1),
                 retract(contenido(Tablero0, I0, J0, ficha(Figura, Turno0))), %quita la ficha de su posicion
                 assert(contenido(Tablero0, I1, J1, ficha(Figura, Turno0))),  %la pone en su nueva posicio. 
                 cambiarTurno(estado(Tablero0, Turno0)).
@@ -385,33 +494,39 @@ numeroColumna(h, 8).
 %%%%%%%%%%%%%%%%%%%%%%
 % posiblecomida/6    % 
 %%%%%%%%%%%%%%%%%%%%%%   
-
-posibleComida(estado(Tablero0, blanco), ficha(Figura,blanco),I0,J0,I1,J1):-
-        not (hayFichaCamino(estado(Tablero0,blanco),ficha(Figura,blanco),I0,J0,I1,J1)),
-        contenido(Tablero0,I1,J1,ficha(FiguraComida,negro)).
+% Posible comida para el peon
+posibleComida(estado(Tablero0, Turno0), ficha(peon,Turno0),I0,J0,I1,J1):-
+        condicionGeneralMovimiento(estado(Tablero0, Turno0),
+                                    ficha(peon, Turno0),
+                                    I0, J0, I1, J1),
+        buenComidaPeon(I0,J0,I1,J1,Turno0),
+        turnoContrario(Turno0,TurnoCont),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,TurnoCont)).
         
-posibleComida(estado(Tablero0, negro), ficha(Figura,negro),I0,J0,I1,J1):-
-        not (hayFichaCamino(estado(Tablero0,negro),ficha(Figura,negro),I0,J0,I1,J1)),
-        contenido(Tablero0,I1,J1,ficha(FiguraComida,blanco)).
+posibleComida(estado(Tablero0, Turno0), ficha(Figura, Turno0),I0,J0,I1,J1):-
+        figura(Figura),
+        not(Figura = peon),
+        turnoContrario(Turno0,TurnoCont),
+        condicionMovimiento(estado(Tablero0, Turno0),
+                                    ficha(Figura, Turno0),
+                                    I0, J0, I1, J1),
+        contenido(Tablero0,I1,J1,ficha(FiguraComida,TurnoCont)).
 
 
-%%%%%%%%%%%%%%%%%%%%%%
-% posiblemovimiento/6% 
-%%%%%%%%%%%%%%%%%%%%%%  
+%%%%%%%%%%%%%%%%%%%%%%%
+% posiblemovimiento/6 % 
+%%%%%%%%%%%%%%%%%%%%%%%  
 
 posibleMovimiento(estado(Tablero0, Turno0),
     ficha(Figura, Turno0),
     I0, J0, I1, J1) :-
+                %contenido(Tablero0, I0, J0, Ficha),
                 condicionMovimiento(estado(Tablero0, Turno0),
                                     ficha(Figura, Turno0),
                                     I0, J0, I1, J1),
-                not(hayFicha(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1)).               
-                
+                not(contenido(Tablero0, I1, J1, F)).               
 
 
-
-
-                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % turnoContrario/2         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -425,11 +540,16 @@ turnoContrario(negro, blanco).
 % estamos en el tablero to, en la columna e en la fila 1 con el rey blanco
         %y el rey negro en la columna e en fila 8
 
-contenido(t0, g, 6, ficha(rey, blanco)). %esto es como un insertar al inicio
-contenido(t0, b, 4, ficha(rey, negro)).
-contenido(t0, e, 7, ficha(alfil,negro)).
-contenido(t0, e, 4, ficha(reina,blanco)).
-contenido(t0, g, 2, ficha(alfil,blanco)).
-contenido(t0, e, 2, ficha(reina,negro)).
+contenido(t0, a, 1, ficha(rey, blanco)). %esto es como un insertar al inicio
+contenido(t0, h, 8, ficha(rey, negro)).
+contenido(t0, c, 7, ficha(alfil,negro)).
+contenido(t0, d, 1, ficha(reina,blanco)).
+contenido(t0, e, 4, ficha(torre,negro)).
+contenido(t0, a, 4, ficha(torre,blanco)).
+contenido(t0, h, 2, ficha(alfil,blanco)).
+contenido(t0, a, 8, ficha(reina,negro)).
+contenido(t0, c, 3, ficha(caballo,blanco)).
+contenido(t0, g, 4, ficha(peon, blanco)).
+contenido(t0, f, 5, ficha(peon, negro)).
 
 estado(t0, blanco).%aqui dice: primer turno para aa

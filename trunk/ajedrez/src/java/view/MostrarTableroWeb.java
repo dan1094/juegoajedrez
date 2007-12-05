@@ -9,7 +9,7 @@
 
 package view;
 
-import model.partida.Partida;
+import model.partida.Game;
 
 
 
@@ -22,7 +22,7 @@ public class MostrarTableroWeb extends MostrarTablero{
     /** Creates a new instance of MostrarTableroWeb */
     public MostrarTableroWeb() {
     }
-     public void update(Partida partida){}
-     public void borrar(Partida partida){}
+     public void update(Game game){}
+     public void borrar(Game game){}
     
 }

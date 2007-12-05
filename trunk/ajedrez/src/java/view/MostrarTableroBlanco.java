@@ -9,9 +9,9 @@
 
 package view;
 
-import model.partida.Partida;
-import org.me.hello.*;
-
+import model.partida.Game;
+import org.me.hello.VistaTablero;
+import org.me.hello.VistaTableroPieza;
 
 
 /**
@@ -27,20 +27,20 @@ public class MostrarTableroBlanco extends MostrarTablero{
     
     public MostrarTableroBlanco() {
         
-        //VistaTablero = new VistaTablero();
+        VistaTablero = new VistaTablero();
     }
-    public void update(Partida partida)
+    public void update(Game game)
     {
         VistaTableroPieza vistaTableroPieza = new VistaTableroPieza();
              
         vistaTableroPieza.init(vistaTableroPieza);
              
     }
-    public void borrar(Partida partida)
+    public void borrar(Game game)
     {
         VistaTableroPieza vistaTableroPieza = new VistaTableroPieza();
              
-        vistaTableroPieza.hideBoard();
+       // vistaTableroPieza.hideBoard();
         
     }
    

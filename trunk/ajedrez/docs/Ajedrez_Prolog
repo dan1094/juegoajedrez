@@ -1,24 +1,39 @@
-% El par "(Tablero, Turno)" se representará como "estado(Tablero, Turno)"
-
-% Se ha considerado I como la columna y J como la fila.
-
-% Para representar que una Ficha está en la posición (I, J) de un Tablero
-% se escribirá "contenido(Tablero, I, J, Ficha)"
-
-% El par "(Figura, Color)" se representará como "ficha(Figura, Color)"
-
+% Algoritmo mueve fichas Ajedrez en Prolog
+%       Autores: Alvato Torroba
+%                Javier Hertfelder
+%                Juan Jose Dominguez
+%                Pablo Fernandez
+%                Miguel Corchero
+% Descripcion:
+%               Algoritmo implementado en Prolog a base de diferentes funciones
+%               ordenadas alfabeticamente para poder encontrarlas facilmente.
+%               Basado en el algoritmo inicial del Doctor Mariano Fernandez, 
+%               profesor de la asignatura de IA de la universidad San Pablo CEU.
+%               
+%
+% Con esta función cargamos todas las librerias externas del prolog para el mane-
+% jo de funciones con listas etc..
+% Previamente hay que copiar los archivos desde la carpeta lib en jiprolog en don-
+% se ha instalado la IDE, solo sirve para la IDE JIPROLOG
+%
 :-load_library('jipxsets.jar').
 
 
 %%%%%%%%%%%%%%%%%%%%
-%  Ahogado/1       %
+%  Ahogado/1
+% Descripcion: Sirve para comprobar si el rey de cualquier color está en posicion
+% de ahogado.  Se comprueba que no haya un posible movimiento para cualquier ficha 
+% del turno actual y que el rey no esté en JAQUE.
 %%%%%%%%%%%%%%%%%%%%
 ahogado(estado(Tablero,Turno)):-
         not(posibleMovimiento(estado(Tablero,Turno),F,I0,J0,I1,J1)),
         not(esJaque(estado(Tablero,Turno))).
 
 %%%%%%%%%%%%%%%%%%%%
-% cambiarTurno/2   %
+% cambiarTurno/2   
+% Descripcion: Funcion que cambia el turno de blancas a negras y viceversa
+% lo utilizamos para poder hacer simulaciones con los movimientos y las 
+% comidas de las fichas.Mas adelante lo veremos        
 %%%%%%%%%%%%%%%%%%%%
 %permuta el turno
 cambiarTurno(estado(Tablero, blanco)) :- retract(estado(Tablero, blanco)),
@@ -29,7 +44,11 @@ cambiarTurno(estado(Tablero, negro)) :-  retract(estado(Tablero, negro)),
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% casillaAmenazada/3       %
+% casillaAmenazada/3
+% Descripcion: Vemos si una casilla esta amenazada por cualquiera del turno 
+% contrario. Cambiamos el turno para hacer la simulacion y comprobamos si 
+% hay alguna ficha del turno contrario que pueda mover a la casilla que le hemos 
+% indicado. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                   
 casillaAmenazada(estado(Tablero, Turno0), I, J) :-
@@ -38,7 +57,8 @@ casillaAmenazada(estado(Tablero, Turno0), I, J) :-
         
 
 %%%%%%%%%%%%%%%%%%
-% columna/1      %
+% columna/1      
+% Descripcion: Nos devuelve ...
 %%%%%%%%%%%%%%%%%%
 
 columna(a).
@@ -51,7 +71,8 @@ columna(g).
 columna(h).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% columnaNumero    %
+% columnaNumero    
+% Descripcion: Nos devuelve que columna en letras es un numero 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 columnaNumero(1, a).
@@ -64,7 +85,16 @@ columnaNumero(7, g).
 columnaNumero(8, h).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%       comer            %
+% comer            
+% Descripcion: come una ficha del equipo contrario comprobando varias cosas:
+%              1.- si el estado del tablero está en el turno correcto
+%              2.- Cambiamos el turno 
+%              3.- vemos si se puede comer con la funcion de comprobacion
+%              4.- quitamos la ficha comida
+%              5.- ponemos la ficha de nuestro turno
+%              6.- quitamos nuestra ficha de la posicion inicial
+%              7.- cambiamos el turno.
+%      
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 comerFicha(estado(Tablero0, Turno0), ficha(Figura,Turno0),I0,J0,I1,J1):-
         estado(Tablero0,Turno0),
@@ -76,7 +106,10 @@ comerFicha(estado(Tablero0, Turno0), ficha(Figura,Turno0),I0,J0,I1,J1):-
         cambiarTurno(estado(Tablero0, Turno0)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% comidaPeon/5                    %
+% comidaPeon/5
+% Descripcion: Comprobamos que el Peon coma siempre en diagonal
+%              esto lo hacemos porque el peon es la unica ficha que come de forma diferente 
+%              a moverse.           
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 buenComidaPeon(I0,J0,I1,J1,blanco):- columnaNumero(NI0,I0), columnaNumero(NI1,I1),
         Di is NI0 + 1, Dj is J0 + 1, Di = NI1, Dj = J1. 
@@ -91,7 +124,9 @@ buenComidaPeon(I0,J0,I1,J1,negro):- columnaNumero(NI0,I0), columnaNumero(NI1,I1)
         Di is NI0 - 1, Dj is J0 - 1, Di = NI1, Dj = J1. 
         
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% condicionGeneralMovimiento/6    %
+% condicionGeneralMovimiento/6  
+% Descripcion: Comprobamos que la ficha no se salga de los limites del tablero
+%              que no este en la misma casilla que otra ficha 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %AQUI ha habido correcciones de codigo. 
 condicionGeneralMovimiento(
@@ -105,7 +140,12 @@ condicionGeneralMovimiento(
                 
                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% condicionMovimiento/6    %
+% condicionMovimiento/6   
+% Descripcion: Aqui implementamos los diferentes movimientos de las fichas
+%               basandonos en el movimiento del rey que nos dio el profesor 
+%               y algunas modificaciones menores
+%               Lo unico que cambia en las diferentes fichas es la forma de moverse 
+%               por el tablero.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Movimiento del rey                             
@@ -175,12 +215,12 @@ condicionMovimiento(
                 not(hayFichaCamino(estado(Tablero0,Turno0),ficha(peon,Turno0),I0,J0,I1,J1)).
                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% condicionMovimientoSalvoAmenazas/6    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%esta funcion sirve para "fingir" los movimientos del contrario
-%es decir fuerza los movimientos del otro color sin tener en cuenta si amenanazan o no
-%porque de otra forma ese movimiento no se "fingiria"
-   
+% condicionMovimientoSalvoAmenazas/6    
+% Descripcion:  esta funcion sirve para "fingir" los movimientos del contrario
+%               es decir fuerza los movimientos del otro color sin tener en 
+%               cuenta si amenanazan o no porque de otra forma ese movimiento 
+%               no se "fingiria"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 condicionMovimientoSalvoAmenazas(
     estado(Tablero0, Turno0),
     ficha(rey, Turno0),
@@ -192,7 +232,9 @@ condicionMovimientoSalvoAmenazas(
                 Di is NI1 - NI0, Dj is J1 - J0, abs(Di) =< 1, abs(Dj) =< 1.
                 
 %%%%%%%%%%%%%%%%%%%
-%  Copiar Tablero %
+%  Copiar Tablero 
+%  Descripcion: esta funcion no la utilizamos en esta implementacion pero fucniona 
+%               copia un tablero en otro para simular movimientos.
 %%%%%%%%%%%%%%%%%%%
 
 copiarSituacion(Tablero0,Tablero1):-
@@ -208,7 +250,8 @@ limpiarTablero(Tablero0):-
         retractall(contenido(Tablero0,F,I,J)). 
     
 %%%%%%%%%%%%%%%%%%
-% figura/1       %
+% figura/1       
+%
 %%%%%%%%%%%%%%%%%%
 
 figura(peon).
@@ -219,7 +262,8 @@ figura(reina).
 figura(rey).
 
 %%%%%%%%%%%%%%%%%%
-% fila/1         %
+% fila/1         
+%
 %%%%%%%%%%%%%%%%%%
 
 fila(1).
@@ -232,7 +276,8 @@ fila(7).
 fila(8).   
      
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-% hayFichaCamino/6        %
+% hayFichaCamino/6        
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %ARRIBA ABAJO
@@ -448,6 +493,21 @@ movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
 movCaballo(I0,J0,I1,J1):- columnaNumero(NI0,I0),columnaNumero(NI1,I1),
         C is NI0-1, F is J0+2, NI1 = C, J1 = F.                
 
+
+              
+%%%%%%%%%%%%%%%%%%%%
+% moverFicha/6     %
+%%%%%%%%%%%%%%%%%%%%
+
+moverFicha(
+    estado(Tablero0, Turno0),
+    ficha(Figura, Turno0),
+    I0, J0, I1, J1) :-
+                estado(Tablero0,Turno0),
+                posibleMovimiento(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1),
+                retract(contenido(Tablero0, I0, J0, ficha(Figura, Turno0))), %quita la ficha de su posicion
+                assert(contenido(Tablero0, I1, J1, ficha(Figura, Turno0))),  %la pone en su nueva posicio. 
+                cambiarTurno(estado(Tablero0, Turno0)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % movPeon/5               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -463,20 +523,6 @@ movPeon(I0, J0, I0, J1, blanco):- Dis is J1 - J0, Dis = 1.
 
 % Movimiento sencillo peon negro
 movPeon(I0, J0, I0, J1, negro):- Dis is J0 - J1, Dis = 1.
-              
-%%%%%%%%%%%%%%%%%%%%
-% moverFicha/6     %
-%%%%%%%%%%%%%%%%%%%%
-
-moverFicha(
-    estado(Tablero0, Turno0),
-    ficha(Figura, Turno0),
-    I0, J0, I1, J1) :-
-                estado(Tablero0,Turno0),
-                posibleMovimiento(estado(Tablero0,Turno0),ficha(Figura,Turno0),I0,J0,I1,J1),
-                retract(contenido(Tablero0, I0, J0, ficha(Figura, Turno0))), %quita la ficha de su posicion
-                assert(contenido(Tablero0, I1, J1, ficha(Figura, Turno0))),  %la pone en su nueva posicio. 
-                cambiarTurno(estado(Tablero0, Turno0)).
 
 %%%%%%%%%%%%%%%%%%%%
 % numeroColumna/2  %
@@ -552,4 +598,4 @@ contenido(t0, c, 3, ficha(caballo,blanco)).
 contenido(t0, g, 4, ficha(peon, blanco)).
 contenido(t0, f, 5, ficha(peon, negro)).
 
-estado(t0, blanco).%aqui dice: primer turno para aa
+estado(t0, blanco).%aqui dice: primer turno para blanco

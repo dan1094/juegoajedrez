@@ -1,5 +1,0 @@
-1.- Comer al paso del peon.
-2.- Movimiento FIDE.
-3.- Son_tablas-> Cambiar (puede estar rodeado por fichas)
-4.- Es_mate -> Cambiar (lo mismo).
-5.- 

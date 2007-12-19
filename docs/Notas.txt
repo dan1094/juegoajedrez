@@ -1,0 +1,17 @@
+1.- Comer al paso del peon.
+2.- Movimiento FIDE.
+3.- Son_tablas-> Cambiar (puede estar rodeado por fichas)
+4.- Es_mate -> Cambiar (lo mismo).
+5.- 
+
+
+
+Requisitos
+
+-FIDE.
+-Mas 1 vista.
+-Blanco tablero con fichas.
+-Jugar ajedrez en lo negro.
+-Solo una partida.
+-Mover fichas.
+

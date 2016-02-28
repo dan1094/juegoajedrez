@@ -1,0 +1,1 @@
+Juego de ajedrez con Inteligencia Artificial. Posibilidad de juego online contra el ordenador u online entre 2 jugadores.
